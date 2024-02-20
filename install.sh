@@ -35,21 +35,21 @@ IP_NAT_SR=$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)
 username=$(whoami)
 
 
-sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressources/interfaces
+sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressource/interfaces
 
-sed -i "s/{IP_Nat}/$IP_Nat/g" /ressources/interfaces
+sed -i "s/{IP_Nat}/$IP_Nat/g" /ressource/interfaces
 
-sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" /ressources/interfaces
+sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" /ressource/interfaces
 
-sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressources/interfaces
+sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressource/interfaces
 
-sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/interfaces
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/interfaces
 
-sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressources/interfaces
+sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressource/interfaces
 
-sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/interfaces
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/interfaces
 
-mv /ressources/interfaces /etc/network/interfaces
+mv /ressource/interfaces /etc/network/interfaces
 
 
 
@@ -94,11 +94,11 @@ sudo chown -R root:root /srv/nfs
 
 sudo chmod 777 /srv/nfs
 
-sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/exports 
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/exports 
 
-sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/exports
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/exports
 
-sudo mv /ressources/exports /etc/exports
+sudo mv /ressource/exports /etc/exports
 
 sudo exportfs -a
 
@@ -136,7 +136,7 @@ exit
 
 mv /ressource/profile /srv/nfs/debian/home/$username/.profile
 
-sed -i "s/{username}/$username/g" /ressources/grub.cfg
+sed -i "s/{username}/$username/g" /ressource/grub.cfg
 
 sudo mv /ressource/sudoers /srv/nfs/debian/ect/sudoers
 
@@ -177,9 +177,9 @@ sudo chmod -R ugo+rw /srv/tftp/
 
 sudo grub-mknetdir
 
-sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/grub.cfg
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/grub.cfg
 
-mv /ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
+mv /ressource/grub.cfg /srv/tftp/boot/gryb/grub.cfg
 
 
 
@@ -190,11 +190,11 @@ sudo chown -R root:root /srv/nfs
 
 sudo chmod 777 /srv/nfs
 
-sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/exports 
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/exports 
 
-sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/exports
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/exports
 
-sudo mv /ressources/exports /etc/exports
+sudo mv /ressource/exports /etc/exports
 
 sudo exportfs -a
 
@@ -232,7 +232,7 @@ exit
 
 mv /ressource/profile /srv/nfs/debian/home/$username/.profile
 
-sed -i "s/{username}/$username/g" /ressources/grub.cfg
+sed -i "s/{username}/$username/g" /ressource/grub.cfg
 
 sudo mv /ressource/sudoers /srv/nfs/debian/ect/sudoers
 
@@ -285,13 +285,13 @@ Hostname VARCHAR(30));
 # Configuration du DHCP
 
 
-sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/dhcpd.conf
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/dhcpd.conf
 
-sed -i "s/{Masque_LAN}/$Masque_LAN/g" /ressources/dhcpd.conf
+sed -i "s/{Masque_LAN}/$Masque_LAN/g" /ressource/dhcpd.conf
 
-sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/dhcpd.conf
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/dhcpd.conf
 
-sudo mv /ressources/dhcpd.conf /etc/dhcp/dhcpd.conf
+sudo mv /ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 
 sudo systemctl restart isc-dhcp-server.service
 
@@ -300,19 +300,19 @@ sudo systemctl restart isc-dhcp-server.service
 # Configuration DNS
 
 
-sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/dns/site22.fr.zone
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/dns/site22.fr.zone
 
 sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
 
-sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/dns/dns.fr.reverse
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/dns/dns.fr.reverse
 
 sudo mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
 
-sed -i "s/{IP_LAN_TABLEAU[0]}/$IP_LAN_TABLEAU[0]/g" /ressources/dns/dns.fr.reverse
+sed -i "s/{IP_LAN_TABLEAU[0]}/$IP_LAN_TABLEAU[0]/g" /ressource/dns/dns.fr.reverse
 
-sed -i "s/{IP_LAN_TABLEAU[1]}/$IP_LAN_TABLEAU[1]/g" /ressources/dns/dns.fr.reverse
+sed -i "s/{IP_LAN_TABLEAU[1]}/$IP_LAN_TABLEAU[1]/g" /ressource/dns/dns.fr.reverse
 
-sed -i "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" /ressources/dns/dns.fr.reverse
+sed -i "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" /ressource/dns/dns.fr.reverse
 
 sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
 
@@ -323,23 +323,23 @@ sudo systmeclt restart bind9.service
 # Configuration Nftables
 
 
-sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressources/nftables.conf
+sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressource/nftables.conf
 
-sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressources/nftables.conf
+sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressource/nftables.conf
 
-sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/nftables.conf
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/nftables.conf
 
-sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/nftables.conf
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/nftables.conf
 
-sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressources/nftables.conf
+sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressource/nftables.conf
 
-sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressources/nftables.conf
+sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressource/nftables.conf
 
-sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/nftables.conf
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/nftables.conf
 
-sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/nftables.conf
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/nftables.conf
 
-sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressources/nftables.conf
+sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressource/nftables.conf
 
 sudo mv ressource/nftables.conf /etc/nftables.conf
 
