@@ -10,9 +10,9 @@ iface lo inet loopback
 # The primary network interface
 #allow-hotplug eno1
 iface {Interface_NAT} inet static
- address {IP_Nat}/16
+ address {IP_Nat}/{Masque_NAT_CIDR}
         gateaway {Routeur_NAT}
         dns-nameservers 1.1.1.1
 iface {Interface_LAN} inet static
-        address {IP_LAN}/24
+        address {IP_LAN}/{Masque_LAN_CIDR}
         # dns-* options are implemented by the resolvconf package, if installed

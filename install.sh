@@ -1,68 +1,113 @@
 #!/bin/bash
 
-echo "test"
 
 # Assigner les paramètres à des variables
 
-read -p "Quelle nom d'utilisateur voudrez vous pour votre linux de mainteantce :"username
 
-read -p "Entrer son mot de passe :"password
+ip a
 
-read -p "Quelle sera l'addresse IP du serveur :"IP
+read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
 
-read -p "Quelle est son masque de réseau :"masque
+IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." "\n") )
 
-read -p "Quelle est son interface :"interface
+read -p "Quelle est son masque de son sous réseaux LAN :" Masque_LAN
 
-read -p "Quelle sera le sous réseau dans le quel il operera en CIDR(192.168.1.0/24):"IPSRCIDR
+read -p "Quelle est son interface pour son sous réseaux LAN :" Interface_LAN
 
-read -p "Quelle est sa \"Gateaway\" :" gateaway
+read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
+
+IP_NAT_TABLEAU=( $(echo $IP_NAT | tr "." "\n") )
+
+read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
+
+read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
+
+read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
+
+IP_LAN_SR=$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)
+
+IP_NAT_SR=$(./ObtentionIPSousReseau.sh $IP_NAT $Masque_NAT)
+
+#Masque_LAN_CIDR=$(./ObtentionMasqueCIDR $Masque_LAN)
+
+#Masque_NAT_CIDR=$(./ObtentionMasqueCIDR $Masque_NAT)
+
+username=$(whoami)
+
+
+sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressources/interfaces
+
+sed -i "s/{IP_Nat}/$IP_Nat/g" /ressources/interfaces
+
+sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" /ressources/interfaces
+
+sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressources/interfaces
+
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/interfaces
+
+sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressources/interfaces
+
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/interfaces
+
+mv /ressources/interfaces /etc/network/interfaces
+
 
 
 # Mise a jour et installation des paquets
 
+
 sudo apt update && sudo apt upgrade
 
-sudo apt install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server
+sudo apt install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
 
-#sudo apt install apache2 atftpd nfs-kernel-server debootstrap php isc-kea
+wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-# Mise en place du serveur TFTP
+#alternative du dhcp et dns non obsolete avec "kea"
+
+# Configuration du serveur TFTP
 
 sudo mkdir /srv/tftp
 
-sudo echo -e "allow-hotplug $interface\inface $interface inet static\naddress $IP\nnetmask $masque\ngateway $gateaway\ndns-nameservers $IP ">> /etc/network/interfaces
-
-sudo echo "USE_INETD=true" >>/etc/default/atftpd
+mv /ressource/atftpd /etc/default/atftpd
 
 sudo systemctl restart atftpd.service
 
 sudo chmod -R ugo+rw /srv/tftp/
 
 
+
 # Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg)
+
 
 sudo grub-mknetdir
 
-sudo echo -e "insmod http\n\nmenuentry 'Boot OpenClone' {\n\n\tset root=(http,$IP)\n\n\techo 'Chargement de vmlinuz ...'\n\tlinux /download/vmlinuz root=/dev/nfs nfsroot=$IP:/srv/nfs/debian rw\n\n\techo 'Chargement de initrd.img ...'\n\tinitrd /download/initrd.img\n\n}\n\nmenuentry 'reboot' {\n\n\techo 'Au revoir !'\n\treboot\n\n}" > /srv/tftp/boot/grub/grub.cfg
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/grub.cfg
+
+mv /ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
 
 
-#Mise en place du serveur NFS
+
+#Configuration du serveur NFS
+
 
 sudo chown -R root:root /srv/nfs
 
 sudo chmod 777 /srv/nfs
 
-sudo echo "/srv/nfs/amd64 $IPSRCIDR(rw,no_subtree_check,no_root_squash) //ro pour read-only" > /etc/exports
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/exports 
+
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/exports
+
+sudo mv /ressources/exports /etc/exports
 
 sudo exportfs -a
 
 sudo systemctl restart nfs-kernel-server
 
-sudo grub-mknetdir
 
 
-# Mise en place du Debootstrap
+# Configuration du Debootstrap
+
 
 sudo mkdir /srv/nfs/debian
 
@@ -75,52 +120,236 @@ sudo mount -o bind /dev /srv/nfs/debian/dev
 sudo chroot /srv/nfs/debian /bin/bash
 
 
-# Créer l'utilisateur avec le mot de passe fourni
+apt update && apt full-upgrade
+
+apt install linux-image-amd64 partclone dialog sudo
+
 
 sudo useradd -m "$username" -s /bin/bash
 
 echo "$username:$password" | sudo chpasswd
 
+sudo usermod -aG sudo "$username"
 
-# Ajouter l'utilisateur au groupe sudo
+exit
+
+
+mv /ressource/profile /srv/nfs/debian/home/$username/.profile
+
+sed -i "s/{username}/$username/g" /ressources/grub.cfg
+
+sudo mv /ressource/sudoers /srv/nfs/debian/ect/sudoers
+
+sudo mv /ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
+
+mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
+
+sudo mv /ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+
+
+
+# Configuration du serveur WEB / HTTP
+
+sudo mv -r /ressource/www /srv/
+
+sudo mv /ressource/site.conf /etc/apache2/site-available/
+
+sudo a2dissite 000-default.conf
+
+sudo a2ensite site.conf
+
+sudo chown www-data /srv/www/ -Rf
+
+sudo systemctl restart apache2# Configuration du serveur TFTP
+
+sudo mkdir /srv/tftp
+
+mv /ressource/atftpd /etc/default/atftpd
+
+sudo systemctl restart atftpd.service
+
+sudo chmod -R ugo+rw /srv/tftp/
+
+
+
+# Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg)
+
+
+sudo grub-mknetdir
+
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/grub.cfg
+
+mv /ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
+
+
+
+#Configuration du serveur NFS
+
+
+sudo chown -R root:root /srv/nfs
+
+sudo chmod 777 /srv/nfs
+
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/exports 
+
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/exports
+
+sudo mv /ressources/exports /etc/exports
+
+sudo exportfs -a
+
+sudo systemctl restart nfs-kernel-server
+
+
+
+# Configuration du Debootstrap
+
+
+sudo mkdir /srv/nfs/debian
+
+sudo debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
+
+sudo mount -t proc none /srv/nfs/debian/proc
+
+sudo mount -o bind /dev /srv/nfs/debian/dev
+
+sudo chroot /srv/nfs/debian /bin/bash
+
+
+apt update && apt full-upgrade
+
+apt install linux-image-amd64 partclone dialog sudo
+
+
+sudo useradd -m "$username" -s /bin/bash
+
+echo "$username:$password" | sudo chpasswd
 
 sudo usermod -aG sudo "$username"
 
-
-# Vérifier si l'ajout au groupe sudo a réussi
-
-if id "$username" &>/dev/null; then
-
- echo "L'utilisateur $username a été créé avec succès et ajouté au groupe sudo."
-
-else
-
- echo "Erreur : Impossible de créer l'utilisateur $username ou de l'ajouter au groupe sudo."
-
-fi
-
-echo "root:$password" | chpasswd
-
-apt update &&  apt full-upgrade
-
-apt install linux-image-amd64 partclone dialog
-
-echo "sudo loadkeys fr-pc && cd /home/felix && sudo ./manuel.sh" >> /home/felix/.profile
-
-echo "$(username) ALL=(ALL) NOPASSWD: /home/felix/.profile" >> /etc/sudoers
-
-echo "NAutoVTs=6\nReserveVT=7">> /etc/systemd/logind.conf
-
-mkdir /etc/systemd/system/getty@tty1.service.d/
-
-echo "[Service]
-
-ExecStart=
-
-ExecStart=-/sbin/agetty --noissue --autologin ostechnix %I $TERM
-
-Type=idle" > /etc/systemd/system/getty@tty1.service.d/override.conf
-
 exit
+
+
+mv /ressource/profile /srv/nfs/debian/home/$username/.profile
+
+sed -i "s/{username}/$username/g" /ressources/grub.cfg
+
+sudo mv /ressource/sudoers /srv/nfs/debian/ect/sudoers
+
+sudo mv /ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
+
+mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
+
+sudo mv /ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+
+
+
+# Configuration du serveur WEB / HTTP
+
+sudo mv -r /ressource/www /srv/
+
+sudo mv /ressource/site.conf /etc/apache2/site-available/
+
+sudo a2dissite 000-default.conf
+
+sudo a2ensite site.conf
+
+sudo chown www-data /srv/www/ -Rf
+
+sudo systemctl restart apache2.service
+
+
+# Configuration MariaDB 
+
+
+use mariadb
+
+CREATE DATABASE openclone;
+
+use openclone;
+
+CREATE USER 'responsable' IDENTIFIED BY 'felix22';
+
+grant all privileges on openclone.* to 'responsable';
+
+CREATE USER 'consultant' IDENTIFIED BY 'felix22';
+
+GRANT SELECT ON openclone.* TO 'consultant';
+
+CREATE TABLE clients(id INT PRIMARY KEY NOT NULL, MAC_Address VARCHAR(17), IP_Address VARCHAR(15),
+
+Hostname VARCHAR(30));
+
+
+
+# Configuration du DHCP
+
+
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/dhcpd.conf
+
+sed -i "s/{Masque_LAN}/$Masque_LAN/g" /ressources/dhcpd.conf
+
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/dhcpd.conf
+
+sudo mv /ressources/dhcpd.conf /etc/dhcp/dhcpd.conf
+
+sudo systemctl restart isc-dhcp-server.service
+
+
+
+# Configuration DNS
+
+
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/dns/site22.fr.zone
+
+sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
+
+sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/dns/dns.fr.reverse
+
+sudo mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
+
+sed -i "s/{IP_LAN_TABLEAU[0]}/$IP_LAN_TABLEAU[0]/g" /ressources/dns/dns.fr.reverse
+
+sed -i "s/{IP_LAN_TABLEAU[1]}/$IP_LAN_TABLEAU[1]/g" /ressources/dns/dns.fr.reverse
+
+sed -i "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" /ressources/dns/dns.fr.reverse
+
+sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
+
+sudo systmeclt restart bind9.service
+
+
+
+# Configuration Nftables
+
+
+sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressources/nftables.conf
+
+sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressources/nftables.conf
+
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/nftables.conf
+
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/nftables.conf
+
+sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressources/nftables.conf
+
+sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressources/nftables.conf
+
+sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressources/nftables.conf
+
+sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressources/nftables.conf
+
+sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressources/nftables.conf
+
+sudo mv ressource/nftables.conf /etc/nftables.conf
+
+sudo systemctl restart nftables.service
+
+
+echo "Fini "
+
+
+
+
 
 
