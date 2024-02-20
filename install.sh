@@ -89,7 +89,6 @@ mv /ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
 
 #Configuration du serveur NFS
 
-sudo mkdir /srv/nfs 
 
 sudo chown -R root:root /srv/nfs
 
@@ -133,102 +132,6 @@ echo "$username:$password" | sudo chpasswd
 sudo usermod -aG sudo "$username"
 
 exit 1
-
-
-mv /ressource/profile /srv/nfs/debian/home/$username/.profile
-
-sed -i "s/{username}/$username/g" /ressource/grub.cfg
-
-sudo mv /ressource/sudoers /srv/nfs/debian/ect/sudoers
-
-sudo mv /ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
-
-mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
-
-sudo mv /ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
-
-
-
-# Configuration du serveur WEB / HTTP
-
-sudo mv -r /ressource/www /srv/
-
-sudo mv /ressource/site.conf /etc/apache2/site-available/
-
-sudo a2dissite 000-default.conf
-
-sudo a2ensite site.conf
-
-sudo chown www-data /srv/www/ -Rf
-
-sudo systemctl restart apache2# Configuration du serveur TFTP
-
-sudo mkdir /srv/tftp
-
-mv /ressource/atftpd /etc/default/atftpd
-
-sudo systemctl restart atftpd.service
-
-sudo chmod -R ugo+rw /srv/tftp/
-
-
-
-# Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg)
-
-
-sudo grub-mknetdir
-
-sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/grub.cfg
-
-mv /ressource/grub.cfg /srv/tftp/boot/gryb/grub.cfg
-
-
-
-#Configuration du serveur NFS
-
-
-sudo chown -R root:root /srv/nfs
-
-sudo chmod 777 /srv/nfs
-
-sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/exports 
-
-sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/exports
-
-sudo mv /ressource/exports /etc/exports
-
-sudo exportfs -a
-
-sudo systemctl restart nfs-kernel-server
-
-
-
-# Configuration du Debootstrap
-
-
-sudo mkdir /srv/nfs/debian
-
-sudo debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
-
-sudo mount -t proc none /srv/nfs/debian/proc
-
-sudo mount -o bind /dev /srv/nfs/debian/dev
-
-sudo chroot /srv/nfs/debian /bin/bash
-
-
-apt update && apt full-upgrade
-
-apt install linux-image-amd64 partclone dialog sudo
-
-
-sudo useradd -m "$username" -s /bin/bash
-
-echo "$username:$password" | sudo chpasswd
-
-sudo usermod -aG sudo "$username"
-
-exit
 
 
 mv /ressource/profile /srv/nfs/debian/home/$username/.profile
