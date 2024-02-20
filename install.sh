@@ -3,7 +3,7 @@
 # Verification du script lancement en root ????
 # Assigner les paramètres à des variables
 
-cd "(dirname $0)"
+cd "$(dirname $0)"
 
 ip a
 
@@ -25,15 +25,15 @@ read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 
 read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
 
-IP_LAN_SR=$"(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
+IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
 echo $IP_LAN_SR
-IP_NAT_SR=$"(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
+IP_NAT_SR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
 echo $IP_NAT_SR
 #Masque_LAN_CIDR=$(./ObtentionMasqueCIDR $Masque_LAN)
 
 #Masque_NAT_CIDR=$(./ObtentionMasqueCIDR $Masque_NAT)
 
-username=$(whoami)
+username="$(whoami)"
 
 
 sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interfaces
