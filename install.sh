@@ -128,7 +128,7 @@ apt install linux-image-amd64 partclone dialog sudo
 
 sudo useradd -m "$username" -s /bin/bash
 
-echo "$username:$password" | sudo chpasswd
+echo "$username:password" | sudo chpasswd
 
 sudo usermod -aG sudo "$username"
 
