@@ -30,7 +30,7 @@ sudo apt install bc
 IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
 echo $IP_LAN_SR
 Masque_LAN_CIDR="$(./ObtentionMasqueCIDR.sh $IP_LAN $Masque_LAN)"
-echo $IP_LAN_SR
+echo $Masque_LAN_CIDR
 
 IP_NAT_SR="$(./ObtentionIPSousReseau.sh $IP_NAT $Masque_NAT)"
 echo $IP_NAT_SR
