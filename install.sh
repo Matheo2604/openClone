@@ -26,9 +26,9 @@ read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
 
 IP_LAN_SR=$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)
-
+echo $IP_LAN_SR
 IP_NAT_SR=$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)
-
+echo $IP_NAT_SR
 #Masque_LAN_CIDR=$(./ObtentionMasqueCIDR $Masque_LAN)
 
 #Masque_NAT_CIDR=$(./ObtentionMasqueCIDR $Masque_NAT)
@@ -82,9 +82,9 @@ sudo chmod -R ugo+rw /srv/tftp/
 
 sudo grub-mknetdir
 
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressources/grub.cfg
+sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
 
-sudo mv ressources/grub.cfg /srv/tftp/boot/grub/grub.cfg
+sudo mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
 
