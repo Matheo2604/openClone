@@ -36,21 +36,21 @@ IP_NAT_SR=$"(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
 username=$(whoami)
 
 
-sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressource/interfaces
+sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interfaces
 
-sudo sed -i "s/{IP_Nat}/$IP_Nat/g" /ressource/interfaces
+sudo sed -i "s/{IP_Nat}/$IP_Nat/g" ressource/interfaces
 
-sudo sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" /ressource/interfaces
+sudo sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" ressource/interfaces
 
-sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressource/interfaces
+sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interfaces
 
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/interfaces
+sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interfaces
 
-sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressource/interfaces
+sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/interfaces
 
-sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/interfaces
+sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interfaces
 
-mv /ressource/interfaces /etc/network/interfaces
+mv ressource/interfaces /etc/network/interfaces
 
 
 
@@ -69,7 +69,7 @@ wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 sudo mkdir /srv/tftp
 
-mv /ressource/atftpd /etc/default/atftpd
+mv ressource/atftpd /etc/default/atftpd
 
 sudo systemctl restart atftpd.service
 
@@ -82,9 +82,9 @@ sudo chmod -R ugo+rw /srv/tftp/
 
 sudo grub-mknetdir
 
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" /ressources/grub.cfg
+sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressources/grub.cfg
 
-mv /ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
+mv ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
 
 
 
@@ -95,11 +95,11 @@ sudo chown -R root:root /srv/nfs
 
 sudo chmod 777 /srv/nfs
 
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/exports 
+sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/exports 
 
-sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/exports
+sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/exports
 
-sudo mv /ressource/exports /etc/exports
+sudo mv ressource/exports /etc/exports
 
 sudo exportfs -a
 
@@ -135,25 +135,25 @@ sudo usermod -aG sudo "$username"
 exit 1
 
 
-mv /ressource/profile /srv/nfs/debian/home/$username/.profile
+mv ressource/profile /srv/nfs/debian/home/$username/.profile
 
-sudo sed -i "s/{username}/$username/g" /ressource/grub.cfg
+sudo sed -i "s/{username}/$username/g" ressource/grub.cfg
 
-sudo mv /ressource/sudoers /srv/nfs/debian/ect/sudoers
+sudo mv ressource/sudoers /srv/nfs/debian/ect/sudoers
 
-sudo mv /ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
+sudo mv ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 
 mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
 
-sudo mv /ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+sudo mv ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
 
 
 
 # Configuration du serveur WEB / HTTP
 
-sudo mv -r /ressource/www /srv/
+sudo mv -r ressource/www /srv/
 
-sudo mv /ressource/site.conf /etc/apache2/site-available/
+sudo mv ressource/site.conf /etc/apache2/site-available/
 
 sudo a2dissite 000-default.conf
 
@@ -190,13 +190,13 @@ Hostname VARCHAR(30));
 # Configuration du DHCP
 
 
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/dhcpd.conf
+sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dhcpd.conf
 
-sudo sed -i "s/{Masque_LAN}/$Masque_LAN/g" /ressource/dhcpd.conf
+sudo sed -i "s/{Masque_LAN}/$Masque_LAN/g" ressource/dhcpd.conf
 
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/dhcpd.conf
+sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/dhcpd.conf
 
-sudo mv /ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
+sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 
 sudo systemctl restart isc-dhcp-server.service
 
@@ -205,19 +205,19 @@ sudo systemctl restart isc-dhcp-server.service
 # Configuration DNS
 
 
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/dns/site22.fr.zone
+sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
 
 sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
 
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" /ressource/dns/dns.fr.reverse
+sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/dns.fr.reverse
 
 sudo mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
 
-sudo sed -i "s/{IP_LAN_TABLEAU[0]}/$IP_LAN_TABLEAU[0]/g" /ressource/dns/dns.fr.reverse
+sudo sed -i "s/{IP_LAN_TABLEAU[0]}/$IP_LAN_TABLEAU[0]/g" ressource/dns/dns.fr.reverse
 
-sudo sed -i "s/{IP_LAN_TABLEAU[1]}/$IP_LAN_TABLEAU[1]/g" /ressource/dns/dns.fr.reverse
+sudo sed -i "s/{IP_LAN_TABLEAU[1]}/$IP_LAN_TABLEAU[1]/g" ressource/dns/dns.fr.reverse
 
-sudo sed -i "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" /ressource/dns/dns.fr.reverse
+sudo sed -i "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" ressource/dns/dns.fr.reverse
 
 sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
 
@@ -228,23 +228,23 @@ sudo systmeclt restart bind9.service
 # Configuration Nftables
 
 
-sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" /ressource/nftables.conf
+sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/nftables.conf
 
-sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressource/nftables.conf
+sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
 
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/nftables.conf
+sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
 
-sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/nftables.conf
+sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
 
-sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" /ressource/nftables.conf
+sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/nftables.conf
 
-sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" /ressource/nftables.conf
+sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
 
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" /ressource/nftables.conf
+sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
 
-sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" /ressource/nftables.conf
+sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
 
-sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" /ressource/nftables.conf
+sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/nftables.conf
 
 sudo mv ressource/nftables.conf /etc/nftables.conf
 
