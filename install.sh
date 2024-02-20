@@ -29,8 +29,13 @@ sudo apt install bc
 
 IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
 echo $IP_LAN_SR
-IP_NAT_SR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
+Masque_LAN_CIDR="$(./ObtentionMasqueCIDR.sh $IP_LAN $Masque_LAN)"
+echo $IP_LAN_SR
+
+IP_NAT_SR="$(./ObtentionIPSousReseau.sh $IP_NAT $Masque_NAT)"
 echo $IP_NAT_SR
+Masque_NAT_CIDR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
+echo $Masque_NAT_CIDR
 
 username="$(whoami)"
 
