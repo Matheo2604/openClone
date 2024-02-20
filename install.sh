@@ -137,9 +137,9 @@ sudo usermod -aG sudo "$username"
 exit 1
 
 
-sudo mv ressource/profile /srv/nfs/debian/home/$username/.profile
+sudo sed -i "s/{username}/$username/g" ressource/profile
 
-sudo sed -i "s/{username}/$username/g" ressource/grub.cfg
+sudo mv ressource/profile /srv/nfs/debian/home/$username/.profile
 
 sudo sudo mv ressource/sudoers /srv/nfs/debian/ect/sudoers
 
