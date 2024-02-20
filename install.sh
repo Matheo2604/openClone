@@ -67,7 +67,7 @@ sudo apt install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp
 
 # Configuration du serveur TFTP
 
-sudo mkdir /srv/tftp
+sudo sudo mkdir /srv/tftp
 
 sudo mv ressource/atftpd /etc/default/atftpd
 
@@ -110,7 +110,7 @@ sudo systemctl restart nfs-kernel-server
 # Configuration du Debootstrap
 
 
-sudo mkdir /srv/nfs/debian
+sudo sudo mkdir /srv/nfs/debian
 
 sudo debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
 
@@ -143,7 +143,7 @@ sudo sudo mv ressource/sudoers /srv/nfs/debian/ect/sudoers
 
 sudo sudo mv ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 
-mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
+sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
 
 sudo sudo mv ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
 
