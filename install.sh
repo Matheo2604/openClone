@@ -26,7 +26,7 @@ read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
 
 IP_LAN_SR=$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)
 
-IP_NAT_SR=$(./ObtentionIPSousReseau.sh $IP_NAT $Masque_NAT)
+IP_NAT_SR=$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)
 
 #Masque_LAN_CIDR=$(./ObtentionMasqueCIDR $Masque_LAN)
 
