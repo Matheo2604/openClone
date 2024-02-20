@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+# Verification du script lancement en root ????
 # Assigner les paramètres à des variables
 
 
