@@ -91,6 +91,8 @@ sudo mv ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
 #Configuration du serveur NFS
 
 
+sudo mkdir /srv/nfs
+
 sudo chown -R root:root /srv/nfs
 
 sudo chmod 777 /srv/nfs
