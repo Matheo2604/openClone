@@ -84,7 +84,7 @@ sudo grub-mknetdir
 
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressources/grub.cfg
 
-sudo mv ressources/grub.cfg /srv/tftp/boot/gryb/grub.cfg
+sudo mv ressources/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
 
