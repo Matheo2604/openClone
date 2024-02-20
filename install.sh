@@ -132,7 +132,7 @@ echo "$username:$password" | sudo chpasswd
 
 sudo usermod -aG sudo "$username"
 
-exit
+exit 1
 
 
 mv /ressource/profile /srv/nfs/debian/home/$username/.profile
