@@ -252,9 +252,3 @@ sudo systemctl restart nftables.service
 
 
 echo "Fini "
-
-
-
-
-
-
