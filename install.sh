@@ -25,13 +25,12 @@ read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 
 read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
 
+sudo apt install bc
+
 IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
 echo $IP_LAN_SR
 IP_NAT_SR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
 echo $IP_NAT_SR
-#Masque_LAN_CIDR=$(./ObtentionMasqueCIDR $Masque_LAN)
-
-#Masque_NAT_CIDR=$(./ObtentionMasqueCIDR $Masque_NAT)
 
 username="$(whoami)"
 
