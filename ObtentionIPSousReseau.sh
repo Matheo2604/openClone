@@ -2,7 +2,7 @@
 
 
 # Fonction pour convertir une adresse IP en binaire
-
+echo "test"
 
 ip_en_binaire() {
 
