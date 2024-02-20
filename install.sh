@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Assigner les paramètres à des variables
 
 read -p "Quelle nom d'utilisateur voudrez vous pour votre linux de mainteantce :"username
