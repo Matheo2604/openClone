@@ -25,7 +25,7 @@ read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 
 read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
 
-sudo apt install bc
+sudo apt install -y bc
 
 #y a couille avec masque cidr
 IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
@@ -64,7 +64,7 @@ sudo mv ressource/interfaces /etc/network/interfaces
 
 sudo apt update && sudo apt upgrade
 
-sudo apt install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
+sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
 
 #!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
@@ -127,10 +127,12 @@ sudo mount -o bind /dev /srv/nfs/debian/dev
 
 sudo chroot /srv/nfs/debian /bin/bash
 
+wait
+
 
 apt update && apt full-upgrade
 
-apt install linux-image-amd64 partclone dialog sudo
+apt install -y linux-image-amd64 partclone dialog sudo
 
 
 sudo useradd -m "$username" -s /bin/bash
