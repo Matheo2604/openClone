@@ -158,7 +158,7 @@ sudo sudo mv ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tt
 
 # Configuration du serveur WEB / HTTP
 
-sudo sudo mv -r ressource/www /srv/
+sudo sudo mv ressource/www /srv/www
 
 sudo sudo mv ressource/site.conf /etc/apache2/site-available/
 
