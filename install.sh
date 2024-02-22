@@ -173,8 +173,8 @@ sudo systemctl restart apache2.service
 
 # Configuration MariaDB 
 
-
-use mariadb
+#couille dans le paté
+use mariadb << EOT
 
 CREATE DATABASE openclone;
 
