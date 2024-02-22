@@ -125,7 +125,7 @@ sudo mount -t proc none /srv/nfs/debian/proc
 
 sudo mount -o bind /dev /srv/nfs/debian/dev
 
-sudo chroot /srv/nfs/debian /bin/bash
+sudo chroot /srv/nfs/debian /bin/bash << EOT
 
 wait
 
@@ -141,7 +141,7 @@ echo "$username:password" | sudo chpasswd
 
 sudo usermod -aG sudo "$username"
 
-exit 1
+EOT
 
 
 sudo sed -i "s/{username}/$username/g" ressource/profile
