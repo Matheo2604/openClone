@@ -127,8 +127,6 @@ sudo mount -o bind /dev /srv/nfs/debian/dev
 
 sudo chroot /srv/nfs/debian /bin/bash << EOT
 
-wait
-
 
 apt update && apt full-upgrade
 
