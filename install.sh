@@ -35,6 +35,7 @@ ip link show | grep -o '^[0-9]*:' | wc -l
 #Masque_NAT_CIDR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
 #echo $Masque_NAT_CIDR*/
 
+# A refaire
 sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interfaces
 sudo sed -i "s/{IP_Nat}/$IP_Nat/g" ressource/interfaces
 sudo sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" ressource/interfaces
