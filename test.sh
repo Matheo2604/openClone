@@ -26,7 +26,7 @@ if [ $nombre_interfaces -gt 1 ]; then
                 read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
                 read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
                 echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
-                # Ajoutez ici des commandes pour configurer l'agrégation avec les interfaces choisies
+                # Ajoute ici des commandes pour configurer l'agrégation avec les interfaces choisies
                 ;;
 
             [2]* )
@@ -35,7 +35,7 @@ if [ $nombre_interfaces -gt 1 ]; then
                 read -p "Quelle interface sera utiliser pour comme LAN ? " lan_interface
                 read -p "Quelle interface sera utiliser pour comme WAN ? " wan_interface
                 echo "Interfaces choisies pour le LAN : $interface_lan, pour le WAN : $interface_wan"
-                # Ajoutez ici des commandes pour configurer nftables avec les interfaces choisies
+                # Ajoute ici des commandes pour configurer nftables avec les interfaces choisies
                 ;;
 
             * )
