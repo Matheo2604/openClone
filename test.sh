@@ -13,7 +13,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     echo "Il y a $nombre_interfaces interfaces réseau disponibles."
 
     while true; do
-        echo -e "Vous pouvez mettre en place l'une de ces fonctionnalités :\n1 - L'agrégation de liens\n2 - Nftables\n3 - Ne rien mettre en place"
+        echo -e "Vous pouvez mettre en place l'une de ces fonctionnalités :\n1 - L'agrégation de liens\n2 - Nftables\n3 - Ne rien mettre en place\n"
         read -p "Votre choix : " choice
 
         case $choice in
