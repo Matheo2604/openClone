@@ -15,7 +15,7 @@ if [ $nombre_interfaces -gt 1 ]; then
 
     while true; do
 
-        echo -e "Vous pouvez mettre en place ces fonctionnalité:\n1 - L'agrégation de liens\n2 - Nftables\n3 - Ne rien mettre en place"
+        echo -e "Vous pouvez mettre en place l'une de ces fonctionnalité:\n1 - L'agrégation de liens\n2 - Nftables\n3 - Ne rien mettre en place"
         read choice
 
         case $choice in
