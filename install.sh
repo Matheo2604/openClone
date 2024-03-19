@@ -1,60 +1,47 @@
 #!/bin/bash
 
-# Verification du script lancement en root ????
-# Assigner les paramètres à des variables
+### Assigner les paramètres à des variables ###
 
 cd "$(dirname $0)"
 
-ip a
+# Vérifie si l'utilisateur est root
+if [ "$(id -u)" -eq 0 ]; then
+ echo "Ce script ne doit pas être exécuté en tant que root."
+    exit 1
+fi
 
-read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
-
-IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." "\n") )
-
-read -p "Quelle est son masque de son sous réseaux LAN :" Masque_LAN
-
-read -p "Quelle est son interface pour son sous réseaux LAN :" Interface_LAN
-
-read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
-
-IP_NAT_TABLEAU=( $(echo $IP_NAT | tr "." "\n") )
-
-read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
-
-read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
-
-read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
-
-sudo apt install -y bc
-
-#y a couille avec masque cidr
-IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
-echo $IP_LAN_SR
-Masque_LAN_CIDR="$(./ObtentionMasqueCIDR.sh $IP_LAN $Masque_LAN)"
-echo $Masque_LAN_CIDR
-
-IP_NAT_SR="$(./ObtentionIPSousReseau.sh $IP_NAT $Masque_NAT)"
-echo $IP_NAT_SR
-Masque_NAT_CIDR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
-echo $Masque_NAT_CIDR
-
+# Utilise le nom de l'utilisateur actuel pour celui du Debootstrap
 username="$(whoami)"
 
+ip link show | grep -o '^[0-9]*:' | wc -l
+
+#read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
+#IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." "\n") )
+#read -p "Quelle est son masque de son sous réseaux LAN :" Masque_LAN
+#read -p "Quelle est son interface pour son sous réseaux LAN :" Interface_LAN
+#read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
+#IP_NAT_TABLEAU=( $(echo $IP_NAT | tr "." "\n") )
+#read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
+#read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
+#read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
+#sudo apt install -y bc
+#y a couille avec masque cidr
+#IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
+#echo $IP_LAN_SR
+#Masque_LAN_CIDR="$(./ObtentionMasqueCIDR.sh $IP_LAN $Masque_LAN)"
+#echo $Masque_LAN_CIDR
+#IP_NAT_SR="$(./ObtentionIPSousReseau.sh $IP_NAT $Masque_NAT)"
+#echo $IP_NAT_SR
+#Masque_NAT_CIDR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
+#echo $Masque_NAT_CIDR*/
 
 sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interfaces
-
 sudo sed -i "s/{IP_Nat}/$IP_Nat/g" ressource/interfaces
-
 sudo sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" ressource/interfaces
-
 sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interfaces
-
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interfaces
-
 sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/interfaces
-
 sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interfaces
-
 sudo mv ressource/interfaces /etc/network/interfaces
 
 
