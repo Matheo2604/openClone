@@ -62,7 +62,6 @@ sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-d
 #alternative du dhcp et dns non obsolete avec "kea"
 
 # Configuration du serveur TFTP
-
 sudo sudo mkdir /srv/tftp
 
 sudo mv ressource/atftpd /etc/default/atftpd
@@ -74,8 +73,6 @@ sudo chmod -R ugo+rw /srv/tftp/
 
 
 # Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg)
-
-
 sudo grub-mknetdir
 
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
@@ -85,8 +82,6 @@ sudo mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
 #Configuration du serveur NFS
-
-
 sudo mkdir /srv/nfs
 
 sudo chown -R root:root /srv/nfs
@@ -106,8 +101,6 @@ sudo systemctl restart nfs-kernel-server
 
 
 # Configuration du Debootstrap
-
-
 sudo sudo mkdir /srv/nfs/debian
 
 sudo debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
@@ -148,7 +141,6 @@ sudo sudo mv ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tt
 
 
 # Configuration du serveur WEB / HTTP
-
 sudo sudo mv ressource/www /srv/www
 
 sudo sudo mv ressource/site.conf /etc/apache2/site-available/
@@ -163,7 +155,6 @@ sudo systemctl restart apache2.service
 
 
 # Configuration MariaDB 
-
 #couille dans le paté ouverture mariadb
 use mariadb << EOT
 
@@ -183,11 +174,10 @@ CREATE TABLE clients(id INT PRIMARY KEY NOT NULL, MAC_Address VARCHAR(17), IP_Ad
 
 Hostname VARCHAR(30));
 
+EOT
 
 
 # Configuration du DHCP
-
-
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dhcpd.conf
 
 sudo sed -i "s/{Masque_LAN}/$Masque_LAN/g" ressource/dhcpd.conf
@@ -201,8 +191,6 @@ sudo systemctl restart isc-dhcp-server.service
 
 
 # Configuration DNS
-
-
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
 
 sudo sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
@@ -224,8 +212,6 @@ sudo systmeclt restart bind9.service
 
 
 # Configuration Nftables
-
-
 sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/nftables.conf
 
 sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
@@ -249,4 +235,4 @@ sudo sudo mv ressource/nftables.conf /etc/nftables.conf
 sudo systemctl restart nftables.service
 
 
-echo "Fini "
+echo "Installation terminee "
