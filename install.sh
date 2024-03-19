@@ -80,7 +80,7 @@ sudo chmod -R ugo+rw /srv/tftp/
 
 
 
-# Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg)
+# Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg & core.0 & core.efi)
 sudo grub-mknetdir
 
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
