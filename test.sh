@@ -32,9 +32,11 @@ if [ $nombre_interfaces -gt 1 ]; then
                 read -p "Quelle interface sera utiliser comme WAN ? " wan_interface
                 echo "Interfaces choisies pour le LAN : $lan_interface, pour le WAN : $wan_interface"
                 # Ajouter ici des commandes pour configurer nftables avec les interfaces choisies
+                break
                 ;;
             3* )
                 echo "Vous avez choisi de ne rien faire."
+                #fonction pour choisir l'interface reseau
                 break
                 ;;
             * )
@@ -43,6 +45,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         esac
     done
 else
+    # mettre ceci dans une fonction
     echo "Il n'y a qu'une interface réseau disponible."
     read -p "Quelle interface souhaitez-vous utiliser ? " interface
 fi
