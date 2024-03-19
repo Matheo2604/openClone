@@ -51,8 +51,6 @@ sudo mv ressource/interfaces /etc/network/interfaces
 
 
 # Mise a jour et installation des paquets
-
-
 sudo apt update && sudo apt upgrade
 
 sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
