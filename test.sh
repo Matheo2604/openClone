@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Fonction pour afficher les interfaces disponibles
-afficher_interfaces() {
+Afficher_interfaces() {
  echo "Interfaces disponibles :"
     ip -o link show | awk -F': ' '{print $2}'
 }
 
 # Trouver le nombre d'interfaces réseau
-num_interfaces=$(($(ip -o link show | wc -l) - 1))
+nombre_interfaces=$(($(ip -o link show | wc -l) - 1))
 
 if [ $num_interfaces -gt 1 ]; then
-    echo "Il y a $num_interfaces interfaces réseau disponibles."
+    echo "Il y a $nombre_interfaces interfaces réseau disponibles."
     while true; do
         read -p "Voulez-vous utiliser nftables (N), de l'agrégation (A), ou rien (R) ? [N/A/R]: " choice
         case $choice in
