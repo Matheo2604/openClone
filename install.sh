@@ -49,6 +49,16 @@ sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interfaces
 sudo mv ressource/interfaces /etc/network/interfaces
 
 
+#auto eno1
+#iface eno1 inet static
+#        address 172.20.15.153/16
+#        gateway 172.20.255.251
+#        dns-nameservers 1.1.1.1
+#auto bond0
+#iface bond0 inet static
+#        address 192.168.150.153/24
+#        bond-slaves ens1 eno2
+
 
 # Mise a jour et installation des paquets
 sudo apt update && sudo apt upgrade
