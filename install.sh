@@ -12,7 +12,7 @@ fi
 
 # Utilise le nom de l'utilisateur actuel pour celui du Debootstrap
 username="$(whoami)"
-
+sudo apt install dialog
 ip link show | grep -o '^[0-9]*:' | wc -l
 
 #read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
