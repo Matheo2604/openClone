@@ -56,10 +56,10 @@ sudo mv ressource/interfaces /etc/network/interfaces
 sudo apt update && sudo apt upgrade
 
 sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
-
-#!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
-
 #alternative du dhcp et dns non obsolete avec "kea"
+
+# A décommenter a fin du script !!!
+#wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 # Configuration du serveur TFTP
 sudo sudo mkdir /srv/tftp
