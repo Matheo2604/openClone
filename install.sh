@@ -12,7 +12,10 @@ fi
 
 # Utilise le nom de l'utilisateur actuel pour celui du Debootstrap
 username="$(whoami)"
-sudo apt install dialog
+
+# Librairie pour semi-graphique
+sudo apt -y install dialog
+
 ip link show | grep -o '^[0-9]*:' | wc -l
 
 #read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
@@ -35,6 +38,7 @@ ip link show | grep -o '^[0-9]*:' | wc -l
 #echo $Masque_NAT_CIDR*/
 
 # A refaire
+# echo >> 
 sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interfaces
 sudo sed -i "s/{IP_Nat}/$IP_Nat/g" ressource/interfaces
 sudo sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" ressource/interfaces
