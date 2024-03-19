@@ -20,7 +20,7 @@ if [ $nombre_interfaces -gt 1 ]; then
 
         case $choice in
 
-            [Aa]* )
+            [1]* )
                 echo "Vous avez choisi d'utiliser de l'agrégation."
                 afficher_interfaces
                 read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
@@ -29,7 +29,7 @@ if [ $nombre_interfaces -gt 1 ]; then
                 # Ajoutez ici les commandes pour configurer l'agrégation avec les interfaces choisies
                 ;;
 
-            [Nn]* )
+            [2]* )
                 echo "Vous avez choisi d'utiliser nftables."
                 afficher_interfaces
                 read -p "Quelle interface sera utiliser pour comme LAN ? " lan_interface
