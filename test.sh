@@ -46,7 +46,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     done
 
 else
-    echo "Il y a 1 interface réseau ou moins disponible."
+    echo "Il n'y a qu'une interface réseau disponible."
     read -p "Quelle interface souhaitez-vous utiliser ? " interface
-    # Ajoutez ici les commandes pour configurer l'interface choisie
+
 fi
