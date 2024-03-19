@@ -25,7 +25,6 @@ ip link show | grep -o '^[0-9]*:' | wc -l
 #read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 #read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
 #sudo apt install -y bc
-#y a couille avec masque cidr
 #IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
 #echo $IP_LAN_SR
 #Masque_LAN_CIDR="$(./ObtentionMasqueCIDR.sh $IP_LAN $Masque_LAN)"
