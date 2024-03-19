@@ -9,11 +9,17 @@ Afficher_interfaces() {
 # Trouver le nombre d'interfaces réseau
 nombre_interfaces=$(($(ip -o link show | wc -l) - 1))
 
-if [ $num_interfaces -gt 1 ]; then
+if [ $nombre_interfaces -gt 1 ]; then
+
     echo "Il y a $nombre_interfaces interfaces réseau disponibles."
+
     while true; do
-        read -e -p "Vous pouvez mettre en place ces fonctionnalité:\n1 - L'agrégation de liens\n2 - Nftables\n3 - Ne rien mettre en place\n" choice
+
+        echo -e "Vous pouvez mettre en place ces fonctionnalité:\n1 - L'agrégation de liens\n2 - Nftables\n3 - Ne rien mettre en place"
+        read choice
+
         case $choice in
+
             [Aa]* )
                 echo "Vous avez choisi d'utiliser de l'agrégation."
                 afficher_interfaces
@@ -22,20 +28,23 @@ if [ $num_interfaces -gt 1 ]; then
                 echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
                 # Ajoutez ici les commandes pour configurer l'agrégation avec les interfaces choisies
                 ;;
+
             [Nn]* )
                 echo "Vous avez choisi d'utiliser nftables."
                 afficher_interfaces
                 read -p "Quelle interface voulez-vous utiliser pour le LAN ? " lan_interface
                 read -p "Quelle interface voulez-vous utiliser pour le WAN ? " wan_interface
-                echo "Interfaces choisies pour le LAN : $lan_interface, pour le WAN : $wan_interface"
+                echo "Interfaces choisies pour le LAN : $interface_lan, pour le WAN : $interface_wan"
                 # Ajoutez ici les commandes pour configurer nftables avec les interfaces choisies
                 ;;
+
             * )
                 echo "Vous avez choisi de ne rien faire."
                 break
                 ;;
         esac
     done
+
 else
     echo "Il y a 1 interface réseau ou moins disponible."
     read -p "Quelle interface souhaitez-vous utiliser ? " interface
