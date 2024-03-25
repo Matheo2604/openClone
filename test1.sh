@@ -17,17 +17,19 @@ nombre_interfaces=$(($(ip -o link show | wc -l) - 1))
 if [ $nombre_interfaces -gt 1 ]; then
     echo "Il y a $nombre_interfaces interfaces réseau disponibles."
 
-    read -p "Voulez vous mettre en place de l'aggregation de lien [y|n] " choice
-    if{
+    while true; do
+        echo -e "Vous pouvez mettre en place l'une de ces fonctionnalités :\n1 - L'agrégation de liens\n2 - Nftables\n3 - Ne rien mettre en place\n"
+        read -p "Votre choix : " choice
+
+        case $choice in
+            1* )
+                echo "Vous avez choisi d'utiliser de l'agrégation."
                 Afficher_interfaces
                 read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
                 read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
                 echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
                 # Ajouter ici des commandes pour configurer l'agrégation avec les interfaces choisies
-}
-    else{
-
-}
+                ;;
             2* )
                 echo "Vous avez choisi d'utiliser nftables."
                 Afficher_interfaces
