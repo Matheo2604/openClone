@@ -45,7 +45,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         esac
     done
 else
-    # mettre ceci dans une fonction
+    # mettre ceci dans une fonction 1
     echo "Il n'y a qu'une interface réseau disponible."
     read -p "Quelle interface souhaitez-vous utiliser ? " interface
 fi
