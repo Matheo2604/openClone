@@ -52,4 +52,3 @@ fi
 
 # Le reste du script ici après la sortie de la boucle while
 echo "La suite du script après la boucle while."
->>>>>>> 7b56896 (u)
