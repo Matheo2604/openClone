@@ -18,7 +18,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     echo "Il y a $nombre_interfaces interfaces réseau disponibles."
 
     read -p "Voulez vous mettre en place de l'aggregation de lien [y|n] " choice
-    if["$choice" = [yY]] then
+    if[["$choice" =~ ^(yes|y)$]] then
                 Afficher_interfaces
                 read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
                 read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
@@ -26,7 +26,7 @@ if [ $nombre_interfaces -gt 1 ]; then
                 # Ajouter ici des commandes pour configurer l'agrégation avec les interfaces choisies
     fi
     read -p "Voulez vous mettre en place un systeme nftables [y|n] " choice
-    if[["$choice" =~ ^([yY][eE][sS]|[yY])$ ]] then
+    if[["$choice" =~ ^(yes|y)$]] then
                 echo "Vous avez choisi d'utiliser nftables."
                 Afficher_interfaces
                 read -p "Quelle interface sera utiliser comme LAN ? " lan_interface
