@@ -49,7 +49,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
-
+        echo "une nouvelle interface nommer bond0 vient d'etre creer" 
         # Ajouter ici des commandes pour configurer l'agrégation avec les interfaces choisies
 
     fi
@@ -97,6 +97,8 @@ case "$aggregation$nftable" in
         -e "s/{IP_NAT}/$IP_NAT/g" \
         -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
         -e "s/{Routeur}/$Routeur/g" \
+        -e "s/{interface1}/$interface1/g" \
+        -e "s/{interface2}/$interface2/g" \
         ressource/interface/interfaces+aggregation+nftable
 
     sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation+aggregation+nftable
@@ -128,6 +130,8 @@ case "$aggregation$nftable" in
         -e "s/{IP_LAN}/$IP_LAN/g" \
         -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
         -e "s/{Routeur}/$Routeur/g" \
+        -e "s/{interface1}/$interface1/g" \
+        -e "s/{interface2}/$interface2/g" \
         ressource/interface/interfaces+aggregation
 
     sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation
