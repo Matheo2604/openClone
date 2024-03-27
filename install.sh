@@ -101,7 +101,7 @@ case "$aggregation$nftable" in
         -e "s/{interface2}/$interface2/g" \
         ressource/interface/interfaces+aggregation+nftable
 
-    sudo mv ressource/interface/interfaces+aggregation+nftable /etc/network/interface/interfaces
+    sudo mv ressource/interface/interfaces+aggregation+nftable /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -118,7 +118,7 @@ case "$aggregation$nftable" in
         -e "s/{Routeur}/$Routeur/g" \
         ressource/interface/interfaces+nftable
 
-    sudo mv ressource/interface/interfaces+nftable /etc/network/interface/interfaces
+    sudo mv ressource/interface/interfaces+nftable /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -134,7 +134,7 @@ case "$aggregation$nftable" in
         -e "s/{interface2}/$interface2/g" \
         ressource/interface/interfaces+aggregation
 
-    sudo mv ressource/interface/interfaces+aggregation /etc/network/interface/interfaces
+    sudo mv ressource/interface/interfaces+aggregation /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -148,7 +148,7 @@ case "$aggregation$nftable" in
         -e "s/{Routeur}/$Routeur/g" \
         ressource/interface/interfaces
 
-    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces
+    sudo mv ressource/interface/interfaces /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
