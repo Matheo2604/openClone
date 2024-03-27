@@ -98,7 +98,7 @@ case "$aggregation$b" in
     echo "4"
     ;;
   *)
-    echo "Invalid combination"
+    echo "erreur"
     ;;
 esac
 
