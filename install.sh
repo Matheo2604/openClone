@@ -40,6 +40,8 @@ if [ $nombre_interfaces -gt 1 ]; then
     if [ "$choice_aggregation" == "y" ]; then
         
         Afficher_interfaces
+        sudo apt -y install ifenslave-2.6
+
 
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
@@ -105,7 +107,7 @@ sudo mv ressource/interfaces /etc/network/interfaces
 # Mise a jour et installation des paquets
 
 
-sudo apt update && sudo apt upgrade
+sudo apt update && sudo apt -y upgrade
 
 sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
 
