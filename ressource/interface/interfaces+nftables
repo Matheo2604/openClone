@@ -8,7 +8,7 @@ iface lo inet loopback
 auto {Interface_NAT}
 iface {Interface_NAT} inet static
  address {IP_Nat}/{Masque_NAT_CIDR}
-        gateaway {Routeur_NAT}
+        gateaway {Routeur}
         dns-nameservers 1.1.1.1
 iface {Interface_LAN} inet static
         address {IP_LAN}/{Masque_LAN_CIDR}
