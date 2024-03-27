@@ -16,13 +16,13 @@ Afficher_interfaces() {
 
 Recuperer_IP_LAN(){
 
-read -p "Quelle est son interface pour son sous réseaux LAN :" Interface_LAN
+read -p "Quelle est son interface pour son sous réseaux LAN (exemple: eth0):" Interface_LAN
 
-read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
+read -p "Quelle sera l'addresse IP de son sous réseaux LAN (exemple: 192.168.1.15):" IP_LAN
 
 read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (/24):" Masque_LAN_CIDR
 
-read -p "Quelle est son masque de son sous réseaux LAN :" Masque_LAN
+read -p "Quelle est son masque de son sous réseaux LAN (exemple: 255.255.255.0):" Masque_LAN
 
 read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
@@ -63,12 +63,12 @@ if [ $nombre_interfaces -gt 1 ]; then
         Recuperer_IP_LAN
         nftable=true
 
-        read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
-        read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
+        read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
+        read -p "Quelle sera l'addresse IP de son sous réseaux NAT (exemple: 192.168.1.15):" IP_NAT
         read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (/24):" Masque_NAT_CIDR
-        read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
+        read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
         read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
-        read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur
+        read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
 
      elif [ "$choice_nftables" == "n" ]; then
         
