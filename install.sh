@@ -160,21 +160,4 @@ case "$aggregation$nftable" in
     ;;
 esac
 
-
-
-#sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interface/interfaces
-
-#sudo sed -i "s/{IP_Nat}/$IP_Nat/g" ressource/interface/interfaces
-
-#sudo sed -i "s/{Routeur}/$Routeur/g" ressource/interface/interface/interfaces
-
-#sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces
-
-
-
-#sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces
-
-#sudo mv ressource/interfaces /etc/network/interface/interfaces
-
-
 echo "Fini "
