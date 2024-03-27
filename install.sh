@@ -44,6 +44,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         
         Afficher_interfaces
         sudo apt -y install ifenslave-2.6
+        aggregation=true
 
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
@@ -60,6 +61,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         echo "Vous avez choisi d'utiliser nftables."
         ip a
         Recuperer_IP_LAN
+        nftable=true
 
         read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
         read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
