@@ -43,7 +43,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     if [ "$choice_aggregation" == "y" ]; then
         
         Afficher_interfaces
-        sudo apt -y install ifenslave-2.6
+        sudo apt -y install ifenslave
         aggregation=true
 
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
@@ -101,7 +101,7 @@ case "$aggregation$nftable" in
         -e "s/{interface2}/$interface2/g" \
         ressource/interface/interfaces+aggregation+nftable
 
-    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation+aggregation+nftable
+    sudo mv ressource/interface/interfaces+aggregation+nftable /etc/network/interface/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -118,7 +118,7 @@ case "$aggregation$nftable" in
         -e "s/{Routeur}/$Routeur/g" \
         ressource/interface/interfaces+nftable
 
-    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+nftable
+    sudo mv ressource/interface/interfaces+nftable /etc/network/interface/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -134,7 +134,7 @@ case "$aggregation$nftable" in
         -e "s/{interface2}/$interface2/g" \
         ressource/interface/interfaces+aggregation
 
-    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation
+    sudo mv ressource/interface/interfaces+aggregation /etc/network/interface/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
