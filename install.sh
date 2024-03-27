@@ -6,7 +6,6 @@
 cd "$(dirname $0)"  
 username="$(whoami)"
 
-
 # Fonction pour afficher les interfaces disponibles
 Afficher_interfaces() {
 
@@ -32,10 +31,14 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 # Trouver le nombre d'interfaces réseau
 nombre_interfaces=$(($(ip -o link show | wc -l) - 1))
 
+# Connaitre si l'utilisateur choisit l'une de c'est fonctionnalite
+aggregation=false
+nftable=false
+
 if [ $nombre_interfaces -gt 1 ]; then
 
     echo "Il y a $nombre_interfaces interfaces réseau disponibles."
-    read -p "Voulez-vous mettre en place de l'agrégation de liens ? [y|n] " choice_aggregation
+    read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
 
     if [ "$choice_aggregation" == "y" ]; then
         
@@ -81,8 +84,24 @@ else
 
 fi
 
-# Le reste du script ici après la sortie de la boucle while
-echo "La suite du script après la boucle while."
+case "$aggregation$b" in
+  "truetrue")
+    echo "1"
+    ;;
+  "falsetrue")
+    echo "2"
+    ;;
+  "truefalse")
+    echo "3"
+    ;;
+  "falsefalse")
+    echo "4"
+    ;;
+  *)
+    echo "Invalid combination"
+    ;;
+esac
+
 
 
 sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interface/interfaces
