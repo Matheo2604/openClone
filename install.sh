@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#sudo ip route add 192.168.200.0/24 via 192.168.200.254
+
 # Verification du script lancement en root ????
 # Assigner les paramètres à des variables
 
@@ -248,7 +250,7 @@ sudo sed -i "s/{username}/$username/g" ressource/profile
 
 sudo mv ressource/profile /srv/nfs/debian/home/$username/.profile
 
-sudo sudo mv ressource/sudoers /srv/nfs/debian/ect/sudoers
+sudo sudo mv ressource/sudoers /srv/nfs/debian/etc/sudoers
 
 sudo sudo mv ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 
@@ -335,29 +337,17 @@ sudo systmeclt restart bind9.service
 
 
 # Configuration Nftables
-
-
-sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/nftables.conf
-
-sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
-
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
-
-sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
-
-sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/nftables.conf
-
-sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
-
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
-
-sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
-
-sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/nftables.conf
-
-sudo sudo mv ressource/nftables.conf /etc/nftables.conf
-
-sudo systemctl restart nftables.service
+#sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/nftables.conf
+#sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
+#sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
+#sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
+#sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/nftables.conf
+#sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
+#sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
+#sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
+#sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/nftables.conf
+#sudo sudo mv ressource/nftables.conf /etc/nftables.conf
+#sudo systemctl restart nftables.service
 
 
 echo "Fini "
