@@ -84,7 +84,7 @@ else
 
 fi
 
-case "$aggregation$b" in
+case "$aggregation$nftable" in
   "truetrue")
     echo "1"
     nom_fichier="dsflssldkf"
