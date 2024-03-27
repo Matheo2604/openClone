@@ -46,11 +46,11 @@ if [ $nombre_interfaces -gt 1 ]; then
         ip a
         Recuperer_IP_LAN
 
+        read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
+
         read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
 
         read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
-
-        read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 
         read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
 
