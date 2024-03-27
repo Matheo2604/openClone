@@ -7,15 +7,12 @@ cd "$(dirname $0)"
 
 read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
 
-IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." "\n") )
-
 read -p "Quelle est son masque de son sous réseaux LAN :" Masque_LAN
 
 read -p "Quelle est son interface pour son sous réseaux LAN :" Interface_LAN
 
 read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
 
-IP_NAT_TABLEAU=( $(echo $IP_NAT | tr "." "\n") )
 
 read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
 
