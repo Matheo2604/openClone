@@ -89,19 +89,41 @@ fi
 case "$aggregation$nftable" in
   "truetrue")
     echo "1"
-    
+    sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces+aggregation+nftable
+    sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interface/interfaces+aggregation+nftable
+    sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces+aggregation+nftable
+    sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interface/interfaces+aggregation+nftable
+    sudo sed -i "s/{IP_NAT}/$IP_NAT/g" ressource/interface/interfaces+aggregation+nftable
+    sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/interface/interfaces+aggregation+nftable
+     sudo sed -i "s/{Routeur}/$Routeur/g" ressource/interface/interface/interfaces+aggregation+nftable
+    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation+aggregation+nftable
     ;;
   "falsetrue")
     echo "2"
+    sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces+nftable
+    sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interface/interfaces+nftable
+    sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces+nftable
+    sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interface/interfaces+nftable
+    sudo sed -i "s/{IP_NAT}/$IP_NAT/g" ressource/interface/interfaces+nftable
+    sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/interface/interfaces+nftable
+     sudo sed -i "s/{Routeur}/$Routeur/g" ressource/interface/interface/interfaces+nftable
+    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+nftable
     ;;
   "truefalse")
     echo "3"
+    sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces+aggregation
+    sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interface/interfaces+aggregation
+    sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces+aggregation
+     sudo sed -i "s/{Routeur}/$Routeur/g" ressource/interface/interface/interfaces+aggregation
+    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation
     ;;
   "falsefalse")
     echo "4"
-    #sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces
-    #sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interface/interfaces
-    #sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces
+    sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces
+    sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interface/interfaces
+    sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces
+    sudo sed -i "s/{Routeur}/$Routeur/g" ressource/interface/interface/interfaces
+    sudo mv ressource/interface/interfaces /etc/network/interface/interfaces
     ;;
   *)
     echo "erreur"
