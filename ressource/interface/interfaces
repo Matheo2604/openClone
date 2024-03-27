@@ -1,6 +1,3 @@
-# This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
-
 source /etc/network/interfaces.d/*
 
 # The loopback network interface
@@ -15,4 +12,4 @@ iface {Interface_NAT} inet static
         dns-nameservers 1.1.1.1
 iface {Interface_LAN} inet static
         address {IP_LAN}/{Masque_LAN_CIDR}
-        # dns-* options are implemented by the resolvconf package, if installed
+        
