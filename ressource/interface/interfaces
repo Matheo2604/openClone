@@ -5,8 +5,8 @@ auto lo
 iface lo inet loopback
 
 # The primary network interface
-auto {Interface_NAT}
-iface {Interface_NAT} inet static
- address {IP_Nat}/{Masque_NAT_CIDR}
+auto {Interface_LAN}
+iface {Interface_LAN} inet static
+ address {IP_LAN}/{Masque_LAN_CIDR}
         gateaway {Routeur}
         dns-nameservers 1.1.1.1

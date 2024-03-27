@@ -7,7 +7,7 @@ iface lo inet loopback
 # The primary network interface
 auto bond0
 iface bond0 inet static
-        address 192.168.150.153/24
+         address {IP_LAN}/{Masque_LAN_CIDR}
         bond-slaves ens1 eno2
         bond_mode 0
         bond_miimon 100

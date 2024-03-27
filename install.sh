@@ -89,7 +89,7 @@ fi
 case "$aggregation$nftable" in
   "truetrue")
     echo "1"
-    nom_fichier="dsflssldkf"
+    
     ;;
   "falsetrue")
     echo "2"
@@ -99,6 +99,9 @@ case "$aggregation$nftable" in
     ;;
   "falsefalse")
     echo "4"
+    #sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces
+    #sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interface/interfaces
+    #sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces
     ;;
   *)
     echo "erreur"
@@ -115,9 +118,7 @@ esac
 
 #sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interface/interfaces
 
-#sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/interface/interfaces
 
-#sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/interface/interfaces
 
 #sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/interface/interfaces
 
