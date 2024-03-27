@@ -2,20 +2,23 @@
 
 # Fonction pour afficher les interfaces disponibles
 Afficher_interfaces() {
+
     echo "Interfaces disponibles :"
     ip -o link show | awk -F': ' '{print $2}'
+
 }
 
 Recuperer_IP_LAN(){
-read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
-
-read -p "Quelle est son masque de son sous réseaux LAN :" Masque_LAN
 
 read -p "Quelle est son interface pour son sous réseaux LAN :" Interface_LAN
 
-read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
+read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
 
-read -p "Quelle est l'IP de broadcast local du sous réseaux LAN (exemple: 192.168.1.255):" Masque_LAN_CIDR
+read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (*.*.*.*/24):" Masque_LAN_CIDR
+
+read -p "Quelle est son masque de son sous réseaux LAN :" Masque_LAN
+
+read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
 }
 
@@ -30,6 +33,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     if [ "$choice_aggregation" == "y" ]; then
         
         Afficher_interfaces
+
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
@@ -47,21 +51,18 @@ if [ $nombre_interfaces -gt 1 ]; then
         Recuperer_IP_LAN
 
         read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
-
         read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
-
+        read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (*.*.*.*/24):" Masque_NAT_CIDR
         read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
-
         read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
-
-        read -p "Quelle est l'IP de broadcast local du sous réseaux NAT (exemple: 192.168.1.255):" Masque_NAT_CIDR
-
-        read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
+        read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur
 
      elif [ "$choice_nftables" == "n" ]; then
         
         ip a
         Recuperer_IP_LAN
+        
+        read -p "Quelle est l'IP du routeur du réseaux :" Routeur
         
     fi
 

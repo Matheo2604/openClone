@@ -13,13 +13,11 @@ read -p "Quelle est son interface pour son sous réseaux LAN :" Interface_LAN
 
 read -p "Quelle sera l'addresse IP de son sous réseaux NAT :" IP_NAT
 
-
 read -p "Quelle est son masque de son sous réseaux NAT :" Masque_NAT
 
 read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 
-read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
-
+read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur
 
 read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
@@ -36,7 +34,7 @@ sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/interfaces
 
 sudo sed -i "s/{IP_Nat}/$IP_Nat/g" ressource/interfaces
 
-sudo sed -i "s/{Routeur_NAT}/$Routeur_NAT/g" ressource/interfaces
+sudo sed -i "s/{Routeur}/$Routeur/g" ressource/interfaces
 
 sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/interfaces
 
@@ -186,7 +184,7 @@ Hostname VARCHAR(30));
 
 
 # Configuration du DHCP
-
+#!!!! si pas nftables besoins routeur
 
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dhcpd.conf
 
