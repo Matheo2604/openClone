@@ -8,7 +8,7 @@ auto lo
 iface lo inet loopback
 
 # The primary network interface
-#allow-hotplug eno1
+auto {Interface_NAT}
 iface {Interface_NAT} inet static
  address {IP_Nat}/{Masque_NAT_CIDR}
         gateaway {Routeur_NAT}
