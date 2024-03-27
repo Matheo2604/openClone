@@ -3,9 +3,7 @@
 # Verification du script lancement en root ????
 # Assigner les paramètres à des variables
 
-cd "$(dirname $0)"
-
-ip a
+cd "$(dirname $0)"  
 
 read -p "Quelle sera l'addresse IP de son sous réseaux LAN :" IP_LAN
 
@@ -25,18 +23,14 @@ read -p "Quelle est son interface pour son sous réseaux NAT :" Interface_NAT
 
 read -p "Quelle est l'IP du routeur du réseaux NAT :" Routeur_NAT
 
-sudo apt install -y bc
 
-#y a couille avec masque cidr
-IP_LAN_SR="$(./ObtentionIPSousReseau.sh $IP_LAN $Masque_LAN)"
-echo $IP_LAN_SR
-Masque_LAN_CIDR="$(./ObtentionMasqueCIDR.sh $IP_LAN $Masque_LAN)"
-echo $Masque_LAN_CIDR
+read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
-IP_NAT_SR="$(./ObtentionIPSousReseau.sh $IP_NAT $Masque_NAT)"
-echo $IP_NAT_SR
-Masque_NAT_CIDR="$(./ObtentionMasqueCIDR.sh $IP_NAT $Masque_NAT)"
-echo $Masque_NAT_CIDR
+read -p "Quelle est l'IP de broadcast local du sous réseaux LAN (exemple: 192.168.1.255):" Masque_LAN_CIDR
+
+read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
+
+read -p "Quelle est l'IP de broadcast local du sous réseaux NAT (exemple: 192.168.1.255):" Masque_NAT_CIDR
 
 username="$(whoami)"
 
