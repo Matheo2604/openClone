@@ -100,6 +100,8 @@ case "$aggregation$nftable" in
         ressource/interface/interfaces+aggregation+nftable
 
     sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation+aggregation+nftable
+    sudo systemctl restart networking
+    sudo service networking restart
     ;;
 
   "falsetrue")
@@ -115,6 +117,8 @@ case "$aggregation$nftable" in
         ressource/interface/interfaces+nftable
 
     sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+nftable
+    sudo systemctl restart networking
+    sudo service networking restart
     ;;
 
   "truefalse")
@@ -127,6 +131,8 @@ case "$aggregation$nftable" in
         ressource/interface/interfaces+aggregation
 
     sudo mv ressource/interface/interfaces /etc/network/interface/interfaces+aggregation
+    sudo systemctl restart networking
+    sudo service networking restart
     ;;
 
   "falsefalse")
@@ -139,6 +145,8 @@ case "$aggregation$nftable" in
         ressource/interface/interfaces
 
     sudo mv ressource/interface/interfaces /etc/network/interface/interfaces
+    sudo systemctl restart networking
+    sudo service networking restart
     ;;
 
   *)
