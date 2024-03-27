@@ -42,14 +42,15 @@ if [ $nombre_interfaces -gt 1 ]; then
 
     if [ "$choice_aggregation" == "y" ]; then
         
-        Afficher_interfaces
-        sudo apt -y install ifenslave
         aggregation=true
+        sudo apt -y install ifenslave
+        Afficher_interfaces
+        echo ""
 
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
-        echo "une nouvelle interface nommer bond0 vient d'etre creer" 
+        echo -e "une nouvelle interface nommer bond0 vient d'etre creer\n" 
         # Ajouter ici des commandes pour configurer l'agrégation avec les interfaces choisies
 
     fi
