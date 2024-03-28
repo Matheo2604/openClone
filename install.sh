@@ -167,34 +167,27 @@ esac
 
 # Mise a jour et installation des paquets
 
-
 sudo apt update && sudo apt -y upgrade
-
 sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
+
 
 #!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 #alternative du dhcp et dns non obsolete avec "kea"
 
+
 # Configuration du serveur TFTP
 
 sudo sudo mkdir /srv/tftp
-
 sudo mv ressource/serveur_transfert/atftpd /etc/default/atftpd
-
 sudo systemctl restart atftpd.service
-
 sudo chmod -R ugo+rw /srv/tftp/
-
 
 
 # Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg)
 
-
 sudo grub-mknetdir
-
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
-
 sudo mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
@@ -203,63 +196,39 @@ sudo mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
 sudo mkdir /srv/nfs
-
 sudo chown -R root:root /srv/nfs
-
 sudo chmod 777 /srv/nfs
-
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/exports 
-
-sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/exports
-
+sudo sed -i \
+  -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
+  -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+  ressource/serveur_transfert/exports
 sudo sudo mv ressource/serveur_transfert/exports /etc/exports
-
 sudo exportfs -a
-
 sudo systemctl restart nfs-kernel-server
-
 
 
 # Configuration du Debootstrap
 
 
 sudo sudo mkdir /srv/nfs/debian
-
 sudo debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
-
 sudo mount -t proc none /srv/nfs/debian/proc
-
 sudo mount -o bind /dev /srv/nfs/debian/dev
-
 sudo chroot /srv/nfs/debian /bin/bash << EOT
 
-
-apt update && apt full-upgrade
-
-apt install -y linux-image-amd64 partclone dialog sudo
-
-
-sudo useradd -m "$username" -s /bin/bash
-
-echo "$username:password" | sudo chpasswd
-
-sudo usermod -aG sudo "$username"
+  apt update && apt full-upgrade
+  apt install -y linux-image-amd64 partclone dialog sudo
+  useradd -m "$username" -s /bin/bash
+  echo "$username:password" | chpasswd
+  usermod -aG sudo "$username"
 
 EOT
-
-
-sudo sed -i "s/{username}/$username/g" ressource/profile
-
+sudo sed -i "s/{username}/$username/g" ressource/.profile
 sudo mv ressource/profile /srv/nfs/debian/home/$username/.profile
-
-sudo sudo mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
-
-sudo sudo mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
-
+sudo mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
+sudo mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
-
 sudo sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
-
 
 
 # Configuration du serveur WEB / HTTP
