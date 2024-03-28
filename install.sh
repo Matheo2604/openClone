@@ -260,9 +260,11 @@ EOT
 # Configuration du DHCP
 #!!!! si pas nftables besoins routeur
 
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dhcpd.conf
-sudo sed -i "s/{Masque_LAN}/$Masque_LAN/g" ressource/dhcpd.conf
-sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/dhcpd.conf
+sudo sed -i \
+  -e "s/{IP_LAN}/$IP_LAN/g" \
+  -e "s/{Masque_LAN}/$Masque_LAN/g" \
+  -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
+  ressource/dhcpd.conf
 sudo sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 sudo systemctl restart isc-dhcp-server.service
 
