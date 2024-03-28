@@ -76,7 +76,9 @@ if [ $nombre_interfaces -gt 1 ]; then
 
      elif [ "$choice_nftables" == "n" ]; then
         
+        echo ""
         ip a
+        echo ""
         Recuperer_IP_LAN
         
         read -p "Quelle est l'IP du routeur du réseaux :" Routeur
