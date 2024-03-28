@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#sudo ip route add 192.168.200.0/24 via 192.168.200.254
-
 # Verification du script lancement en root ????
 # Assigner les paramètres à des variables
 # Nom du site a changer
