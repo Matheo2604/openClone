@@ -24,13 +24,9 @@ Afficher_interfaces() {
 Recuperer_IP_LAN(){
 
 read -p "Quelle est son interface pour son sous réseaux LAN (exemple: eth0):" Interface_LAN
-
 read -p "Quelle sera l'addresse IP de son sous réseaux LAN (exemple: 192.168.1.15):" IP_LAN
-
 read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (/24):" Masque_LAN_CIDR
-
 read -p "Quelle est son masque de son sous réseaux LAN (exemple: 255.255.255.0):" Masque_LAN
-
 read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
 }
@@ -78,6 +74,21 @@ if [ $nombre_interfaces -gt 1 ]; then
         read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
         read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
         read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
+
+        # Configuration Nftables
+        sudo sed -i \
+          -e "s/{Interface_NAT}/$Interface_NAT/g" \
+          -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
+          -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
+          -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+          -e "s/{Interface_LAN}/$Interface_LAN/g" \
+          -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
+          -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
+          -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+          -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
+          ressource/network/nftables.conf
+        sudo sudo mv ressource/nftables.conf /etc/nftables.conf
+        sudo systemctl restart nftables.service
 
      elif [ "$choice_nftables" == "n" ]; then
         
@@ -262,6 +273,7 @@ use mariadb << EOT
 
 EOT
 
+
 # Configuration du DHCP
 #!!!! si pas nftables besoins routeur
 
@@ -288,20 +300,6 @@ sudo sed -i \
   ressource/dns/named.conf.local
 sudo sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
 sudo systmeclt restart bind9.service
-
-
-# Configuration Nftables
-#sudo sed -i "s/{Interface_NAT}/$Interface_NAT/g" ressource/nftables.conf
-#sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
-#sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
-#sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
-#sudo sed -i "s/{Interface_LAN}/$Interface_LAN/g" ressource/nftables.conf
-#sudo sed -i "s/{IP_NAT_SR}/$IP_NAT_SR/g" ressource/nftables.conf
-#sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/nftables.conf
-#sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/nftables.conf
-#sudo sed -i "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" ressource/nftables.conf
-#sudo sudo mv ressource/nftables.conf /etc/nftables.conf
-#sudo systemctl restart nftables.service
 
 
 echo "Fini "
