@@ -233,16 +233,11 @@ sudo sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/syste
 
 # Configuration du serveur WEB / HTTP
 
-sudo sudo mv ressource/www /srv/www
-
-sudo sudo mv ressource/serveur_transfert/site.conf /etc/apache2/site-available/
-
+sudo mv ressource/www /srv/www
+sudo mv ressource/serveur_transfert/site.conf /etc/apache2/site-available/
 sudo a2dissite 000-default.conf
-
 sudo a2ensite site.conf
-
 sudo chown www-data /srv/www/ -Rf
-
 sudo systemctl restart apache2.service
 
 
@@ -251,60 +246,38 @@ sudo systemctl restart apache2.service
 #couille dans le paté ouverture mariadb
 use mariadb << EOT
 
-CREATE DATABASE openclone;
+  CREATE DATABASE openclone;
+  use openclone;
+  CREATE USER 'responsable' IDENTIFIED BY 'felix22';
+  grant all privileges on openclone.* to 'responsable';
+  CREATE USER 'consultant' IDENTIFIED BY 'felix22';
+  GRANT SELECT ON openclone.* TO 'consultant';
+  CREATE TABLE clients(id INT PRIMARY KEY NOT NULL, MAC_Address VARCHAR(17), IP_Address VARCHAR(15),
+  Hostname VARCHAR(30));
 
-use openclone;
-
-CREATE USER 'responsable' IDENTIFIED BY 'felix22';
-
-grant all privileges on openclone.* to 'responsable';
-
-CREATE USER 'consultant' IDENTIFIED BY 'felix22';
-
-GRANT SELECT ON openclone.* TO 'consultant';
-
-CREATE TABLE clients(id INT PRIMARY KEY NOT NULL, MAC_Address VARCHAR(17), IP_Address VARCHAR(15),
-
-Hostname VARCHAR(30));
-
-
+EOT
 
 # Configuration du DHCP
 #!!!! si pas nftables besoins routeur
 
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dhcpd.conf
-
 sudo sed -i "s/{Masque_LAN}/$Masque_LAN/g" ressource/dhcpd.conf
-
 sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/dhcpd.conf
-
 sudo sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
-
 sudo systemctl restart isc-dhcp-server.service
-
 
 
 # Configuration DNS
 
-
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
-
 sudo sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
-
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/dns.fr.reverse
-
 sudo sudo mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
-
 sudo sed -i "s/{IP_LAN_TABLEAU[0]}/$IP_LAN_TABLEAU[0]/g" ressource/dns/dns.fr.reverse
-
 sudo sed -i "s/{IP_LAN_TABLEAU[1]}/$IP_LAN_TABLEAU[1]/g" ressource/dns/dns.fr.reverse
-
 sudo sed -i "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" ressource/dns/dns.fr.reverse
-
 sudo sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
-
 sudo systmeclt restart bind9.service
-
 
 
 # Configuration Nftables
