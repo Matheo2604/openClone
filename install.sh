@@ -180,7 +180,7 @@ sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-d
 
 sudo sudo mkdir /srv/tftp
 
-sudo mv ressource/atftpd /etc/default/atftpd
+sudo mv ressource/serveur_transfert/atftpd /etc/default/atftpd
 
 sudo systemctl restart atftpd.service
 
@@ -212,7 +212,7 @@ sudo sed -i "s/{IP_LAN_SR}/$IP_LAN_SR/g" ressource/exports
 
 sudo sed -i "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" ressource/exports
 
-sudo sudo mv ressource/exports /etc/exports
+sudo sudo mv ressource/serveur_transfert/exports /etc/exports
 
 sudo exportfs -a
 
@@ -252,13 +252,13 @@ sudo sed -i "s/{username}/$username/g" ressource/profile
 
 sudo mv ressource/profile /srv/nfs/debian/home/$username/.profile
 
-sudo sudo mv ressource/sudoers /srv/nfs/debian/etc/sudoers
+sudo sudo mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
 
-sudo sudo mv ressource/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
+sudo sudo mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 
 sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
 
-sudo sudo mv ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+sudo sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
 
 
 
@@ -266,7 +266,7 @@ sudo sudo mv ressource/override.conf /srv/nfs/debian/etc/systemd/system/getty@tt
 
 sudo sudo mv ressource/www /srv/www
 
-sudo sudo mv ressource/site.conf /etc/apache2/site-available/
+sudo sudo mv ressource/serveur_transfert/site.conf /etc/apache2/site-available/
 
 sudo a2dissite 000-default.conf
 
