@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Verification du script lancement en root ????
-# Assigner les paramètres à des variables
+# Mettre tous les services dans des fonctions
 # Nom du site a changer
 
 if [ "$(id -u)" -eq 0 ]; then
