@@ -280,9 +280,6 @@ sudo sed -i \
   -e "s/{IP_LAN}/$IP_LAN/g" \
   -e "s/{Masque_LAN}/$Masque_LAN/g" \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-  -e "s/{IP_LAN_TABLEAU[0]}/$IP_LAN_TABLEAU[0]/g" \
-  -e "s/{IP_LAN_TABLEAU[1]}/$IP_LAN_TABLEAU[1]/g" \
-  -e "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" \
   ressource/dhcpd.conf
 sudo sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 sudo systemctl restart isc-dhcp-server.service
