@@ -84,7 +84,8 @@ if [ $nombre_interfaces -gt 1 ]; then
           -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
           -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
           ressource/network/nftables.conf
-        sudo sudo mv ressource/nftables.conf /etc/nftables.conf
+        sudo apt -y install nftables
+        sudo sudo mv ressource/network/nftables.conf /etc/nftables.conf
         sudo systemctl restart nftables.service
 
      elif [ "$choice_nftables" == "n" ]; then
@@ -181,7 +182,7 @@ esac
 # Mise a jour et installation des paquets
 
 sudo apt update && sudo apt -y upgrade
-sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget nftables
+sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget 
 
 
 #!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
@@ -236,8 +237,8 @@ sudo chroot /srv/nfs/debian /bin/bash << EOT
   usermod -aG sudo "$username"
 
 EOT
-sudo sed -i "s/{username}/$username/g" ressource/.profile
-sudo mv ressource/profile /srv/nfs/debian/home/$username/.profile
+sudo sed -i "s/{username}/$username/g" 'ressource/linux_maintenance/.profile'
+sudo mv 'ressource/linux_maintenance/.profile' /srv/nfs/debian/home/$username/.profile
 sudo mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
 sudo mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
