@@ -122,8 +122,6 @@ case "$aggregation$nftable" in
         ressource/network/interfacesAggregationNftables
 
     sudo mv ressource/network/interfacesAggregationNftables /etc/network/interfaces
-    sudo systemctl restart networking
-    sudo service networking restart
     ;;
 
   "falsetrue")
@@ -139,8 +137,6 @@ case "$aggregation$nftable" in
         ressource/network/interfacesNftables
 
     sudo mv ressource/network/interfacesNftables /etc/network/interfaces
-    sudo systemctl restart networking
-    sudo service networking restart
     ;;
 
   "truefalse")
@@ -155,8 +151,6 @@ case "$aggregation$nftable" in
         ressource/network/interfacesAggregation
 
     sudo mv ressource/network/interfacesAggregation /etc/network/interfaces
-    sudo systemctl restart networking
-    sudo service networking restart
     ;;
 
   "falsefalse")
@@ -169,14 +163,16 @@ case "$aggregation$nftable" in
         ressource/network/interfaces
 
     sudo mv ressource/network/interfaces /etc/network/interfaces
-    sudo systemctl restart networking
-    sudo service networking restart
     ;;
 
   *)
     echo "erreur"
     ;;
 esac
+
+sudo systemctl restart networking
+sudo service networking restart
+sudo ip r default via $Routeur
 
 
 # Mise a jour et installation des paquets
