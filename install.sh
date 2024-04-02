@@ -119,9 +119,9 @@ case "$aggregation$nftable" in
         -e "s/{Routeur}/$Routeur/g" \
         -e "s/{interface1}/$interface1/g" \
         -e "s/{interface2}/$interface2/g" \
-        'ressource/network/interfaces+aggregation+nftable'
+        ressource/network/interfacesAggregationNftables
 
-    sudo mv 'ressource/network/interfaces+aggregation+nftable' /etc/network/interfaces
+    sudo mv ressource/network/interfacesAggregationNftables /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -136,9 +136,9 @@ case "$aggregation$nftable" in
         -e "s/{IP_NAT}/$IP_NAT/g" \
         -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
         -e "s/{Routeur}/$Routeur/g" \
-        'ressource/network/interfaces+nftable'
+        ressource/network/interfacesNftables
 
-    sudo mv 'ressource/network/interfaces+nftable' /etc/network/interfaces
+    sudo mv ressource/network/interfacesNftables /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -152,9 +152,9 @@ case "$aggregation$nftable" in
         -e "s/{Routeur}/$Routeur/g" \
         -e "s/{interface1}/$interface1/g" \
         -e "s/{interface2}/$interface2/g" \
-        'ressource/network/interfaces+aggregation'
+        ressource/network/interfacesAggregation
 
-    sudo mv 'ressource/network/interfaces+aggregation' /etc/network/interfaces
+    sudo mv ressource/network/interfacesAggregation /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
@@ -166,9 +166,9 @@ case "$aggregation$nftable" in
         -e "s/{IP_LAN}/$IP_LAN/g" \
         -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
         -e "s/{Routeur}/$Routeur/g" \
-        'ressource/network/interfaces'
+        ressource/network/interfaces
 
-    sudo mv 'ressource/network/interfaces' /etc/network/interfaces
+    sudo mv ressource/network/interfaces /etc/network/interfaces
     sudo systemctl restart networking
     sudo service networking restart
     ;;
