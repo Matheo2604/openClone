@@ -182,7 +182,7 @@ esac
 # Mise a jour et installation des paquets
 
 sudo apt update && sudo apt -y upgrade
-sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget 
+sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget mariadb-server
 
 
 #!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
@@ -235,10 +235,10 @@ sudo chroot /srv/nfs/debian /bin/bash << EOT
   useradd -m "$username" -s /bin/bash
   echo "$username:password" | chpasswd
   usermod -aG sudo "$username"
+  (crontab -l 2>/dev/null; echo "@reboot /srv/scripts/ACHANGER.sh") | crontab -
 
 EOT
-sudo sed -i "s/{username}/$username/g" 'ressource/linux_maintenance/.profile'
-sudo mv 'ressource/linux_maintenance/.profile' /srv/nfs/debian/home/$username/.profile
+
 sudo mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
 sudo mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
@@ -255,11 +255,14 @@ sudo chown www-data /srv/www/ -Rf
 sudo systemctl reload apache2.service
 
 
-# Configuration MariaDB 
+# Configuration MariaDB
 
-#couille dans le paté ouverture mariadb
-use mariadb << EOT
+#Securiser bdd 
+#yes | sudo mysql_secure_installation 
 
+sudo mysql  << EOT
+
+  use mariadb 
   CREATE DATABASE openclone;
   use openclone;
   CREATE USER 'responsable' IDENTIFIED BY 'felix22';
