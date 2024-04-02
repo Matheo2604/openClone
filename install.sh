@@ -172,7 +172,7 @@ esac
 
 sudo systemctl restart networking
 sudo service networking restart
-sudo ip r default via $Routeur
+sudo ip r add default via $Routeur
 
 
 # Mise a jour et installation des paquets
