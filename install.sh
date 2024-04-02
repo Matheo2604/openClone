@@ -300,7 +300,7 @@ sudo sed -i \
   -e "s/{IP_LAN_TABLEAU[2]}/$IP_LAN_TABLEAU[2]/g" \
   ressource/dns/named.conf.local
 sudo sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
-sudo systmectl restart bind9.service
+sudo systemctl restart bind9.service
 
 
 echo "Fini "
