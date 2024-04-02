@@ -256,6 +256,7 @@ sudo systemctl reload apache2.service
 #Securiser bdd 
 #yes | sudo mysql_secure_installation 
 
+#PB
 sudo mysql  << EOT
 
   use mariadb 
@@ -274,6 +275,7 @@ EOT
 # Configuration du DHCP
 #!!!! si pas nftables besoins routeur
 
+#PB
 sudo sed -i \
   -e "s/{IP_LAN}/$IP_LAN/g" \
   -e "s/{Masque_LAN}/$Masque_LAN/g" \
@@ -285,6 +287,7 @@ sudo systemctl restart isc-dhcp-server.service
 
 # Configuration DNS
 
+#PB
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
 sudo sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/dns.fr.reverse
