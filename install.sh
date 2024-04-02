@@ -248,7 +248,7 @@ sudo sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/syste
 # Configuration du serveur WEB / HTTP
 
 sudo mv ressource/www /srv/www
-sudo mv ressource/serveur_transfert/site.conf /etc/apache2/site-available/
+sudo mv ressource/serveur_transfert/site.conf /etc/apache2/sites-available/
 sudo a2dissite 000-default.conf
 sudo a2ensite site.conf
 sudo chown www-data /srv/www/ -Rf
