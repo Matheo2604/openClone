@@ -45,9 +45,10 @@ EOF"
 
     # Création des partitions supplémentaires
     for ((i=3; i<=$nombre_partitions+2; i++)); do
-        sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
+sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
 ,${taille_une_partition}s,83
 EOF
+
     echo "    for ((i=3; i<=$nombre_partitions+2; i++)); do
         sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
 ,${taille_une_partition}s,83
