@@ -21,13 +21,14 @@ sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
 label: dos
 unit: sectors
 
-,4096000,0c,*
-,4096000,83
+,4096000,boot,*
+,4096000,grub
 EOF
 
 # Création des partitions supplémentaires
-for ((i=1; i<=$nombre_partitions; i++)); do
+for ((i=3; i<=$nombre_partitions+2; i++)); do
     sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
 ,${taille_une_partition}s,83
 EOF
 done
+
