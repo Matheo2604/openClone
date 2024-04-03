@@ -14,10 +14,10 @@ output=$(./partitionnage.sh $nombre_partitions)
 read nom_disque taille_une_partition <<< "$output"
 
 # Suppression de toutes les partitions et tables de partition sur nom_disque
-sudo /usr/sbin/sfdisk --delete $nom_disque
+sudo /usr/sbin/sfdisk --delete /dev/$nom_disque
 
 # Création d'une nouvelle table de partition
-sudo /usr/sbin/sfdisk $nom_disque << EOF
+sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
 label: dos
 unit: sectors
 
@@ -27,7 +27,7 @@ EOF
 
 # Création des partitions supplémentaires
 for ((i=1; i<=$nombre_partitions; i++)); do
-    sudo /usr/sbin/sfdisk $nom_disque << EOF
+    sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
 ,${taille_une_partition}s,83
 EOF
 done
