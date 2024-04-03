@@ -14,10 +14,10 @@ output=$(./partitionnage.sh)
 read nom_disque taille_une_partition <<< "$output"
 
 # Suppression de toutes les partitions et tables de partition sur nom_disque
-sudo sfdisk --delete $nom_disque
+sudo $(command -v sfdisk) --delete $nom_disque
 
 # Création d'une nouvelle table de partition
-sudo sfdisk $nom_disque << EOF
+sudo $(command -v sfdisk) $nom_disque << EOF
 label: dos
 unit: sectors
 
@@ -30,7 +30,7 @@ taille_restante=$((taille_une_partition - 4096000 * 2))
 
 # Création des partitions supplémentaires
 for ((i=1; i<=$nombre_partitions; i++)); do
-    sudo sfdisk $nom_disque << EOF
+    sudo $(command -v sfdisk) $nom_disque << EOF
 ,${taille_restante}s,83
 EOF
 done
