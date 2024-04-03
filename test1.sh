@@ -25,8 +25,8 @@ sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
 label: dos
 unit: sectors
 
-,4096000,boot,*
-,4096000,grub
+,4096000,0c,*
+,4096000,83
 EOF
 
 # Affichage de quelques informations pour le débogage
