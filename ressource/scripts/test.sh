@@ -27,9 +27,12 @@ unit: sectors
 EOF
 
 # Création des partitions supplémentaires
+start_sector=4096000  # Début du premier espace libre
 for ((i=3; i<=$nombre_partitions+2; i++)); do
+    end_sector=$((start_sector + taille_une_partition - 1))
     sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
-,$((taille_une_partition * i)),83
+,$end_sector,83
 EOF
+    start_sector=$((end_sector + 1))
 done
 
