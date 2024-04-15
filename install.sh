@@ -86,7 +86,7 @@ if [ $nombre_interfaces -gt 1 ]; then
           ressource/network/nftables.conf
         sudo apt -y install nftables
         sudo sudo mv ressource/network/nftables.conf /etc/nftables.conf
-        sudo systemctl restart nftables.service
+        sudo systemctl restart nftables
 
      elif [ "$choice_nftables" == "n" ]; then
         
