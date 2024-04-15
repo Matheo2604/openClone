@@ -248,7 +248,7 @@ sudo mv ressource/serveur_transfert/site.conf /etc/apache2/sites-available/
 sudo a2dissite 000-default.conf
 sudo a2ensite site.conf
 sudo chown www-data /srv/www/ -Rf
-sudo systemctl reload apache2.service
+sudo systemctl restart apache2.service
 
 
 # Configuration MariaDB
