@@ -286,7 +286,9 @@ sudo sed -i \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dhcpd.conf
 sudo sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
+sudo echo "INTERFACESv4="\"$Interface_LAN\"\n"INTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
 sudo systemctl restart isc-dhcp-server.service
+
 
 
 # Configuration DNS
