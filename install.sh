@@ -171,10 +171,9 @@ case "$aggregation$nftable" in
 esac
 
 IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." "\n") )
-sudo ip r add default via $Routeur
 sudo systemctl restart networking
 sudo service networking restart
-
+sudo ip r add default via $Routeur
 
 
 # Mise a jour et installation des paquets
