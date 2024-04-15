@@ -275,7 +275,6 @@ EOT
 # Configuration du DHCP
 #!!!! si pas nftables besoins routeur
 
-#PB
 IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." " ") )
 sudo sed -i \
   -e "s/{IP_LAN}/$IP_LAN/g" \
