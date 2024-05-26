@@ -6,6 +6,7 @@
 # KEA
 # Nom du site a changer
 # CONFIG RESEAU
+# MariaDB creer un compte avec un mot de passe randomiser par default
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."
