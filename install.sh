@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# Mettre tous les services dans des fonctions
+# Mettre tous les services dans des scripts a part
+# Ajouter un fichier de config
+# Faire script principal partie Elouen
+# KEA
 # Nom du site a changer
+# CONFIG RESEAU
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."
