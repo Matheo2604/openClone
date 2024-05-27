@@ -319,7 +319,7 @@ sudo sed -i \
   ressource/dhcpd.conf
 sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 sudo chmod 666 /etc/default/isc-dhcp-server 
-sudo echo -e "INTERFACESv4="\"$Interface_LAN\"\n"INTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
+sudo echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
 sudo chmod 644 /etc/default/isc-dhcp-server 
 sudo systemctl restart isc-dhcp-server.service
 
