@@ -216,7 +216,7 @@ sudo mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 sudo mkdir /srv/nfs
 sudo chown -R root:root /srv/nfs
-sudo chmod 777 /srv/nfs
+sudo chmod 744 /srv/nfs
 sudo sed -i \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
   -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
