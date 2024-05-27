@@ -14,5 +14,5 @@ sed -i \
 mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 
 chmod 666 /etc/default/isc-dhcp-server 
-echo -e "INTERFACESv4="\"$Interface_LAN\"\n"INTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
+echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
 chmod 644 /etc/default/isc-dhcp-server 
