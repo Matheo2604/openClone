@@ -215,6 +215,7 @@ grub-mknetdir
 sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
 mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
+# test to restart all the services with only one commande 
 systemctl restart isc-dhcp-server.service
 systemctl restart bind9.service
 systemctl restart atftpd.service
