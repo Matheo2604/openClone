@@ -16,6 +16,8 @@
 # dire demander s'y il veut creer un user ou non
 # verifier s'y besoin user autrement possibiliter de le supprimer a la fin ???
 # demander de changer de mot de passe pour le compte debootstrap l'hors de la premières connexion
+# dans le futur peut être ajouter possibilité d'ajouter un certificat ssl avec lets encrypt penser a changer le .ini et faire un script tiers
+# MariaDB REMOTE CONNEXION
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."
@@ -271,7 +273,7 @@ sudo systemctl restart apache2.service
 #yes | sudo mysql_secure_installation 
 
 #PB
-sudo mysql  << EOT
+sudo mysql  << EOL
 
   use mariadb 
   CREATE DATABASE openclone;
@@ -283,7 +285,21 @@ sudo mysql  << EOT
   CREATE TABLE clients(id INT PRIMARY KEY NOT NULL, MAC_Address VARCHAR(17), IP_Address VARCHAR(15),
   Hostname VARCHAR(30));
 
-EOT
+EOL
+#mysql --password=1234 --user=root --host=localhost << eof
+#create database ownclouddb;
+#grant all privileges on ownclouddb.* to root@localhost identified by "1234";
+#flush privileges;
+#exit;
+#eof
+#cd /var/www/owncloud
+#sudo -u www-data php occ maintenance:install \
+#   --database "mysql" \
+#   --database-name "ownclouddb" \
+#   --database-user "root"\
+#   --database-pass "1234" \
+#   --admin-user "root" \
+#   --admin-pass "1234"
 
 
 # Configuration du DHCP
