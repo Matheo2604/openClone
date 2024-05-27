@@ -1,0 +1,62 @@
+body {
+	background-image: url("/medias/montagne.jpg");
+}
+
+div#conteneur{
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: 250px auto;
+	grid-template-rows: 100px 50px auto 50px;
+	grid-template-areas:
+		"hd hd"
+		"as nv"
+		"as mn"
+		"ft ft"
+}
+
+header {
+	grid-area: hd;
+	font-size: 3rem;
+	border: 1px dotted;
+	text-align: center;
+	line-height: 100px;	/*Alignement vertical : height=line-height*/
+}
+
+nav {
+	grid-area: nv;
+	line-height: 50px;
+}
+
+nav button {
+	margin-left: 20px;
+}
+
+main {
+	grid-area: mn;
+}
+
+footer {
+	grid-area: ft;
+	border: 1px dotted;
+	margin-top: 20px;
+	font-size: 0.8rem;
+}
+
+aside {
+	grid-area: as;
+	border: 1px dotted;
+}
+
+aside img {
+	width: 100%;
+}
+
+article, nav {
+	border: 1px dotted;
+}
+
+table, th, td {
+	border: 2px solid black;
+	border-collapse: collapse;
+}
+

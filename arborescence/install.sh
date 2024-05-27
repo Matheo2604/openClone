@@ -7,10 +7,6 @@
 # Nom du site a changer
 # CONFIG RESEAU
 # MariaDB creer un compte avec un mot de passe randomiser par default
-# Fichier de conf rw r r
-# dossier rwxr-xr-x
-# lancement avec bash
-# reset pour clear le terminal
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."

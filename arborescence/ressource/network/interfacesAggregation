@@ -1,0 +1,15 @@
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto bond0
+iface bond0 inet static
+        address {IP_LAN}/{Masque_LAN_CIDR}
+        bond-slaves {interface1} {interface2}
+        bond_mode 0
+        bond_miimon 100
+        gateaway {Routeur}
+        dns-nameservers 1.1.1.1
