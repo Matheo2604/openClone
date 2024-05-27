@@ -1,12 +1,25 @@
 #!/bin/bash
 
-# Mettre tous les services dans des scripts a part
-# Ajouter un fichier de config
-# Faire script principal partie Elouen
-# KEA
-# Nom du site a changer
-# CONFIG RESEAU
-# MariaDB creer un compte avec un mot de passe randomiser par default
+# TO DO
+# Put every services in a different script
+# Make the file.ini useful
+# Implementation of KEA
+# Change the name of web site and lets the user chose it
+# in the readME need to presice to start the script with the commande bash
+# In the end restart every services then do a final check of these services
+# MariaDB create an account with random password by default
+# Doesn't need to start the script without having root permission by consequences ask the user to create an account 
+# Ask to change the password with an script when the first remote connexion is done DeBootStrap 
+
+# THING TO DO BUT NO THE PRIORITIES 
+# CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY  
+# Do the most importante script (the part of Elouen)
+# Add the possibility to have an ssl certificat with lets encrypt for an web server
+# MariaDB remote connexion
+
+# THING THAT CAN HELP FOR THE FUTUR
+# reset to clear the terminal
+# source <(grep = config.ini)
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."
@@ -15,7 +28,7 @@ fi
 cd "$(dirname $0)"  
 username="$(whoami)"
 
-# Fonction pour afficher les interfaces disponibles
+# Fonction to show network interface
 Afficher_interfaces() {
 
     echo "Interfaces disponibles :"
@@ -33,12 +46,12 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
 }
 
-# Trouver le nombre d'interfaces réseau
+# Find the number of network interface
 nombre_interfaces=$(($(ip -o link show | wc -l) - 1))
 
-# Connaitre si l'utilisateur choisit l'une de c'est fonctionnalite
+# Know if the user chose one of these fonctionality
 aggregation=false
-nftable=false
+nftables=false
 
 if [ $nombre_interfaces -gt 1 ]; then
 
@@ -57,7 +70,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
         echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n" 
-        # Ajouter ici des commandes pour configurer l'agrégation avec les interfaces choisies
+        # add here commandes to configure l'agréggation with the chosen interfaces
 
     fi
 
@@ -68,7 +81,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         echo "Vous avez choisi d'utiliser nftables."
         ip a
         Recuperer_IP_LAN
-        nftable=true
+        nftables=true
 
         read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
         read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
@@ -77,7 +90,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
         read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
 
-        # Configuration Nftables
+        # Configure Nftables
         sudo sed -i \
           -e "s/{Interface_NAT}/$Interface_NAT/g" \
           -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
@@ -111,7 +124,7 @@ else
 
 fi
 
-case "$aggregation$nftable" in
+case "$aggregation$nftables" in
   "truetrue")
 
     sudo sed -i \
@@ -180,7 +193,7 @@ sudo service networking restart
 sudo ip r add default via $Routeur
 
 
-# Mise a jour et installation des paquets
+# Update & install of paquets needed
 
 sudo apt update && sudo apt -y upgrade
 sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget mariadb-server
@@ -188,10 +201,10 @@ sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-d
 
 #!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-#alternative du dhcp et dns non obsolete avec "kea"
+# alternative for dhcp & dns non-deprecated with "kea"
 
 
-# Configuration du serveur TFTP
+# Configure TFTP server
 
 sudo sudo mkdir /srv/tftp
 sudo mv ressource/serveur_transfert/atftpd /etc/default/atftpd
@@ -199,7 +212,7 @@ sudo systemctl restart atftpd.service
 sudo chmod -R ugo+rw /srv/tftp/
 
 
-# Ajouts des fichiers de boot linux (vmlinuz & initrd & grub.cfg)
+# Add Boot file for linux (vmlinuz & initrd & grub.cfg)
 
 sudo grub-mknetdir
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
@@ -207,12 +220,12 @@ sudo mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
 
-#Configuration du serveur NFS
+#Configure NFS server
 
 
 sudo mkdir /srv/nfs
 sudo chown -R root:root /srv/nfs
-sudo chmod 777 /srv/nfs
+sudo chmod 744 /srv/nfs
 sudo sed -i \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
   -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
@@ -222,7 +235,7 @@ sudo exportfs -a
 sudo systemctl restart nfs-kernel-server
 
 
-# Configuration du Debootstrap
+# Configure Debootstrap
 
 
 sudo sudo mkdir /srv/nfs/debian
@@ -246,7 +259,7 @@ sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
 sudo sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
 
 
-# Configuration du serveur WEB / HTTP
+# Configure WEB server / HTTP
 
 sudo mv ressource/www /srv/www
 sudo mv ressource/serveur_transfert/site.conf /etc/apache2/sites-available/
@@ -256,13 +269,13 @@ sudo chown www-data /srv/www/ -Rf
 sudo systemctl restart apache2.service
 
 
-# Configuration MariaDB
-
-#Securiser bdd 
+# Configure MariaDB
+# Secured database 
+# Remote connexion
 #yes | sudo mysql_secure_installation 
 
 #PB
-sudo mysql  << EOT
+sudo mysql  << EOL
 
   use mariadb 
   CREATE DATABASE openclone;
@@ -274,11 +287,26 @@ sudo mysql  << EOT
   CREATE TABLE clients(id INT PRIMARY KEY NOT NULL, MAC_Address VARCHAR(17), IP_Address VARCHAR(15),
   Hostname VARCHAR(30));
 
-EOT
+EOL
+
+#mysql --password=1234 --user=root --host=localhost << eof
+#create database ownclouddb;
+#grant all privileges on ownclouddb.* to root@localhost identified by "1234";
+#flush privileges;
+#exit;
+#eof
+#cd /var/www/owncloud
+#sudo -u www-data php occ maintenance:install \
+#   --database "mysql" \
+#   --database-name "ownclouddb" \
+#   --database-user "root"\
+#   --database-pass "1234" \
+#   --admin-user "root" \
+#   --admin-pass "1234"
 
 
 # Configuration du DHCP
-#!!!! si pas nftables besoins routeur
+#!!!! if no nftables routeur needed
 
 IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." " ") )
 sudo sed -i \
@@ -311,8 +339,5 @@ sudo sed -i \
   ressource/dns/named.conf.local
 sudo sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
 sudo systemctl restart bind9.service
-
-# Faire un check finale de tous les services
-# apt update && apt full-upgrade && apt autoremove --purge && apt autoclean 
 
 echo "Fini "
