@@ -49,7 +49,7 @@ nombre_interfaces=$(($(ip -o link show | wc -l) - 1))
 
 # Connaitre si l'utilisateur choisit l'une de c'est fonctionnalite
 aggregation=false
-nftable=false
+nftables=false
 
 if [ $nombre_interfaces -gt 1 ]; then
 
@@ -79,7 +79,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         echo "Vous avez choisi d'utiliser nftables."
         ip a
         Recuperer_IP_LAN
-        nftable=true
+        nftables=true
 
         read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
         read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
@@ -122,7 +122,7 @@ else
 
 fi
 
-case "$aggregation$nftable" in
+case "$aggregation$nftables" in
   "truetrue")
 
     sudo sed -i \
