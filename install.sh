@@ -103,7 +103,7 @@ if [ $nombre_interfaces -gt 1 ]; then
           -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
           ressource/network/nftables.conf
         sudo apt -y install nftables
-        sudo sudo mv ressource/network/nftables.conf /etc/nftables.conf
+        sudo mv ressource/network/nftables.conf /etc/nftables.conf
         sudo systemctl restart nftables
 
      elif [ "$choice_nftables" == "n" ]; then
@@ -206,7 +206,7 @@ sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-d
 
 # Configure TFTP server
 
-sudo sudo mkdir /srv/tftp
+sudo mkdir /srv/tftp
 sudo mv ressource/serveur_transfert/atftpd /etc/default/atftpd
 sudo systemctl restart atftpd.service
 sudo chmod -R ugo+rw /srv/tftp/
@@ -230,7 +230,7 @@ sudo sed -i \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
   -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
   ressource/serveur_transfert/exports
-sudo sudo mv ressource/serveur_transfert/exports /etc/exports
+sudo mv ressource/serveur_transfert/exports /etc/exports
 sudo exportfs -a
 sudo systemctl restart nfs-kernel-server
 
@@ -238,7 +238,7 @@ sudo systemctl restart nfs-kernel-server
 # Configure Debootstrap
 
 
-sudo sudo mkdir /srv/nfs/debian
+sudo mkdir /srv/nfs/debian
 sudo debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
 sudo mount -t proc none /srv/nfs/debian/proc
 sudo mount -o bind /dev /srv/nfs/debian/dev
@@ -256,7 +256,7 @@ EOT
 sudo mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
 sudo mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
-sudo sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
 
 
 # Configure WEB server / HTTP
@@ -317,7 +317,7 @@ sudo sed -i \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dhcpd.conf
-sudo sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
+sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 sudo chmod 666 /etc/default/isc-dhcp-server 
 sudo echo -e "INTERFACESv4="\"$Interface_LAN\"\n"INTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
 sudo chmod 644 /etc/default/isc-dhcp-server 
@@ -329,15 +329,15 @@ sudo systemctl restart isc-dhcp-server.service
 
 #PB
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
-sudo sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
+sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
 sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/dns.fr.reverse
-sudo sudo mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
+sudo mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
 sudo sed -i \
   -e "s/{ip0}/${IP_LAN_TABLEAU[0]}/g" \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dns/named.conf.local
-sudo sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
+sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
 sudo systemctl restart bind9.service
 
 echo "Fini "
