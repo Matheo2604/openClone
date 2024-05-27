@@ -312,5 +312,7 @@ sudo sed -i \
 sudo sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
 sudo systemctl restart bind9.service
 
+# Faire un check finale de tous les services
+# apt update && apt full-upgrade && apt autoremove --purge && apt autoclean 
 
 echo "Fini "
