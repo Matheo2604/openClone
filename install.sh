@@ -323,5 +323,6 @@ sudo systemctl restart bind9.service
 
 # Faire un check finale de tous les services
 # apt update && apt full-upgrade && apt autoremove --purge && apt autoclean 
+# restart tous les services a la fin uniquement
 
 echo "Fini "
