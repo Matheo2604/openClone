@@ -11,6 +11,8 @@
 # dossier rwxr-xr-x
 # lancement avec bash
 # reset pour clear le terminal
+# source <(grep = k.ini)
+
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."
