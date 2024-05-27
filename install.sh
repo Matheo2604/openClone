@@ -12,6 +12,9 @@
 # lancement avec bash
 # reset pour clear le terminal
 # source <(grep = k.ini)
+# default user pas besoin de sudo et par consequen debut demander s'y etre sure de lancer en root 
+# dire demander s'y il veut creer un user ou non
+# verifier s'y besoin user autrement possibiliter de le supprimer a la fin ???
 
 
 if [ "$(id -u)" -eq 0 ]; then
