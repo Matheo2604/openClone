@@ -198,17 +198,17 @@ apt -y install wget
 
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-bash aggregation/aggregation.sh
-bash core/core.sh
-bash database/database.sh
-bash debootstrap/debootstrap.sh
-bash dhcp/dhcp.sh
-bash dns/dns.sh
-bash http/http.sh
-bash interface/interface.sh
-bash nfs/nfs.sh
-bash nftables/nftables.sh
-bash tftp/tftp.sh
+.\aggregation/aggregation.sh
+.\core/core.sh
+.\database/database.sh
+.\ debootstrap/debootstrap.sh
+.\dhcp/dhcp.sh
+.\ dns/dns.sh
+.\ http/http.sh
+.\ interface/interface.sh
+.\ nfs/nfs.sh
+.\ nftables/nftables.sh
+.\ tftp/tftp.sh
 
 # Add Boot file for linux (vmlinuz & initrd & grub.cfg)
 grub-mknetdir
