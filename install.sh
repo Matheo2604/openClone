@@ -20,6 +20,7 @@
 # THING THAT CAN HELP FOR THE FUTUR
 # reset to clear the terminal
 # source <(grep = config.ini)
+# to debug dhcp do dhcpd -t -cf /etc/dhcp/dhcpd.conf
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."
