@@ -1,0 +1,10 @@
+zone "site22.fr" {
+type master;
+file "/var/cache/bind/site22.fr.zone";
+};
+
+
+zone "{ip2}.{ip1}.{ip0}.in-addr.arpa" {
+    type master;
+    file "/var/cache/bind/dns.fr.reverse";
+};

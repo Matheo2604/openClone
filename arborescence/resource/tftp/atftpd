@@ -1,0 +1,11 @@
+SE_INETD=true
+## Options for atftpd:
+OPTIONS="--port 69 --tftpd-timeout 300 --retry-timeout 5 --mcast-port 1758 --mcast-addr 239.239.239.0-2>
+
+
+
+
+
+
+
+
