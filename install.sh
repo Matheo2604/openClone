@@ -11,11 +11,11 @@
 # dossier rwxr-xr-x
 # lancement avec bash
 # reset pour clear le terminal
-# source <(grep = k.ini)
+# source <(grep = config.ini)
 # default user pas besoin de sudo et par consequen debut demander s'y etre sure de lancer en root 
 # dire demander s'y il veut creer un user ou non
 # verifier s'y besoin user autrement possibiliter de le supprimer a la fin ???
-
+# demander de changer de mot de passe pour le compte debootstrap l'hors de la premières connexion
 
 if [ "$(id -u)" -eq 0 ]; then
  echo "Ce script ne doit pas être exécuté en tant que root."
