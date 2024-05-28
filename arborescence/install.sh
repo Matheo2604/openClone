@@ -32,7 +32,7 @@ fi
 # Verify if the user that start the script is in the openClone folder 
 cd "$(dirname $0)"  
 
-rm log
+rm resource/log
 
 echo -e "
                                           ______   __                               \n
@@ -111,18 +111,18 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    .\aggregation/aggregation.sh >> log
-    .\nftables/nftables.sh >> log
+    .\aggregation/aggregation.sh >> resource/log
+    .\nftables/nftables.sh >> resource/log
     ;;
 
   "falsetrue")
 
-    .\nftables/nftables.sh >> log
+    .\nftables/nftables.sh >> resource/log
     ;;
 
   "truefalse")
     
-    .\aggregation/aggregation.sh >> log
+    .\aggregation/aggregation.sh >> resource/log
     ;;
 
   "falsefalse")
@@ -150,16 +150,16 @@ apt update && apt -y upgrade
 
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
-
-.\interface/interface.sh >> log
-.\dhcp/dhcp.sh >> log
-.\dns/dns.sh >> log
-.\database/database.sh >> log
-.\http/http.sh >> log
-.\nfs/nfs.sh >> log
-.\debootstrap/debootstrap.sh >> log
-.\tftp/tftp.sh >> log
-.\core/core.sh >> log
+#switch break seuelement pour le dernier et default pour erreur plus if a chaque fois par rapport aux file.ini
+.\interface/interface.sh >> resource/log
+.\dhcp/dhcp.sh >> resource/log
+.\dns/dns.sh >> resource/log
+.\database/database.sh >> resource/log
+.\http/http.sh >> resource/log
+.\nfs/nfs.sh >> resource/log
+.\debootstrap/debootstrap.sh >> resource/log
+.\tftp/tftp.sh >> resource/log
+.\core/core.sh >> resource/log
 
 # Restart every service so they take into account the new configuration
 systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb
