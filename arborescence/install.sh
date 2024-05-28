@@ -93,32 +93,9 @@ ActivationNftables=false
     if [ "$choice_nftables" == "y" ]; then
 
         echo "Vous avez choisi d'utiliser nftables."
-        ip a
+        ip a && ip r
         Recuperer_IP_LAN
         ActivationNftables=true
-
-        read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
-        read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
-        read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
-        read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
-        read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
-        read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
-
-        # Configure Nftables
-        sed -i \
-          -e "s/{Interface_NAT}/$Interface_NAT/g" \
-          -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
-          -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-          -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-          -e "s/{Interface_LAN}/$Interface_LAN/g" \
-          -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
-          -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-          -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-          -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
-          ressource/network/nftables.conf
-        apt -y install nftables
-        mv ressource/network/nftables.conf /etc/nftables.conf
-
 
      elif [ "$choice_nftables" == "n" ]; then
         
@@ -141,48 +118,18 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    sed -i \
-        -e "s/{Interface_LAN}/$Interface_LAN/g" \
-        -e "s/{IP_LAN}/$IP_LAN/g" \
-        -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-        -e "s/{Interface_NAT}/$Interface_NAT/g" \
-        -e "s/{IP_NAT}/$IP_NAT/g" \
-        -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
-        -e "s/{Routeur}/$Routeur/g" \
-        -e "s/{interface1}/$interface1/g" \
-        -e "s/{interface2}/$interface2/g" \
-        ressource/network/interfacesAggregationNftables
-
-    mv ressource/network/interfacesAggregationNftables /etc/network/interfaces
+    .\aggregation/aggregation.sh
+    .\nftables/nftables.sh
     ;;
 
   "falsetrue")
 
-    sed -i \
-        -e "s/{Interface_LAN}/$Interface_LAN/g" \
-        -e "s/{IP_LAN}/$IP_LAN/g" \
-        -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-        -e "s/{Interface_NAT}/$Interface_NAT/g" \
-        -e "s/{IP_NAT}/$IP_NAT/g" \
-        -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
-        -e "s/{Routeur}/$Routeur/g" \
-        ressource/network/interfacesNftables
-
-    mv ressource/network/interfacesNftables /etc/network/interfaces
+    .\nftables/nftables.sh
     ;;
 
   "truefalse")
-
-    sed -i \
-        -e "s/{Interface_LAN}/$Interface_LAN/g" \
-        -e "s/{IP_LAN}/$IP_LAN/g" \
-        -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-        -e "s/{Routeur}/$Routeur/g" \
-        -e "s/{interface1}/$interface1/g" \
-        -e "s/{interface2}/$interface2/g" \
-        ressource/network/interfacesAggregation
-
-    mv ressource/network/interfacesAggregation /etc/network/interfaces
+    
+    .\aggregation/aggregation.sh
     ;;
 
   "falsefalse")
@@ -211,7 +158,6 @@ apt update && apt -y upgrade
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-.\aggregation/aggregation.sh
 .\core/core.sh
 .\database/database.sh
 .\ debootstrap/debootstrap.sh
@@ -220,7 +166,6 @@ apt update && apt -y upgrade
 .\ http/http.sh
 .\ interface/interface.sh
 .\ nfs/nfs.sh
-.\ nftables/nftables.sh
 .\ tftp/tftp.sh
 
 # Restart every service so they take into account the new configuration

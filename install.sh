@@ -271,6 +271,7 @@ chroot /srv/nfs/debian /bin/bash << EOT
   (crontab -l 2>/dev/null; echo "@reboot /srv/scripts/ACHANGER.sh") | crontab -
 
 EOT
+# PASSWORD AND PATH TO SCRIPT HAVE TO CHANGE
 
 mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
 mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
