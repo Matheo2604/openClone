@@ -215,7 +215,7 @@ ip r add default via $Routeur
 # Update & install of paquets needed
 
 apt update && apt -y upgrade
-apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget mariadb-server
+apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget mariadb-server grub-common
 
 
 #!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
