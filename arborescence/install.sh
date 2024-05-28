@@ -151,9 +151,8 @@ apt update && apt -y upgrade
 
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
-#switch break seuelement pour le dernier et default pour erreur plus if a chaque fois par rapport aux file.ini
 
-case "$ActivationAggregation$ActivationNftables" in
+case "true -eq true" in
   "true")
     source .\interface/interface.sh >> resource/log
 
