@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo -e "[database]\n"
-
+# Install the package needed for the DataBase
 apt -y install mariadb-server
 
+# Create the user & the DataBase
 mysql  << EOL
 
   CREATE DATABASE openclonedb;

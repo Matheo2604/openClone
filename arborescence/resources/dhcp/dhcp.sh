@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#KEA a mettre en place
 #if [ "$variable" = true ]; then
 #    # Exécution du script si la condition est remplie
 #    echo "La variable est égale à true. Exécution du script..."
@@ -8,10 +9,11 @@
 #   
 #fi
 
-echo -e "[dhcp]\n"
 
+# Install the package needed for the DHCP
 apt -y install isc-dhcp-server
 
+# Copied and modification of the config file
 IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." " ") )
 sed -i \
   -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -23,6 +25,7 @@ sed -i \
   resources/dhcp/dhcpd.conf
 cp resources/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf
 
+# Ensures DHCP has access to the correct network interface
 chmod 666 /etc/default/isc-dhcp-server 
 echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
 chmod 644 /etc/default/isc-dhcp-server 

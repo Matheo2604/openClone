@@ -1,12 +1,16 @@
 #!/bin/bash
 
+# Install the package needed for the NFS
 apt -y install nfs-kernel-server
 
-mkdir /srv/nfs
+# Create the shared folder
+mkdir $PathNFS
 
-chown -R root:root /srv/nfs
-chmod 744 /srv/nfs
+# Give it the good rights
+chown -R root:root $PathNFS
+chmod 744 $PathNFS
 
+# Copied congif files
 sed -i \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
   -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \

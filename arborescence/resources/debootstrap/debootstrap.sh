@@ -1,16 +1,22 @@
 #!/bin/bash
 
-echo -e "[debootstrap]\n"
-
+# Install the package needed for the DeBootStrap
 apt -y install debootstrap
 
-mkdir /srv/nfs/debian
+# Create the folder that's well be used for the DeBootStrap
+mkdir $PathNFS/debian
 
+# Creation of the actual tree structure of an debian
 debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
-mount -t proc none /srv/nfs/debian/proc
-mount -o bind /dev /srv/nfs/debian/dev
 
-chroot /srv/nfs/debian /bin/bash << EOT
+# Mount the proc filesystem to access process information in the chroot
+mount -t proc none $PathNFS/debian/proc
+
+# Mount the host system's device directory into the chroot
+mount -o bind /dev $PathNFS/debian/dev
+
+# Install all the package needed and the actual kernel that's well be used to Boot in PXE mode
+chroot $PathNFS/debian /bin/bash << EOT
 
   apt update && apt full-upgrade
   apt install -y linux-image-amd64 partclone dialog sudo
@@ -21,7 +27,8 @@ chroot /srv/nfs/debian /bin/bash << EOT
 
 EOT
 
-cp resources/debootstrap/sudoers /srv/nfs/debian/etc/sudoers
-cp resources/debootstrap/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
-mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
-cp resources/debootstrap/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+# Copied the files used for the auto-logging
+cp resources/debootstrap/sudoers $PathNFS/debian/etc/sudoers
+cp resources/debootstrap/logind.conf $PathNFS/debian/etc/systemd/logind.conf
+mkdir $PathNFS/debian/etc/systemd/system/getty@tty1.service.d/
+cp resources/debootstrap/override.conf $PathNFS/debian/etc/systemd/system/getty@tty1.service.d/override.conf

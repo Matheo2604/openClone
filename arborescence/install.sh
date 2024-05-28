@@ -17,6 +17,7 @@
 # Add the possibility to have an ssl certificat with lets encrypt for an web server
 # MariaDB remote connexion
 # Change the range in dhcp file in funcition of question or file.ini 
+# Generate the grub.cfg
 
 echo -e "
                                           ______   __                               \n
