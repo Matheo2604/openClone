@@ -1,5 +1,5 @@
 #!/bin/bash
-
+    
     apt -y install ifenslave
     echo ""
     ip a && ip r

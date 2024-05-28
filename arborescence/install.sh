@@ -18,11 +18,6 @@
 # MariaDB remote connexion
 # Change the range in dhcp file in funcition of question or file.ini 
 
-# THING THAT CAN HELP FOR THE FUTUR
-# reset to clear the terminal
-# source <(grep = config.ini)
-# to debug dhcp do dhcpd -t -cf /etc/dhcp/dhcpd.conf
-
 echo -e "
                                           ______   __                               \n
                                          /      \ /  |                              \n
@@ -118,8 +113,8 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    log_prefix "aggregation" "aggregation/aggregation.sh" || { echo "something went wrong during the installation of the aggregation" && exit 1; }
-    log_prefix "nftables" "nftables/nftables.sh" || { echo "something went wrong during the installation of the nftable" && exit 1; }
+    source bash aggregation/aggregation.sh || { echo "something went wrong during the installation of the aggregation" && exit 1; }
+    source bash nftables/nftables.sh || { echo "something went wrong during the installation of the nftable" && exit 1; }
     sed -i \
     -e "s/{Interface_NAT}/$Interface_NAT/g" \
     -e "s/{IP_NAT}/$IP_NAT/g" \
@@ -135,7 +130,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "falsetrue")
 
-    log_prefix "nftables" "nftables/nftables.sh" || { echo "something went wrong during the installation of the nftables" && exit 1; }
+    source bash nftables/nftables.sh || { echo "something went wrong during the installation of the nftables" && exit 1; }
     sed -i \
     -e "s/{Interface_LAN}/$Interface_LAN/g" \
     -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -150,7 +145,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "truefalse")
     
-    log_prefix "aggregation/aggregation.sh" || { echo "something went wrong during the installation of the aggregation" && exit 1; }
+    source bash aggregation/aggregation.sh || { echo "something went wrong during the installation of the aggregation" && exit 1; }
     sed -i \
     -e "s/{Interface_LAN}/$Interface_LAN/g" \
     -e "s/{IP_LAN}/$IP_LAN/g" \
