@@ -111,18 +111,18 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    .\aggregation/aggregation.sh >> resource/log
-    .\nftables/nftables.sh >> resource/log
+    source .\aggregation/aggregation.sh >> resource/log
+    source .\nftables/nftables.sh >> resource/log
     ;;
 
   "falsetrue")
 
-    .\nftables/nftables.sh >> resource/log
+    source .\nftables/nftables.sh >> resource/log
     ;;
 
   "truefalse")
     
-    .\aggregation/aggregation.sh >> resource/log
+    source .\aggregation/aggregation.sh >> resource/log
     ;;
 
   "falsefalse")
@@ -154,31 +154,31 @@ apt update && apt -y upgrade
 
 case "$ActivationAggregation$ActivationNftables" in
   "true")
-.\interface/interface.sh >> resource/log
+source .\interface/interface.sh >> resource/log
 
   "true")
-.\dhcp/dhcp.sh >> resource/log
+source .\dhcp/dhcp.sh >> resource/log
 
   "true")
-.\dns/dns.sh >> resource/log
+source .\dns/dns.sh >> resource/log
 
   "true")
-.\database/database.sh >> resource/log
+source .\database/database.sh >> resource/log
 
   "true")
-.\http/http.sh >> resource/log
+source .\http/http.sh >> resource/log
 
   "true")
-.\nfs/nfs.sh >> resource/log
+source .\nfs/nfs.sh >> resource/log
 
   "true")
-.\tftp/tftp.sh >> resource/log
+source .\tftp/tftp.sh >> resource/log
 
   "true")
-.\debootstrap/debootstrap.sh >> resource/log
+source .\debootstrap/debootstrap.sh >> resource/log
 
   "true")
-.\core/core.sh >> resource/log
+source .\core/core.sh >> resource/log
 ;;
 
   *)
