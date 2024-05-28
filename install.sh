@@ -303,6 +303,7 @@ mysql  << EOL
   Hostname VARCHAR(30));
 
 EOL
+systemctl restart mariadb
 
 #mysql --password=1234 --user=root --host=localhost << eof
 #create database ownclouddb;

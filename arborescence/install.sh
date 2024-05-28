@@ -169,6 +169,6 @@ apt update && apt -y upgrade
 .\ tftp/tftp.sh
 
 # Restart every service so they take into account the new configuration
-systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables
+systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb
 
 echo "Fini "
