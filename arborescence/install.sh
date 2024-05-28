@@ -23,18 +23,6 @@
 # source <(grep = config.ini)
 # to debug dhcp do dhcpd -t -cf /etc/dhcp/dhcpd.conf
 
-# Verify if the id of the user is anything other then 0 (0 = root id) 
-if [ "$EUID" -ne 0 ];then
- echo "Start the script with root permission"
- exit 1
-fi
-
-# Verify if the user that start the script is in the openClone folder 
-cd "$(dirname $0)"  
-
-rm resources/log
-source <(grep = config.ini)
-
 echo -e "
                                           ______   __                               \n
                                          /      \ /  |                              \n
@@ -49,6 +37,17 @@ $$    $$/ $$    $$/ $$       |$$ |  $$ |$$    $$/ $$ |$$    $$/ $$ |  $$ |$$    
           $$ |                                                                      \n
           $$/                                                                       \n
 "
+# Verify if the id of the user is anything other then 0 (0 = root id) 
+if [ "$EUID" -ne 0 ];then
+ echo "Start the script with root permission"
+ exit 1
+fi
+
+# Verify if the user that start the script is in the openClone folder 
+cd "$(dirname $0)"  
+
+rm resources/log
+source <(grep = config.ini)
 
 Recuperer_IP_LAN(){
 
@@ -69,7 +68,6 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
         echo ""
         ip a && ip r
         echo ""
-
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
