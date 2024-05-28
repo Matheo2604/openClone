@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[database]\n"
+
 apt -y install mariadb-server
 
 mysql  << EOL

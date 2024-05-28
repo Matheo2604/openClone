@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[http]\n"
+
 apt -y install apache2 php mariadb-server
 
 cp ressource/www /srv/www

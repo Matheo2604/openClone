@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[debootstrap]\n"
+
 apt -y install debootstrap
 
 mkdir /srv/nfs/debian

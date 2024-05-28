@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[dns]\n"
+
 apt -y install bind9
 
 sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone

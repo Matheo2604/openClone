@@ -32,6 +32,8 @@ fi
 # Verify if the user that start the script is in the openClone folder 
 cd "$(dirname $0)"  
 
+rm log
+
 echo -e "
                                           ______   __                               \n
                                          /      \ /  |                              \n
@@ -118,18 +120,18 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    .\aggregation/aggregation.sh
-    .\nftables/nftables.sh
+    .\aggregation/aggregation.sh >> log
+    .\nftables/nftables.sh >> log
     ;;
 
   "falsetrue")
 
-    .\nftables/nftables.sh
+    .\nftables/nftables.sh >> log
     ;;
 
   "truefalse")
     
-    .\aggregation/aggregation.sh
+    .\aggregation/aggregation.sh >> log
     ;;
 
   "falsefalse")
@@ -158,15 +160,15 @@ apt update && apt -y upgrade
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-.\core/core.sh
-.\database/database.sh
-.\ debootstrap/debootstrap.sh
-.\dhcp/dhcp.sh
-.\ dns/dns.sh
-.\ http/http.sh
-.\ interface/interface.sh
-.\ nfs/nfs.sh
-.\ tftp/tftp.sh
+.\interface/interface.sh >> log
+.\dhcp/dhcp.sh >> log
+.\dns/dns.sh >> log
+.\database/database.sh >> log
+.\http/http.sh >> log
+.\nfs/nfs.sh >> log
+.\debootstrap/debootstrap.sh >> log
+.\tftp/tftp.sh >> log
+.\core/core.sh >> log
 
 # Restart every service so they take into account the new configuration
 systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb

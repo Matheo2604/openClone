@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[tftp]\n"
+
 apt -y install atftpd
 
 mkdir /srv/tftp

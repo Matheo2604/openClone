@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[aggregation]\n"
+
 sed -i \
     -e "s/{Interface_LAN}/$Interface_LAN/g" \
     -e "s/{IP_LAN}/$IP_LAN/g" \

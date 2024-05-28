@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[nfs]\n"
+
 apt -y install nfs-kernel-server
 
 mkdir /srv/nfs

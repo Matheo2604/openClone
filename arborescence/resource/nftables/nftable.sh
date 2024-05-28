@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[nftables]\n"
+
 echo "Vous avez choisi d'utiliser nftables."
     ip a && ip r
     Recuperer_IP_LAN

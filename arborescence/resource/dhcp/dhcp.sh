@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "[dhcp]\n"
+
 apt -y install isc-dhcp-server
 
 IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." " ") )
