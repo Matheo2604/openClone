@@ -60,10 +60,6 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
 }
 
-# Know if the user chose one of these fonctionality
-ActivationAggregation=false
-ActivationNftables=false
-
     read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
 
     if [ "$choice_aggregation" == "y" ]; then
