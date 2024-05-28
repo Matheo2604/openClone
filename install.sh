@@ -22,12 +22,15 @@
 # source <(grep = config.ini)
 # to debug dhcp do dhcpd -t -cf /etc/dhcp/dhcpd.conf
 
-if [ "$(id -u)" -eq 0 ]; then
- echo "Ce script ne doit pas être exécuté en tant que root."
-    exit 1
+# Verify if the id of the user is anything other then 0 (0 = root id) 
+if [ "$EUID" -ne 0 ];then
+ echo "Start the script with root permission"
+ exit 1
 fi
+
+# Verify if the user that start the script is in the openClone folder 
 cd "$(dirname $0)"  
-username="$(whoami)"
+
 
 echo -e "
                                           ______   __                                         \n
