@@ -80,8 +80,7 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
         echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n" 
-        # add here commandes to configure l'agréggation with the chosen interfaces
-
+    
     fi
 
     read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
