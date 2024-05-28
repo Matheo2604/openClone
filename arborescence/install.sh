@@ -33,6 +33,7 @@ fi
 cd "$(dirname $0)"  
 
 rm resource/log
+source <(grep = config.ini)
 
 echo -e "
                                           ______   __                               \n

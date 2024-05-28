@@ -29,6 +29,8 @@ if [ "$EUID" -ne 0 ];then
  exit 1
 fi
 
+source <(grep = config.ini)
+
 # Verify if the user that start the script is in the openClone folder 
 cd "$(dirname $0)"  
 
