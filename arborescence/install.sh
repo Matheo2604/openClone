@@ -178,53 +178,15 @@ apt update && apt -y upgrade
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-case "true -eq true" in
-  "true")
-    source .\interface/interface.sh >> resources/log
-
-  "true")
-    if [ "$ActivationDHCP" = true ]; then
-      source .\dhcp/dhcp.sh >> resources/log
-    fi
-
-  "true")
-    if [ "$ActivationDNS" = true ]; then
-      source .\dns/dns.sh >> resources/log
-    fi
-
-  "true")
-    if [ "$ActivationMariaDB" = true ]; then
-      source .\database/database.sh >> resources/log
-    fi
-
-  "true")
-    if [ "$ActivationHTTP" = true ]; then
-      source .\http/http.sh >> resources/log
-    fi
-
-  "true")
-    if [ "$ActivationNFS" = true ]; then
-      source .\nfs/nfs.sh >> resources/log
-    fi
-
-  "true")
-    if [ "$ActivationTFTP" = true ]; then
-      source .\tftp/tftp.sh >> resources/log
-    fi
-
-  "true")
-    if [ "$ActivationDeBootStrap" = true ]; then
-      source .\debootstrap/debootstrap.sh >> resources/log
-    fi
-
-  "true")
-      source .\core/core.sh >> resources/log
-  ;;
-
-  *)
-    echo "Something went wrong"
-    ;;
-esac
+source ./interface/interface.sh >> resources/log || echo "something went wrong during the initialization of the interface" && exit 1
+[ $ActivationDHCP ] && source ./dhcp/dhcp.sh >> resources/log || echo "something went wrong during the installation of the DHCP SERVER" && exit 1
+[ $ActivationDNS ] && source ./dns/dns.sh >> resources/log || echo "something went wrong during the installation of the DNS SERVER" && exit 1
+[ $ActivationMariaDB ] && source ./database/database.sh >> resources/log || echo "something went wrong during the installation of the DATABASE" && exit 1
+[ $ActivationHTTP ] && source ./http/http.sh >> resources/log || echo "something went wrong during the installation of the WEB SERVER" && exit 1
+[ $ActivationNFS ] && source ./nfs/nfs.sh >> resources/log || echo "something went wrong during the installation of the NFS SERVER" && exit 1
+[ $ActivationDeBootStrap ] && source ./debootstrap/debootstrap.sh >> resources/log || echo "something went wrong during the installation of the DEBOOTSTRAP" && exit 1
+[ $ActivationTFTP ] && source ./tftp/tftp.sh >> resources/log || echo "something went wrong during the installation of the TFTP SERVER" && exit 1
+source ./core/core.sh >> resources/log || echo "something went wrong during the creation of the BOOT FILE for linux" && exit 1
 
 # Restart every service so they take into account the new configuration
 echo -e "\n [Systemctl Restart]" 

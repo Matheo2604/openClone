@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo -e "[nfs]\n"
+function loginfo {
+  echo -e "[nfs] $0"
+}
+
+loginfo "Started"
 
 apt -y install nfs-kernel-server
 
