@@ -80,7 +80,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     if [ "$choice_aggregation" == "y" ]; then
         
         aggregation=true
-        sudo apt -y install ifenslave
+        apt -y install ifenslave
         echo ""
         Afficher_interfaces
         echo ""
@@ -110,7 +110,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
 
         # Configure Nftables
-        sudo sed -i \
+        sed -i \
           -e "s/{Interface_NAT}/$Interface_NAT/g" \
           -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
           -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
@@ -121,9 +121,9 @@ if [ $nombre_interfaces -gt 1 ]; then
           -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
           -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
           ressource/network/nftables.conf
-        sudo apt -y install nftables
-        sudo mv ressource/network/nftables.conf /etc/nftables.conf
-        sudo systemctl restart nftables
+        apt -y install nftables
+        mv ressource/network/nftables.conf /etc/nftables.conf
+        systemctl restart nftables
 
      elif [ "$choice_nftables" == "n" ]; then
         
@@ -146,7 +146,7 @@ fi
 case "$aggregation$nftables" in
   "truetrue")
 
-    sudo sed -i \
+    sed -i \
         -e "s/{Interface_LAN}/$Interface_LAN/g" \
         -e "s/{IP_LAN}/$IP_LAN/g" \
         -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
@@ -158,12 +158,12 @@ case "$aggregation$nftables" in
         -e "s/{interface2}/$interface2/g" \
         ressource/network/interfacesAggregationNftables
 
-    sudo mv ressource/network/interfacesAggregationNftables /etc/network/interfaces
+    mv ressource/network/interfacesAggregationNftables /etc/network/interfaces
     ;;
 
   "falsetrue")
 
-    sudo sed -i \
+    sed -i \
         -e "s/{Interface_LAN}/$Interface_LAN/g" \
         -e "s/{IP_LAN}/$IP_LAN/g" \
         -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
@@ -173,12 +173,12 @@ case "$aggregation$nftables" in
         -e "s/{Routeur}/$Routeur/g" \
         ressource/network/interfacesNftables
 
-    sudo mv ressource/network/interfacesNftables /etc/network/interfaces
+    mv ressource/network/interfacesNftables /etc/network/interfaces
     ;;
 
   "truefalse")
 
-    sudo sed -i \
+    sed -i \
         -e "s/{Interface_LAN}/$Interface_LAN/g" \
         -e "s/{IP_LAN}/$IP_LAN/g" \
         -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
@@ -187,19 +187,19 @@ case "$aggregation$nftables" in
         -e "s/{interface2}/$interface2/g" \
         ressource/network/interfacesAggregation
 
-    sudo mv ressource/network/interfacesAggregation /etc/network/interfaces
+    mv ressource/network/interfacesAggregation /etc/network/interfaces
     ;;
 
   "falsefalse")
 
-    sudo sed -i \
+    sed -i \
         -e "s/{Interface_LAN}/$Interface_LAN/g" \
         -e "s/{IP_LAN}/$IP_LAN/g" \
         -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
         -e "s/{Routeur}/$Routeur/g" \
         ressource/network/interfaces
 
-    sudo mv ressource/network/interfaces /etc/network/interfaces
+    mv ressource/network/interfaces /etc/network/interfaces
     ;;
 
   *)
@@ -207,14 +207,14 @@ case "$aggregation$nftables" in
     ;;
 esac
 
-sudo systemctl restart networking
-sudo ip r add default via $Routeur
+systemctl restart networking
+ip r add default via $Routeur
 
 
 # Update & install of paquets needed
 
-sudo apt update && sudo apt -y upgrade
-sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget mariadb-server
+apt update && apt -y upgrade
+apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-server wget mariadb-server
 
 
 #!!!!!!!!!!!wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
@@ -224,43 +224,43 @@ sudo apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-d
 
 # Configure TFTP server
 
-sudo mkdir /srv/tftp
-sudo mv ressource/serveur_transfert/atftpd /etc/default/atftpd
-sudo systemctl restart atftpd.service
-sudo chmod -R ugo+rw /srv/tftp/
+mkdir /srv/tftp
+mv ressource/serveur_transfert/atftpd /etc/default/atftpd
+systemctl restart atftpd.service
+chmod -R ugo+rw /srv/tftp/
 
 
 # Add Boot file for linux (vmlinuz & initrd & grub.cfg)
 
-sudo grub-mknetdir
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
-sudo mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
+grub-mknetdir
+sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
+mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
 
 #Configure NFS server
 
 
-sudo mkdir /srv/nfs
-sudo chown -R root:root /srv/nfs
-sudo chmod 744 /srv/nfs
-sudo sed -i \
+mkdir /srv/nfs
+chown -R root:root /srv/nfs
+chmod 744 /srv/nfs
+sed -i \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
   -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
   ressource/serveur_transfert/exports
-sudo mv ressource/serveur_transfert/exports /etc/exports
-sudo exportfs -a
-sudo systemctl restart nfs-kernel-server
+mv ressource/serveur_transfert/exports /etc/exports
+exportfs -a
+ systemctl restart nfs-kernel-server
 
 
 # Configure Debootstrap
 
 
-sudo mkdir /srv/nfs/debian
-sudo debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
-sudo mount -t proc none /srv/nfs/debian/proc
-sudo mount -o bind /dev /srv/nfs/debian/dev
-sudo chroot /srv/nfs/debian /bin/bash << EOT
+mkdir /srv/nfs/debian
+debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
+mount -t proc none /srv/nfs/debian/proc
+mount -o bind /dev /srv/nfs/debian/dev
+chroot /srv/nfs/debian /bin/bash << EOT
 
   apt update && apt full-upgrade
   apt install -y linux-image-amd64 partclone dialog sudo
@@ -271,29 +271,24 @@ sudo chroot /srv/nfs/debian /bin/bash << EOT
 
 EOT
 
-sudo mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
-sudo mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
-sudo mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
-sudo mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
+mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
+mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
+mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
 
 
 # Configure WEB server / HTTP
 
-sudo mv ressource/www /srv/www
-sudo mv ressource/serveur_transfert/site.conf /etc/apache2/sites-available/
-sudo a2dissite 000-default.conf
-sudo a2ensite site.conf
-sudo chown www-data /srv/www/ -Rf
-sudo systemctl restart apache2.service
+mv ressource/www /srv/www
+mv ressource/serveur_transfert/site.conf /etc/apache2/sites-available/
+a2dissite 000-default.conf
+a2ensite site.conf
+chown www-data /srv/www/ -Rf
+systemctl restart apache2.service
 
-
-# Configure MariaDB
-# Secured database 
-# Remote connexion
-#yes | sudo mysql_secure_installation 
 
 #PB
-sudo mysql  << EOL
+mysql  << EOL
 
   use mariadb 
   CREATE DATABASE openclone;
@@ -327,7 +322,7 @@ EOL
 #!!!! if no nftables routeur needed
 
 IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." " ") )
-sudo sed -i \
+sed -i \
   -e "s/{IP_LAN}/$IP_LAN/g" \
   -e "s/{Masque_LAN}/$Masque_LAN/g" \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
@@ -335,27 +330,27 @@ sudo sed -i \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dhcpd.conf
-sudo mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
-sudo chmod 666 /etc/default/isc-dhcp-server 
-sudo echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
-sudo chmod 644 /etc/default/isc-dhcp-server 
-sudo systemctl restart isc-dhcp-server.service
+mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
+chmod 666 /etc/default/isc-dhcp-server 
+echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
+chmod 644 /etc/default/isc-dhcp-server 
+systemctl restart isc-dhcp-server.service
 
 
 
 # Configuration DNS
 
 #PB
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
-sudo mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
-sudo sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/dns.fr.reverse
-sudo mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
-sudo sed -i \
+sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
+mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
+sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/dns.fr.reverse
+mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
+sed -i \
   -e "s/{ip0}/${IP_LAN_TABLEAU[0]}/g" \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dns/named.conf.local
-sudo mv ressource/dns/named.conf.local /etc/bind/named.conf.local
-sudo systemctl restart bind9.service
+mv ressource/dns/named.conf.local /etc/bind/named.conf.local
+systemctl restart bind9.service
 
 echo "Fini "

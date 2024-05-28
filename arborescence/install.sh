@@ -79,7 +79,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     if [ "$choice_aggregation" == "y" ]; then
         
         aggregation=true
-        sudo apt -y install ifenslave
+        apt -y install ifenslave
         echo ""
         Afficher_interfaces
         echo ""
@@ -109,7 +109,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
 
         # Configure Nftables
-        sudo sed -i \
+        sed -i \
           -e "s/{Interface_NAT}/$Interface_NAT/g" \
           -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
           -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
