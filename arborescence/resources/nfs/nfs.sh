@@ -12,7 +12,7 @@ chmod 744 /srv/nfs
 sed -i \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
   -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-  ressource/serveur_transfert/exports
-cp ressource/serveur_transfert/exports /etc/exports
+  resources/nfs/exports
+cp resources/nfs/exports /etc/exports
 
 exportfs -a

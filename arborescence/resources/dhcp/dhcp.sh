@@ -20,8 +20,8 @@ sed -i \
   -e "s/{ip0}/${IP_LAN_TABLEAU[0]}/g" \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
-  ressource/dhcpd.conf
-cp ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
+  resources/dhcp/dhcpd.conf
+cp resources/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf
 
 chmod 666 /etc/default/isc-dhcp-server 
 echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
