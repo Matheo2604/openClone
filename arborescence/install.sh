@@ -163,39 +163,37 @@ case "$ActivationAggregation$ActivationNftables" in
     fi
 
   "true")
-    if [ "$ActivationDHCP" = true ]; then
+    if [ "$ActivationDNS" = true ]; then
       source .\dns/dns.sh >> resource/log
     fi
 
   "true")
-    if [ "$ActivationDHCP" = true ]; then
+    if [ "$ActivationMariaDB" = true ]; then
       source .\database/database.sh >> resource/log
     fi
 
   "true")
-    if [ "$ActivationDHCP" = true ]; then
+    if [ "$ActivationHTTP" = true ]; then
       source .\http/http.sh >> resource/log
     fi
 
   "true")
-    if [ "$ActivationDHCP" = true ]; then
+    if [ "$ActivationNFS" = true ]; then
       source .\nfs/nfs.sh >> resource/log
     fi
 
   "true")
-    if [ "$ActivationDHCP" = true ]; then
+    if [ "$ActivationTFTP" = true ]; then
       source .\tftp/tftp.sh >> resource/log
     fi
 
   "true")
-    if [ "$ActivationDHCP" = true ]; then
+    if [ "$ActivationDeBootStrap" = true ]; then
       source .\debootstrap/debootstrap.sh >> resource/log
     fi
 
   "true")
-    if [ "$ActivationDHCP" = true ]; then
       source .\core/core.sh >> resource/log
-    fi
   ;;
 
   *)
