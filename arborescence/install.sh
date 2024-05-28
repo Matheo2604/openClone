@@ -155,43 +155,31 @@ apt update && apt -y upgrade
 case "$ActivationAggregation$ActivationNftables" in
   "true")
 .\interface/interface.sh >> resource/log
-    ;;
 
   "true")
 .\dhcp/dhcp.sh >> resource/log
-    ;;
 
   "true")
 .\dns/dns.sh >> resource/log
-    ;;
 
   "true")
 .\database/database.sh >> resource/log
-    ;;
 
   "true")
 .\http/http.sh >> resource/log
-    ;;
 
   "true")
 .\nfs/nfs.sh >> resource/log
-    ;;
 
   "true")
 .\tftp/tftp.sh >> resource/log
-    ;;
 
   "true")
 .\debootstrap/debootstrap.sh >> resource/log
-    ;;
 
   "true")
 .\core/core.sh >> resource/log
-    ;;
-  "true")
-
-    break
-    ;;
+;;
 
   *)
     echo "erreur"
