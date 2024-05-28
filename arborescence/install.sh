@@ -49,15 +49,6 @@ $$    $$/ $$    $$/ $$       |$$ |  $$ |$$    $$/ $$ |$$    $$/ $$ |  $$ |$$    
           $$/                                                                       \n
 "
 
-
-# Fonction to show network interface
-Afficher_interfaces() {
-
-    echo "Interfaces disponibles :"
-    ip -o link show | awk -F': ' '{print $2}'
-
-}
-
 Recuperer_IP_LAN(){
 
 read -p "Quelle est son interface pour son sous réseaux LAN (exemple: eth0):" Interface_LAN
@@ -79,7 +70,7 @@ ActivationNftables=false
         ActivationAggregation=true
         apt -y install ifenslave
         echo ""
-        Afficher_interfaces
+        ip a && ip r
         echo ""
 
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
