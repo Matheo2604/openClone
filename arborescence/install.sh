@@ -1,12 +1,9 @@
 #!/bin/bash
 
 # TO DO
-# Put every services in a different script
-# Make the file.ini useful
 # Implementation of KEA
 # Change the name of web site and lets the user chose it
 # in the readME need to presice to start the script with the commande bash
-# In the end restart every services then do a final check of these services
 # MariaDB create an account with random password by default
 # Doesn't need to start the script without having root permission by consequences ask the user to create an account 
 # Ask to change the password with an script when the first remote connexion is done DeBootStrap 
