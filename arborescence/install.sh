@@ -186,7 +186,7 @@ source ./interface/interface.sh >> resources/log || echo "something went wrong d
 [ $ActivationNFS ] && source ./nfs/nfs.sh >> resources/log || echo "something went wrong during the installation of the NFS SERVER" && exit 1
 [ $ActivationDeBootStrap ] && source ./debootstrap/debootstrap.sh >> resources/log || echo "something went wrong during the installation of the DEBOOTSTRAP" && exit 1
 [ $ActivationTFTP ] && source ./tftp/tftp.sh >> resources/log || echo "something went wrong during the installation of the TFTP SERVER" && exit 1
-source ./core/core.sh >> resources/log || echo "something went wrong during the creation of the BOOT FILE for linux" && exit 1
+source ./core/core.sh >> resources/log || echo "something went wrong during the creation of the BOOT FILES for linux" && exit 1
 
 # Restart every service so they take into account there new configuration
 echo -e "\n [Systemctl Restart]" 
