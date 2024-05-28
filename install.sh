@@ -16,6 +16,7 @@
 # Do the most importante script (the part of Elouen)
 # Add the possibility to have an ssl certificat with lets encrypt for an web server
 # MariaDB remote connexion
+# Change the range in dhcp file in funcition of question or file.ini 
 
 # THING THAT CAN HELP FOR THE FUTUR
 # reset to clear the terminal

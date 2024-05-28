@@ -16,10 +16,12 @@
 # Do the most importante script (the part of Elouen)
 # Add the possibility to have an ssl certificat with lets encrypt for an web server
 # MariaDB remote connexion
+# Change the range in dhcp file in funcition of question or file.ini 
 
 # THING THAT CAN HELP FOR THE FUTUR
 # reset to clear the terminal
 # source <(grep = config.ini)
+# to debug dhcp do dhcpd -t -cf /etc/dhcp/dhcpd.conf
 
 # Verify if the id of the user is anything other then 0 (0 = root id) 
 if [ "$EUID" -ne 0 ];then
@@ -64,21 +66,15 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
 }
 
-# Find the number of network interface
-nombre_interfaces=$(($(ip -o link show | wc -l) - 1))
-
 # Know if the user chose one of these fonctionality
-aggregation=false
-nftables=false
+ActivationAggregation=false
+ActivationNftables=false
 
-if [ $nombre_interfaces -gt 1 ]; then
-
-    echo "Il y a $nombre_interfaces interfaces réseau disponibles."
     read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
 
     if [ "$choice_aggregation" == "y" ]; then
         
-        aggregation=true
+        ActivationAggregation=true
         apt -y install ifenslave
         echo ""
         Afficher_interfaces
@@ -99,7 +95,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         echo "Vous avez choisi d'utiliser nftables."
         ip a
         Recuperer_IP_LAN
-        nftables=true
+        ActivationNftables=true
 
         read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
         read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
@@ -142,7 +138,7 @@ else
 
 fi
 
-case "$aggregation$nftables" in
+case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
     sed -i \
@@ -211,8 +207,8 @@ ip r add default via $Routeur
 
 # Update & install of paquets needed
 apt update && apt -y upgrade
-apt -y install wget
 
+# apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 .\aggregation/aggregation.sh
