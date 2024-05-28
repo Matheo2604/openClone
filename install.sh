@@ -308,10 +308,10 @@ EOL
 #flush privileges;
 #exit;
 #eof
-#cd /var/www/owncloud
+#cd /srv/www/openClone
 #sudo -u www-data php occ maintenance:install \
 #   --database "mysql" \
-#   --database-name "ownclouddb" \
+#   --database-name "openclonedb" \
 #   --database-user "root"\
 #   --database-pass "1234" \
 #   --admin-user "root" \
