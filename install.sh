@@ -208,7 +208,6 @@ case "$aggregation$nftables" in
 esac
 
 sudo systemctl restart networking
-sudo service networking restart
 sudo ip r add default via $Routeur
 
 

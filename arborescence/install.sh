@@ -207,7 +207,6 @@ case "$aggregation$nftables" in
 esac
 
 systemctl restart networking
-service networking restart
 ip r add default via $Routeur
 
 # Update & install of paquets needed
@@ -228,17 +227,7 @@ apt -y install wget
 .\ nftables/nftables.sh
 .\ tftp/tftp.sh
 
-# Add Boot file for linux (vmlinuz & initrd & grub.cfg)
-grub-mknetdir
-sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
-mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
-
-# test to restart all the services with only one commande 
-systemctl restart isc-dhcp-server.service
-systemctl restart bind9.service
-systemctl restart atftpd.service
-systemctl restart nfs-kernel-server
-systemctl restart apache2.service
-systemctl restart nftables
+# Restart every service so they take into account the new configuration
+systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables
 
 echo "Fini "
