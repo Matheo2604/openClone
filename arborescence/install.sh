@@ -151,17 +151,54 @@ apt update && apt -y upgrade
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 #switch break seuelement pour le dernier et default pour erreur plus if a chaque fois par rapport aux file.ini
+
+case "$ActivationAggregation$ActivationNftables" in
+  "true")
 .\interface/interface.sh >> resource/log
+    ;;
+
+  "true")
 .\dhcp/dhcp.sh >> resource/log
+    ;;
+
+  "true")
 .\dns/dns.sh >> resource/log
+    ;;
+
+  "true")
 .\database/database.sh >> resource/log
+    ;;
+
+  "true")
 .\http/http.sh >> resource/log
+    ;;
+
+  "true")
 .\nfs/nfs.sh >> resource/log
-.\debootstrap/debootstrap.sh >> resource/log
+    ;;
+
+  "true")
 .\tftp/tftp.sh >> resource/log
+    ;;
+
+  "true")
+.\debootstrap/debootstrap.sh >> resource/log
+    ;;
+
+  "true")
 .\core/core.sh >> resource/log
+    ;;
+  "true")
+
+    break
+    ;;
+
+  *)
+    echo "erreur"
+    ;;
+esac
 
 # Restart every service so they take into account the new configuration
 systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb
 
-echo "Fini "
+echo "Fini"
