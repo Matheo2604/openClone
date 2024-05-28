@@ -155,39 +155,56 @@ apt update && apt -y upgrade
 
 case "$ActivationAggregation$ActivationNftables" in
   "true")
-source .\interface/interface.sh >> resource/log
+    source .\interface/interface.sh >> resource/log
 
   "true")
-source .\dhcp/dhcp.sh >> resource/log
+    if [ "$ActivationDHCP" = true ]; then
+      source .\dhcp/dhcp.sh >> resource/log
+    fi
 
   "true")
-source .\dns/dns.sh >> resource/log
+    if [ "$ActivationDHCP" = true ]; then
+      source .\dns/dns.sh >> resource/log
+    fi
 
   "true")
-source .\database/database.sh >> resource/log
+    if [ "$ActivationDHCP" = true ]; then
+      source .\database/database.sh >> resource/log
+    fi
 
   "true")
-source .\http/http.sh >> resource/log
+    if [ "$ActivationDHCP" = true ]; then
+      source .\http/http.sh >> resource/log
+    fi
 
   "true")
-source .\nfs/nfs.sh >> resource/log
+    if [ "$ActivationDHCP" = true ]; then
+      source .\nfs/nfs.sh >> resource/log
+    fi
 
   "true")
-source .\tftp/tftp.sh >> resource/log
+    if [ "$ActivationDHCP" = true ]; then
+      source .\tftp/tftp.sh >> resource/log
+    fi
 
   "true")
-source .\debootstrap/debootstrap.sh >> resource/log
+    if [ "$ActivationDHCP" = true ]; then
+      source .\debootstrap/debootstrap.sh >> resource/log
+    fi
 
   "true")
-source .\core/core.sh >> resource/log
-;;
+    if [ "$ActivationDHCP" = true ]; then
+      source .\core/core.sh >> resource/log
+    fi
+  ;;
 
   *)
-    echo "erreur"
+    echo "Something went wrong"
     ;;
 esac
 
 # Restart every service so they take into account the new configuration
-systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb
+echo -e "\n [Systemctl Restart]" 
+systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb >> resource/log
 
-echo "Fini"
+echo "Done"

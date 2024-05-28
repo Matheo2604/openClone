@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#if [ "$variable" = true ]; then
+#    # Exécution du script si la condition est remplie
+#    echo "La variable est égale à true. Exécution du script..."
+#    # Ajoutez ici les commandes que vous souhaitez exécuter
+#elif [ "$variable" = true ]; then
+#   
+#fi
+
 echo -e "[dhcp]\n"
 
 apt -y install isc-dhcp-server
