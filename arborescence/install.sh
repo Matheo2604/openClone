@@ -110,16 +110,46 @@ case "$ActivationAggregation$ActivationNftables" in
 
     source .\aggregation/aggregation.sh >> resources/log
     source .\nftables/nftables.sh >> resources/log
+    sed -i \
+    -e "s/{Interface_NAT}/$Interface_NAT/g" \
+    -e "s/{IP_NAT}/$IP_NAT/g" \
+    -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
+    -e "s/{Routeur}/$Routeur/g" \
+    -e "s/{IP_LAN}/$IP_LAN/g" \
+    -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+    -e "s/{interface1}/$interface1/g" \
+    -e "s/{interface2}/$interface2/g" \
+    ressource/network/interfacesAggregationNftables
+    cp ressource/network/interfacesAggregationNftables /etc/network/interfaces
     ;;
 
   "falsetrue")
 
     source .\nftables/nftables.sh >> resources/log
+    sed -i \
+    -e "s/{Interface_LAN}/$Interface_LAN/g" \
+    -e "s/{IP_LAN}/$IP_LAN/g" \
+    -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+    -e "s/{Interface_NAT}/$Interface_NAT/g" \
+    -e "s/{IP_NAT}/$IP_NAT/g" \
+    -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
+    -e "s/{Routeur}/$Routeur/g" \
+    ressource/network/interfacesNftables
+    cp ressource/network/interfacesNftables /etc/network/interfaces
     ;;
 
   "truefalse")
     
     source .\aggregation/aggregation.sh >> resources/log
+    sed -i \
+    -e "s/{Interface_LAN}/$Interface_LAN/g" \
+    -e "s/{IP_LAN}/$IP_LAN/g" \
+    -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+    -e "s/{Routeur}/$Routeur/g" \
+    -e "s/{interface1}/$interface1/g" \
+    -e "s/{interface2}/$interface2/g" \
+    ressource/network/interfacesAggregation
+    cp ressource/network/interfacesAggregation /etc/network/interfaces
     ;;
 
   "falsefalse")
@@ -135,7 +165,8 @@ case "$ActivationAggregation$ActivationNftables" in
     ;;
 
   *)
-    echo "erreur"
+    echo "something went wrong"
+    exit 1
     ;;
 esac
 

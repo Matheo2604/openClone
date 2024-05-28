@@ -28,14 +28,3 @@ echo "Vous avez choisi d'utiliser nftables."
     apt -y install nftables
     cp ressource/network/nftables.conf /etc/nftables.conf
 
-sed -i \
-    -e "s/{Interface_LAN}/$Interface_LAN/g" \
-    -e "s/{IP_LAN}/$IP_LAN/g" \
-    -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-    -e "s/{Interface_NAT}/$Interface_NAT/g" \
-    -e "s/{IP_NAT}/$IP_NAT/g" \
-    -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
-    -e "s/{Routeur}/$Routeur/g" \
-    ressource/network/interfacesNftables
-        
-cp ressource/network/interfacesNftables /etc/network/interfaces
