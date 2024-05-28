@@ -32,7 +32,7 @@ fi
 # Verify if the user that start the script is in the openClone folder 
 cd "$(dirname $0)"  
 
-rm resource/log
+rm resources/log
 source <(grep = config.ini)
 
 echo -e "
@@ -108,18 +108,18 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    source .\aggregation/aggregation.sh >> resource/log
-    source .\nftables/nftables.sh >> resource/log
+    source .\aggregation/aggregation.sh >> resources/log
+    source .\nftables/nftables.sh >> resources/log
     ;;
 
   "falsetrue")
 
-    source .\nftables/nftables.sh >> resource/log
+    source .\nftables/nftables.sh >> resources/log
     ;;
 
   "truefalse")
     
-    source .\aggregation/aggregation.sh >> resource/log
+    source .\aggregation/aggregation.sh >> resources/log
     ;;
 
   "falsefalse")
@@ -150,45 +150,45 @@ apt update && apt -y upgrade
 
 case "true -eq true" in
   "true")
-    source .\interface/interface.sh >> resource/log
+    source .\interface/interface.sh >> resources/log
 
   "true")
     if [ "$ActivationDHCP" = true ]; then
-      source .\dhcp/dhcp.sh >> resource/log
+      source .\dhcp/dhcp.sh >> resources/log
     fi
 
   "true")
     if [ "$ActivationDNS" = true ]; then
-      source .\dns/dns.sh >> resource/log
+      source .\dns/dns.sh >> resources/log
     fi
 
   "true")
     if [ "$ActivationMariaDB" = true ]; then
-      source .\database/database.sh >> resource/log
+      source .\database/database.sh >> resources/log
     fi
 
   "true")
     if [ "$ActivationHTTP" = true ]; then
-      source .\http/http.sh >> resource/log
+      source .\http/http.sh >> resources/log
     fi
 
   "true")
     if [ "$ActivationNFS" = true ]; then
-      source .\nfs/nfs.sh >> resource/log
+      source .\nfs/nfs.sh >> resources/log
     fi
 
   "true")
     if [ "$ActivationTFTP" = true ]; then
-      source .\tftp/tftp.sh >> resource/log
+      source .\tftp/tftp.sh >> resources/log
     fi
 
   "true")
     if [ "$ActivationDeBootStrap" = true ]; then
-      source .\debootstrap/debootstrap.sh >> resource/log
+      source .\debootstrap/debootstrap.sh >> resources/log
     fi
 
   "true")
-      source .\core/core.sh >> resource/log
+      source .\core/core.sh >> resources/log
   ;;
 
   *)
@@ -198,6 +198,6 @@ esac
 
 # Restart every service so they take into account the new configuration
 echo -e "\n [Systemctl Restart]" 
-systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb >> resource/log
+systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb >> resources/log
 
 echo "Done"
