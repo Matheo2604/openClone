@@ -11,7 +11,7 @@ sed -i \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dhcpd.conf
-mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
+cp ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 
 chmod 666 /etc/default/isc-dhcp-server 
 echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 

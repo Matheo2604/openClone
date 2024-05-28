@@ -19,7 +19,7 @@ chroot /srv/nfs/debian /bin/bash << EOT
 
 EOT
 
-mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
-mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
+cp ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
+cp ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
-mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+cp ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf

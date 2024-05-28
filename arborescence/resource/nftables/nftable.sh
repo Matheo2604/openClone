@@ -24,7 +24,7 @@ echo "Vous avez choisi d'utiliser nftables."
         -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
         ressource/network/nftables.conf
     apt -y install nftables
-    mv ressource/network/nftables.conf /etc/nftables.conf
+    cp ressource/network/nftables.conf /etc/nftables.conf
 
 sed -i \
     -e "s/{Interface_LAN}/$Interface_LAN/g" \
@@ -36,4 +36,4 @@ sed -i \
     -e "s/{Routeur}/$Routeur/g" \
     ressource/network/interfacesNftables
         
-mv ressource/network/interfacesNftables /etc/network/interfaces
+cp ressource/network/interfacesNftables /etc/network/interfaces

@@ -123,7 +123,7 @@ if [ $nombre_interfaces -gt 1 ]; then
           -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
           ressource/network/nftables.conf
         apt -y install nftables
-        mv ressource/network/nftables.conf /etc/nftables.conf
+        cp ressource/network/nftables.conf /etc/nftables.conf
         systemctl restart nftables
 
      elif [ "$choice_nftables" == "n" ]; then
@@ -159,7 +159,7 @@ case "$aggregation$nftables" in
         -e "s/{interface2}/$interface2/g" \
         ressource/network/interfacesAggregationNftables
 
-    mv ressource/network/interfacesAggregationNftables /etc/network/interfaces
+    cp ressource/network/interfacesAggregationNftables /etc/network/interfaces
     ;;
 
   "falsetrue")
@@ -174,7 +174,7 @@ case "$aggregation$nftables" in
         -e "s/{Routeur}/$Routeur/g" \
         ressource/network/interfacesNftables
 
-    mv ressource/network/interfacesNftables /etc/network/interfaces
+    cp ressource/network/interfacesNftables /etc/network/interfaces
     ;;
 
   "truefalse")
@@ -188,7 +188,7 @@ case "$aggregation$nftables" in
         -e "s/{interface2}/$interface2/g" \
         ressource/network/interfacesAggregation
 
-    mv ressource/network/interfacesAggregation /etc/network/interfaces
+    cp ressource/network/interfacesAggregation /etc/network/interfaces
     ;;
 
   "falsefalse")
@@ -200,7 +200,7 @@ case "$aggregation$nftables" in
         -e "s/{Routeur}/$Routeur/g" \
         ressource/network/interfaces
 
-    mv ressource/network/interfaces /etc/network/interfaces
+    cp ressource/network/interfaces /etc/network/interfaces
     ;;
 
   *)
@@ -225,7 +225,7 @@ apt -y install apache2 atftpd nfs-kernel-server debootstrap php bind9 isc-dhcp-s
 # Configure TFTP server
 
 mkdir /srv/tftp
-mv ressource/serveur_transfert/atftpd /etc/default/atftpd
+cp ressource/serveur_transfert/atftpd /etc/default/atftpd
 systemctl restart atftpd.service
 chmod -R ugo+rw /srv/tftp/
 
@@ -234,7 +234,7 @@ chmod -R ugo+rw /srv/tftp/
 
 grub-mknetdir
 sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
-mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
+cp ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
 
 
 
@@ -248,7 +248,7 @@ sed -i \
   -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
   -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
   ressource/serveur_transfert/exports
-mv ressource/serveur_transfert/exports /etc/exports
+cp ressource/serveur_transfert/exports /etc/exports
 exportfs -a
  systemctl restart nfs-kernel-server
 
@@ -272,16 +272,16 @@ chroot /srv/nfs/debian /bin/bash << EOT
 EOT
 # PASSWORD AND PATH TO SCRIPT HAVE TO CHANGE
 
-mv ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
-mv ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
+cp ressource/linux_maintenance/sudoers /srv/nfs/debian/etc/sudoers
+cp ressource/linux_maintenance/logind.conf /srv/nfs/debian/etc/systemd/logind.conf
 mkdir /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/
-mv ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+cp ressource/linux_maintenance/override.conf /srv/nfs/debian/etc/systemd/system/getty@tty1.service.d/override.conf
 
 
 # Configure WEB server / HTTP
 
-mv ressource/www /srv/www
-mv ressource/serveur_transfert/site.conf /etc/apache2/sites-available/
+cp ressource/www /srv/www
+cp ressource/serveur_transfert/site.conf /etc/apache2/sites-available/
 a2dissite 000-default.conf
 a2ensite site.conf
 chown www-data /srv/www/ -Rf
@@ -331,7 +331,7 @@ sed -i \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dhcpd.conf
-mv ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
+cp ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
 chmod 666 /etc/default/isc-dhcp-server 
 echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
 chmod 644 /etc/default/isc-dhcp-server 
@@ -343,9 +343,9 @@ systemctl restart isc-dhcp-server.service
 
 #PB
 sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/site22.fr.zone
-mv ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
+cp ressource/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
 sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/dns/dns.fr.reverse
-mv ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
+cp ressource/dns/dns.fr.reverse /var/cache/bind/dns.fr.reverse
 sed -i \
   -e "s/{ip0}/${IP_LAN_TABLEAU[0]}/g" \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \

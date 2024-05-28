@@ -9,4 +9,4 @@ sed -i \
     -e "s/{interface2}/$interface2/g" \
     ressource/network/interfacesAggregation
 
-mv ressource/network/interfacesAggregation /etc/network/interfaces
+cp ressource/network/interfacesAggregation /etc/network/interfaces

@@ -141,7 +141,7 @@ case "$ActivationAggregation$ActivationNftables" in
         -e "s/{Routeur}/$Routeur/g" \
         ressource/network/interfaces
 
-    mv ressource/network/interfaces /etc/network/interfaces
+    cp ressource/network/interfaces /etc/network/interfaces
     ;;
 
   *)

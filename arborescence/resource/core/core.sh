@@ -4,4 +4,4 @@
 apt -y install grub-common
 grub-mknetdir
 sed -i "s/{IP_LAN}/$IP_LAN/g" ressource/grub.cfg
-mv ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
+cp ressource/grub.cfg /srv/tftp/boot/grub/grub.cfg
