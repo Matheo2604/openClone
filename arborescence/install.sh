@@ -19,6 +19,7 @@
 # Generate the grub.cfg
 # Dropbox iso + wget iso url via the web interface
 
+clear
 echo -e '
                                           ______   __
                                          /      \ /  |
