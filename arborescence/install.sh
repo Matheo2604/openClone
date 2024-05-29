@@ -224,9 +224,9 @@ system(){
   echo "restarting serices ..."
   # Restart every services so they take into account there new configuration
   systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb
-  if [ "$Kea" = true ]; then
+  if [ $Kea ]; then
   systemctl restart kea-dhcp4-server
-  elif [ "$Isc" = true ]; then
+  elif [ $Isc ]; then
   systemctl restart isc-dhcp-server
   fi
   echo "services restart ..."
