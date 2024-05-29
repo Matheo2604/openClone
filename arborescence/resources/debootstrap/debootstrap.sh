@@ -35,3 +35,10 @@ cp resources/debootstrap/override.conf $PathNFS/debian/etc/systemd/system/getty@
 
 mkdir $PathNFS/debian$PathNFS
 cp resources/scripts/* $PathSCRIPTS
+
+# if the option to skip question is active then the users will be asked to change the maintenance os password when the first connexion is made
+if [ $SkipQuestion ]; then
+  sed -i "s/{UserDebootStrap}/$UserDebootStrap/g" resources/debootstrap/first_logging.sh
+  cp "/home/$UserDebootStrap/.bashrc" "/home/$UserDebootStrap/.bashrc.tmp"
+  echo "bash FirstLogging" >> .bashrc
+fi

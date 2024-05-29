@@ -7,5 +7,9 @@ apt-get -y install grub-common
 grub-mknetdir
 
 # Basic config of the grub.cfg to Boot on the openClone OS
-sed -i "s/{IP_LAN}/$IP_LAN/g" resources/core/grub.cfg
+sed -i \
+    -e "s/{IP_LAN}/$IP_LAN/g" \ 
+    -e "s/{PathNFS}/$PathNFS/g" \
+    resources/core/grub.cfg
+
 cp resources/core/grub.cfg $PathTFTP/boot/grub/grub.cfg

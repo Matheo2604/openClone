@@ -44,6 +44,8 @@ elif [ "$Isc" = true ]; then
     -e "s/{MinIP}/${MinIP}/g" \
     -e "s/{PathTFTP}/${PathTFTP}/g" \
     resources/dhcp/dhcpd.conf
+
+  cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.old
   cp resources/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf
 
   # Ensures DHCP has access to the correct network interface

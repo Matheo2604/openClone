@@ -14,4 +14,5 @@ sed -i \
   -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   resources/dns/named.conf.local
+  
 cp resources/dns/named.conf.local /etc/bind/named.conf.local
