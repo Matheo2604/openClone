@@ -5,6 +5,7 @@
 # MariaDB possibility to create an account with random password by default
 # Change the name of web site and lets the user chose it
 # in the readME need to presice to start the script with the commande bash
+# Change Debian folder for the nfs and interface wrong naming 
 
 
 # THING TO DO BUT NO THE PRIORITIES

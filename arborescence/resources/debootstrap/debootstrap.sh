@@ -7,7 +7,7 @@ apt -y install debootstrap
 mkdir $PathNFS/debian
 
 # Creation of the actual tree structure of an debian
-debootstrap --arch amd64 bookworm /srv/nfs/debian http://ftp.fr.debian.org/debian
+debootstrap --arch amd64 bookworm $PathNFS/debian http://ftp.fr.debian.org/debian
 
 # Mount the proc filesystem to access process information in the chroot
 mount -t proc none $PathNFS/debian/proc
