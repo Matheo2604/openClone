@@ -51,9 +51,9 @@ log_prefix() {
     local prefix=$1
     local script=$2
     {
-        echo "[$prefix] Beginning of $script"
+        echo "Beginning of $script"
         source "$script"
-        echo "[$prefix] End of $script"
+        echo "End of $script"
     } 2>&1 | sed "s/^/[$prefix] /" >> "$log_file"
 }
 
