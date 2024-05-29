@@ -96,7 +96,6 @@ fi
 
 if [ "$choice_nftables" == "y" ]; then
 
-    echo "Vous avez choisi d'utiliser nftables."
     ip a && ip r
     Recuperer_IP_LAN
     ActivationNftables=true
