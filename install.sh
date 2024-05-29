@@ -8,22 +8,22 @@
 # in the readME need to presice to start the script with the commande bash
 # In the end restart every services then do a final check of these services
 # MariaDB create an account with random password by default
-# Doesn't need to start the script without having root permission by consequences ask the user to create an account 
-# Ask to change the password with an script when the first remote connexion is done DeBootStrap 
+# Doesn't need to start the script without having root permission by consequences ask the user to create an account
+# Ask to change the password with an script when the first remote connexion is done DeBootStrap
 
-# THING TO DO BUT NO THE PRIORITIES 
-# CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY  
+# THING TO DO BUT NO THE PRIORITIES
+# CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY
 # Do the most importante script (the part of Elouen)
 # Add the possibility to have an ssl certificat with lets encrypt for an web server
 # MariaDB remote connexion
-# Change the range in dhcp file in funcition of question or file.ini 
+# Change the range in dhcp file in funcition of question or file.ini
 
 # THING THAT CAN HELP FOR THE FUTUR
 # reset to clear the terminal
 # source <(grep = config.ini)
 # to debug dhcp do dhcpd -t -cf /etc/dhcp/dhcpd.conf
 
-# Verify if the id of the user is anything other then 0 (0 = root id) 
+# Verify if the id of the user is anything other then 0 (0 = root id)
 if [ "$EUID" -ne 0 ];then
  echo "Start the script with root permission"
  exit 1
@@ -31,24 +31,24 @@ fi
 
 source <(grep = config.ini)
 
-# Verify if the user that start the script is in the openClone folder 
-cd "$(dirname $0)"  
+# Verify if the user that start the script is in the openClone folder
+cd "$(dirname $0)"
 
 
-echo -e "
-                                          ______   __                               \n
-                                         /      \ /  |                              \n
-  ______    ______    ______   _______  /$$$$$$  |$$ |  ______   _______    ______  \n
- /      \  /      \  /      \ /       \ $$ |  $$/ $$ | /      \ /       \  /      \ \n
-/$$$$$$  |/$$$$$$  |/$$$$$$  |$$$$$$$  |$$ |      $$ |/$$$$$$  |$$$$$$$  |/$$$$$$  |\n
-$$ |  $$ |$$ |  $$ |$$    $$ |$$ |  $$ |$$ |   __ $$ |$$ |  $$ |$$ |  $$ |$$    $$ |\n
-$$ \__$$ |$$ |__$$ |$$$$$$$$/ $$ |  $$ |$$ \__/  |$$ |$$ \__$$ |$$ |  $$ |$$$$$$$$/ \n
-$$    $$/ $$    $$/ $$       |$$ |  $$ |$$    $$/ $$ |$$    $$/ $$ |  $$ |$$       |\n
- $$$$$$/  $$$$$$$/   $$$$$$$/ $$/   $$/  $$$$$$/  $$/  $$$$$$/  $$/   $$/  $$$$$$$/ \n
-          $$ |                                                                      \n
-          $$ |                                                                      \n
-          $$/                                                                       \n
-"
+echo -e '
+                                          ______   __
+                                         /      \ /  |
+  ______    ______    ______   _______  /$$$$$$  |$$ |  ______   _______    ______
+ /      \  /      \  /      \ /       \ $$ |  $$/ $$ | /      \ /       \  /      \
+/$$$$$$  |/$$$$$$  |/$$$$$$  |$$$$$$$  |$$ |      $$ |/$$$$$$  |$$$$$$$  |/$$$$$$  |
+$$ |  $$ |$$ |  $$ |$$    $$ |$$ |  $$ |$$ |   __ $$ |$$ |  $$ |$$ |  $$ |$$    $$ |
+$$ \__$$ |$$ |__$$ |$$$$$$$$/ $$ |  $$ |$$ \__/  |$$ |$$ \__$$ |$$ |  $$ |$$$$$$$$/
+$$    $$/ $$    $$/ $$       |$$ |  $$ |$$    $$/ $$ |$$    $$/ $$ |  $$ |$$       |
+ $$$$$$/  $$$$$$$/   $$$$$$$/ $$/   $$/  $$$$$$/  $$/  $$$$$$/  $$/   $$/  $$$$$$$/
+          $$ |
+          $$ |
+          $$/
+'
 
 # Fonction to show network interface
 Afficher_interfaces() {
@@ -81,7 +81,7 @@ if [ $nombre_interfaces -gt 1 ]; then
     read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
 
     if [ "$choice_aggregation" == "y" ]; then
-        
+
         aggregation=true
         apt -y install ifenslave
         echo ""
@@ -91,7 +91,7 @@ if [ $nombre_interfaces -gt 1 ]; then
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
-        echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n" 
+        echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n"
         # add here commandes to configure l'agréggation with the chosen interfaces
 
     fi
@@ -129,14 +129,14 @@ if [ $nombre_interfaces -gt 1 ]; then
         systemctl restart nftables
 
      elif [ "$choice_nftables" == "n" ]; then
-        
+
         echo ""
         ip a
         echo ""
         Recuperer_IP_LAN
-        
+
         read -p "Quelle est l'IP du routeur du réseaux :" Routeur
-        
+
     fi
 
 else
@@ -334,9 +334,9 @@ sed -i \
   -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \
   ressource/dhcpd.conf
 cp ressource/dhcpd.conf /etc/dhcp/dhcpd.conf
-chmod 666 /etc/default/isc-dhcp-server 
-echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server 
-chmod 644 /etc/default/isc-dhcp-server 
+chmod 666 /etc/default/isc-dhcp-server
+echo -e "INTERFACESv4=\""$Interface_LAN"\"\nINTERFACESv6=\"\"" > /etc/default/isc-dhcp-server
+chmod 644 /etc/default/isc-dhcp-server
 systemctl restart isc-dhcp-server.service
 
 
