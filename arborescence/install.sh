@@ -13,7 +13,7 @@
 # THING TO DO BUT NO THE PRIORITIES
 # CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY
 # Do the most importante script (the part of Elouen)
-# Add the possibility to have an ssl certificat with lets encrypt for an web server
+# Add the possibility to have an ssl certificat with lets encrypt for the web server
 # MariaDB remote connexion
 # Change the range in dhcp file in funcition of question or file.ini
 # Generate the grub.cfg
