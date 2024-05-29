@@ -182,18 +182,30 @@ apt update && apt -y upgrade
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-log_prefix "interfaces" "interface/interface.sh" || { echo "something went wrong during the initialization of the interface" && exit 1; }
-[ $ActivationDHCP ] && log_prefix "dhcp" "dhcp/dhcp.sh" || { echo "something went wrong during the installation of the DHCP SERVER" && exit 1; }
-[ $ActivationDNS ] && log_prefix "dns" "dns/dns.sh" || { echo "something went wrong during the installation of the DNS SERVER" && exit 1; }
-[ $ActivationMariaDB ] && log_prefix "database" "database/database.sh" || { echo "something went wrong during the installation of the DATABASE" && exit 1; }
-[ $ActivationHTTP ] && log_prefix "http" "http/http.sh" || { echo "something went wrong during the installation of the WEB SERVER" && exit 1; }
-[ $ActivationNFS ] && log_prefix "nfs" "nfs/nfs.sh" || { echo "something went wrong during the installation of the NFS SERVER" && exit 1; }
-[ $ActivationDeBootStrap ] && log_prefix "debootstrap" "debootstrap/debootstrap.sh" || { echo "something went wrong during the installation of the DEBOOTSTRAP" && exit 1; }
-[ $ActivationTFTP ] && log_prefix "tftp" "tftp/tftp.sh" || { echo "something went wrong during the installation of the TFTP SERVER" && exit 1; }
-log_prefix "core" "core/core.sh" || { echo "something went wrong during the creation of the BOOT FILES for linux" && exit 1; }
+log_prefix "interfaces" "interface/interface.sh" || { echo -e "something went wrong during the initialization of the interface\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationDHCP ] && log_prefix "dhcp" "dhcp/dhcp.sh" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationDNS ] && log_prefix "dns" "dns/dns.sh" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationMariaDB ] && log_prefix "database" "database/database.sh" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationHTTP ] && log_prefix "http" "http/http.sh" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationNFS ] && log_prefix "nfs" "nfs/nfs.sh" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationDeBootStrap ] && log_prefix "debootstrap" "debootstrap/debootstrap.sh" || { echo -e "something went wrong during the installation of the DEBOOTSTRAP\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationTFTP ] && log_prefix "tftp" "tftp/tftp.sh" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+log_prefix "core" "core/core.sh" || { echo -e"something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
 
-# Restart every service so they take into account there new configuration
-echo -e "\n [Systemctl Restart]" 
-systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb >> resources/log
+system(){
+  {
+  echo "restarting serices ..."
+  # Restart every services so they take into account there new configuration
+  systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb 
+  if [ "$Kea" = true ]; then
+  systemctl restart kea-dhcp4-server
+  elif [ "$isc-dhcp" = true ]; then
+  systemctl restart isc-dhcp-server
+  fi
+  echo "services restart ..."
+  }2>&1 | sed "s/^/[systemctl] /" >> "$log_file"
+}
+
+system || { echo -e "something went wrong during the restart of the services\nGo see the log on /var/log/openClone" && exit 1; }
 
 echo "Done"
