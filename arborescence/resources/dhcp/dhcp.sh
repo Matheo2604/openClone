@@ -20,6 +20,7 @@ if [ "$Kea" = true ]; then
     -e "s/{MinIP}/${MinIP}/g" \
     -e "s/{PathTFTP}/${PathTFTP}/g" \
     resources/dhcp/kea-dhcp4.conf
+  cp /etc/kea/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf.old
   cp resources/dhcp/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf
 
 systemctl start kea-dhcp4-server
