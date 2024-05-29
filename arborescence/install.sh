@@ -212,31 +212,31 @@ echo -e "\nInstallation of the DHCP server\n"
 
 [ $ActivationDHCP ] && log_prefix "dhcp" "resources/dhcp/dhcp.sh" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "DHCP installed & configure correctly\nInstallation of the DNS server\n"
+echo -e "DHCP installed & configure correctly\n\nInstallation of the DNS server\n"
 
 [ $ActivationDNS ] && log_prefix "dns" "resources/dns/dns.sh" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "DNS installed & configure correctly\nInstallation of the DataBase server\n"
+echo -e "DNS installed & configure correctly\n\nInstallation of the DataBase server\n"
 
 [ $ActivationMariaDB ] && log_prefix "database" "resources/database/database.sh" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "Database installed & configure correctly\nInstallation of the Web Server\n"
+echo -e "Database installed & configure correctly\n\nInstallation of the Web Server\n"
 
 [ $ActivationHTTP ] && log_prefix "http" "resources/http/http.sh" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "Web Server installed & configure correctly\nInstallation of the NFS server\n"
+echo -e "Web Server installed & configure correctly\n\nInstallation of the NFS server\n"
 
 [ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "NFS installed & configure correctly\nInstallation of the DeBootStrap service\n"
+echo -e "NFS installed & configure correctly\n\nInstallation of the DeBootStrap service\n"
 
 [ $ActivationDeBootStrap ] && log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" || { echo -e "something went wrong during the installation of the DEBOOTSTRAP\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "DeBootStrap installed & configure correctly\nInstallation of the TFTP server\n"
+echo -e "DeBootStrap installed & configure correctly\n\nInstallation of the TFTP server\n"
 
 [ $ActivationTFTP ] && log_prefix "tftp" "resources/tftp/tftp.sh" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "TFTP installed & configure correctly\nCreation of the Boot files for the  maintenace OS\n"
+echo -e "TFTP installed & configure correctly\n\nCreation of the Boot files for the  maintenace OS\n"
 
 log_prefix "core" "resources/core/core.sh" || { echo -e"something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
 
