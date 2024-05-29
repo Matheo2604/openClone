@@ -258,7 +258,7 @@ system(){
 
   fi
 
-  echo "services restart ..."
+  echo "services restarted ..."
 
   }2>&1 | sed "s/^/[systemctl] /" >> "$log_file"
 
