@@ -16,6 +16,7 @@
 # MariaDB remote connexion
 # Change the range in dhcp file in funcition of question or file.ini 
 # Generate the grub.cfg
+# Dropbox iso + wget iso url via the web interface
 
 echo -e "
                                           ______   __                               \n
