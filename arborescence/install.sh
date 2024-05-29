@@ -126,7 +126,7 @@ if [ "$choice_nftables" == "y" ]; then
 else
 
     echo ""
-    ip a
+    ip a && ip r
     echo ""
     Recuperer_IP_LA
     read -p "Quelle est l'IP du routeur du réseaux :" Routeur
