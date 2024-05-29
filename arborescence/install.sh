@@ -264,7 +264,7 @@ system(){
 
 }
 
-system || { echo -e "something went wrong during the restart of the services\nGo see the log on /var/log/openClone" && exit 1 }
+system || { echo -e "something went wrong during the restart of the services\nGo see the log on /var/log/openClone" && exit 1; }
 
 
 [ $Kea ] && services=("kea-dhcp4-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
