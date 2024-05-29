@@ -36,8 +36,10 @@ $$    $$/ $$    $$/ $$       |$$ |  $$ |$$    $$/ $$ |$$    $$/ $$ |  $$ |$$    
 
 # Verify if the id of the user is anything other then 0 (0 = root id)
 if [ "$EUID" -ne 0 ];then
+
  echo "Start the script with root permission"
  exit 1
+
 fi
 
 # Verify if the user that start the script is in the openClone folder
@@ -49,13 +51,18 @@ source <(grep = config.ini)
 
 # create a prefix before for the log according of the part where it come from
 log_prefix() {
+
     local prefix=$1
     local script=$2
+
     {
+
         echo "Beginning of $script"
         source "$script"
         echo "End of $script"
+
     } 2>&1 | sed "s/^/[$prefix] /" >> "$log_file"
+
 }
 
 Recuperer_IP_LAN(){
