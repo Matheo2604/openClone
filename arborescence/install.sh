@@ -2,11 +2,12 @@
 
 # TO DO
 # Implementation of KEA
-# Change the name of web site and lets the user chose it
-# in the readME need to presice to start the script with the commande bash
 # MariaDB create an account with random password by default
 # Doesn't need to start the script without having root permission by consequences ask the user to create an account 
 # Ask to change the password with an script when the first remote connexion is done DeBootStrap 
+# Change the name of web site and lets the user chose it
+# in the readME need to presice to start the script with the commande bash
+
 
 # THING TO DO BUT NO THE PRIORITIES 
 # CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY  
