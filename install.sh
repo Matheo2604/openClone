@@ -63,77 +63,79 @@ log_prefix() {
 
 }
 
-Recuperer_IP_LAN(){
+if [ $SkipQuestion ]; then
 
-read -p "Quelle est son interface pour son sous réseaux LAN (exemple: eth0):" Interface_LAN
-read -p "Quelle sera son addresse IP cote LAN (exemple: 192.168.1.15):" IP_LAN
-read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (24):" Masque_LAN_CIDR
-read -p "Quelle est son masque de son sous réseaux LAN (exemple: 255.255.255.0):" Masque_LAN
-read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
+  Recuperer_IP_LAN(){
 
-}
+    read -p "Quelle est son interface pour son sous réseaux LAN (exemple: eth0):" Interface_LAN
+    read -p "Quelle sera son addresse IP cote LAN (exemple: 192.168.1.15):" IP_LAN
+    read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (24):" Masque_LAN_CIDR
+    read -p "Quelle est son masque de son sous réseaux LAN (exemple: 255.255.255.0):" Masque_LAN
+    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
-read -p "What will be the username for maintenance OS : " UserDebootStrap
-read -p "and what will be is password : " PasswordDeBootStrap
-read -p "For the database what will be the username : " userMariaDB
-read -p "And what will be is password : " PasswordMariaDBUser
-read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
+  }
 
-if [ "$choice_aggregation" == "y" ]; then
+  read -p "What will be the username for maintenance OS : " UserDebootStrap
+  read -p "and what will be is password : " PasswordDeBootStrap
+  read -p "For the database what will be the username : " userMariaDB
+  read -p "And what will be is password : " PasswordMariaDBUser
+  read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
 
-  ActivationAggregation=true
-  apt-get -y install ifenslave
-  echo ""
-  ip a && ip r
-  echo ""
-  read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
-  read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
-  echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
-  echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n"
+  if [ "$choice_aggregation" == "y" ]; then
 
-fi
+    ActivationAggregation=true
+    apt-get -y install ifenslave
+    echo ""
+    ip a && ip r
+    echo ""
+    read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
+    read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
+    echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
+    echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n"
+
+  fi
 
   read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
 
-if [ "$choice_nftables" == "y" ]; then
+  if [ "$choice_nftables" == "y" ]; then
 
-    ip a && ip r
-    Recuperer_IP_LAN
-    ActivationNftables=true
+      ip a && ip r
+      Recuperer_IP_LAN
+      ActivationNftables=true
 
-    read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
-    read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
-    read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
-    read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
-    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
-    read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
+      read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
+      read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
+      read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
+      read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
+      read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
+      read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
 
-    # Configure Nftables
-    sed -i \
-      -e "s/{Interface_NAT}/$Interface_NAT/g" \
-      -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
-      -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-      -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-      -e "s/{Interface_LAN}/$Interface_LAN/g" \
-      -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
-      -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-      -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-      -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
-      resources/nftables/nftables.conf
-    apt-get -y install nftables
-    cp resources/nftables/nftables.conf /etc/nftables.conf
-    systemctl enable nftables
+      # Configure Nftables
+      sed -i \
+        -e "s/{Interface_NAT}/$Interface_NAT/g" \
+        -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
+        -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
+        -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+        -e "s/{Interface_LAN}/$Interface_LAN/g" \
+        -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
+        -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
+        -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+        -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
+        resources/nftables/nftables.conf
+      apt-get -y install nftables
+      cp resources/nftables/nftables.conf /etc/nftables.conf
+      systemctl enable nftables
 
-else
+  else
 
-    echo ""
-    ip a && ip r
-    echo ""
-    Recuperer_IP_LA
-    read -p "Quelle est l'IP du routeur du réseaux :" Routeur
+      echo ""
+      ip a && ip r
+      echo ""
+      Recuperer_IP_LA
+      read -p "Quelle est l'IP du routeur du réseaux :" Routeur
 
+  fi
 fi
-
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
