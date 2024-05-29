@@ -19,7 +19,8 @@ mount -o bind /dev $PathNFS/debootstrap/dev
 chroot $PathNFS/debootstrap /bin/bash << EOT
 
   apt-get update && apt-get full-upgrade
-  apt-get install -y linux-image-amd64 partclone dialog sudo
+  apt-get -y install linux-image-amd64 partclone dialog sudo
+  apt-get -y install console-data >> /dev/null
   useradd -m "$UserDebootStrap" -s /bin/bash
   echo "$UserDebootStrap:$PasswordDeBootStrap" | chpasswd
   usermod -aG sudo "$UserDebootStrap"
