@@ -103,13 +103,6 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
         
     fi
 
-else
-
-    echo "Il n'y a qu'une interface réseau disponible."
-    Recuperer_IP_LAN
-
-fi
-
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
