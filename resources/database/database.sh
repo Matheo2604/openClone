@@ -24,7 +24,7 @@ mysql -u root -p"${PasswordMariaDBAdmin}" -e "FLUSH PRIVILEGES;"
 mysql -u root -p"${PasswordMariaDBAdmin}" -D "${DataBase}" -e "
 CREATE TABLE class (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE workstations (
@@ -32,6 +32,6 @@ CREATE TABLE workstations (
     class_id INT,
     mac_adresse VARCHAR(17),
     ip_adresse VARCHAR(15),
-    hostname VARCHAR(255),
+    hostname VARCHAR(30),
     FOREIGN KEY (class_id) REFERENCES class(id)
 );"
