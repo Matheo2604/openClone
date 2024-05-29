@@ -113,8 +113,8 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    source bash aggregation/aggregation.sh || { echo "something went wrong during the installation of the aggregation" && exit 1; }
-    source bash nftables/nftables.sh || { echo "something went wrong during the installation of the nftable" && exit 1; }
+    #source bash aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
+    #source bash nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
     -e "s/{Interface_NAT}/$Interface_NAT/g" \
     -e "s/{IP_NAT}/$IP_NAT/g" \
@@ -130,7 +130,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "falsetrue")
 
-    source bash nftables/nftables.sh || { echo "something went wrong during the installation of the nftables" && exit 1; }
+    #source bash nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftables\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
     -e "s/{Interface_LAN}/$Interface_LAN/g" \
     -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -145,7 +145,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "truefalse")
     
-    source bash aggregation/aggregation.sh || { echo "something went wrong during the installation of the aggregation" && exit 1; }
+    #source bash aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
     -e "s/{Interface_LAN}/$Interface_LAN/g" \
     -e "s/{IP_LAN}/$IP_LAN/g" \
