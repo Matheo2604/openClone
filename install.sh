@@ -148,8 +148,8 @@ case "$ActivationAggregation$ActivationNftables" in
       -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
       -e "s/{interface1}/$interface1/g" \
       -e "s/{interface2}/$interface2/g" \
-    resources/interface/interfacesAggregationNftables
-    cp resources/interface/interfacesAggregationNftables /etc/network/interfaces
+    resources/network_interfaces/interfacesAggregationNftables
+    cp resources/network_interfaces/interfacesAggregationNftables /etc/network/interfaces
     ;;
 
   "falsetrue")
@@ -163,8 +163,8 @@ case "$ActivationAggregation$ActivationNftables" in
       -e "s/{IP_NAT}/$IP_NAT/g" \
       -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
       -e "s/{Routeur}/$Routeur/g" \
-    resources/interface/interfacesNftables
-    cp resources/interface/interfacesNftables /etc/network/interfaces
+    resources/network_interfaces/interfacesNftables
+    cp resources/network_interfaces/interfacesNftables /etc/network/interfaces
     ;;
 
   "truefalse")
@@ -188,9 +188,9 @@ case "$ActivationAggregation$ActivationNftables" in
       -e "s/{IP_LAN}/$IP_LAN/g" \
       -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
       -e "s/{Routeur}/$Routeur/g" \
-    resources/interface/interfaces
+    resources/network_interfaces/interfaces
 
-    cp resources/interface/interfaces /etc/network/interfaces
+    cp resources/network_interfaces/interfaces /etc/network/interfaces
     ;;
 
   *)
