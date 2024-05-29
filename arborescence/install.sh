@@ -241,41 +241,6 @@ log_prefix "core" "resources/core/core.sh" || { echo -e "something went wrong du
 echo -e "Core files create & configure correctly\n\n"
 
 
-#system(){
-#  {
-#
-#  echo "restarting serices ..."
-#
-#  # Restart every services so they take into account there new configuration
-#  systemctl restart bind9 atftpd nfs-kernel-server apache2 nftables mariadb
-#
-#  if [ $Kea ]; then
-#    systemctl restart kea-dhcp4-server
-#
-#  elif [ $Isc ]; then
-#    systemctl restart isc-dhcp-server
-#
-#  fi
-#
-#  echo "services restarted ..."
-#
-#  }2>&1 | sed "s/^/[systemctl] /" >> "$log_file"
-#
-#}
-#
-#system || { echo -e "something went wrong during the restart of the services\nGo see the log on /var/log/openClone" && exit 1; }
-#
-#
-#[ $Kea ] && services=("kea-dhcp4-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
-#
-#[ $Isc ] && services=("isc-dhcp-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
-#
-#for service in "${services[@]}"; do
-#  echo "[$service]"
-#  systemctl status "$service" | grep -E 'Loaded:|Active:'
-#  echo
-#done
-
 system(){
   {
 
