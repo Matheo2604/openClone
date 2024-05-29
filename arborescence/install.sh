@@ -284,9 +284,9 @@ system(){
     # Restart every service so they take into account their new configuration
     systemctl restart bind9 atftpd nfs-kernel-server apache2 nftables mariadb
 
-    if [ "$Kea" ]; then
+    if [ $Kea ]; then
       systemctl restart kea-dhcp4-server
-    elif [ "$Isc" ]; then
+    elif [ $Isc ]; then
       systemctl restart isc-dhcp-server
     fi
 
@@ -295,14 +295,11 @@ system(){
   } 2>&1 | sed "s/^/[systemctl] /" >> "$log_file"
 }
 
-system || {
-  echo -e "something went wrong during the restart of the services\nGo see the log on /var/log/openClone"
-  exit 1
-}
+system || { echo -e "something went wrong during the restart of the services\nGo see the log on /var/log/openClone" && exit 1; }
 
-if [ "$Kea" ]; then
+if [ $Kea ]; then
   services=("kea-dhcp4-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
-elif [ "$Isc" ]; then
+elif [ $Isc ]; then
   services=("isc-dhcp-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
 fi
 
