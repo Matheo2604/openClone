@@ -1,10 +1,7 @@
 #!/bin/bash
 
 # TO DO
-# In DeBootStrap need to install console-data for azerty but post-install
 # Network part to redo
-# aggregation and nftables to comment
-# MariaDB possibility to create an account with random password by default
 # Change the name of web site and lets the user chose it
 # THREAD !!! debootstrap is to long
 
