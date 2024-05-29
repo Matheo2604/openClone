@@ -82,11 +82,11 @@ if [ "$choice_aggregation" == "y" ]; then
   echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
   echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n"
 
-  fi
+fi
 
   read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
 
-  if [ "$choice_nftables" == "y" ]; then
+if [ "$choice_nftables" == "y" ]; then
 
     echo "Vous avez choisi d'utiliser nftables."
     ip a && ip r
@@ -116,7 +116,7 @@ if [ "$choice_aggregation" == "y" ]; then
     cp resources/nftables/nftables.conf /etc/nftables.conf
     systemctl restart nftables
 
-  else
+else
 
     echo ""
     ip a
@@ -124,7 +124,7 @@ if [ "$choice_aggregation" == "y" ]; then
     Recuperer_IP_LA
     read -p "Quelle est l'IP du routeur du réseaux :" Routeur
 
-  fi
+fi
 
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
