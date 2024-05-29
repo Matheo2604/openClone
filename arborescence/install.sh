@@ -240,7 +240,7 @@ echo -e "TFTP installed & configure correctly\n\nCreation of the Boot files for 
 
 log_prefix "core" "resources/core/core.sh" || { echo -e"something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "Core files create & configure correctly\n"
+echo -e "Core files create & configure correctly\n\n"
 
 
 system(){
