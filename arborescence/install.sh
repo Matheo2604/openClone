@@ -74,6 +74,8 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
 
 }
 
+read -p "What will be the username for maintenance OS" $UserDebootStrap
+read -p "What will be is password" $PasswordDeBootStrap
 read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
 
 if [ "$choice_aggregation" == "y" ]; then
@@ -274,4 +276,4 @@ for service in "${services[@]}"; do
   echo
 done
 
-echo "INSTALLATION FINISHED"
+echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\nINSTALLATION FINISHED"
