@@ -275,4 +275,6 @@ for service in "${services[@]}"; do
   echo
 done
 
+sleep 1 && clear
+
 echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\nINSTALLATION FINISHED"
