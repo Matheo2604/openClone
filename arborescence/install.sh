@@ -2,8 +2,7 @@
 
 # TO DO
 # In DeBootStrap need to install console-data for azerty but post-install
-# Copied all the scripts needed in the DeBootStrap
-# MariaDB create an account with random password by default
+# MariaDB possibility to create an account with random password by default
 # Doesn't need to start the script without having root permission by consequences ask the user to create an account
 # Ask to change the password with an script when the first remote connexion is done DeBootStrap
 # Change the name of web site and lets the user chose it

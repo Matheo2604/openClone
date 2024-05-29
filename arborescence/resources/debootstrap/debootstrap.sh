@@ -23,7 +23,7 @@ chroot $PathNFS/debian /bin/bash << EOT
   useradd -m "$UserDebootStrap" -s /bin/bash
   echo "$UserDebootStrap:$PasswordDeBootStrap" | chpasswd
   usermod -aG sudo "$UserDebootStrap"
-  (crontab -l 2>/dev/null; echo "@reboot /srv/scripts/ACHANGER.sh") | crontab -
+  (crontab -l 2>/dev/null; echo "@reboot /srv/scripts/menu.sh") | crontab -
 
 EOT
 
@@ -32,3 +32,6 @@ cp resources/debootstrap/sudoers $PathNFS/debian/etc/sudoers
 cp resources/debootstrap/logind.conf $PathNFS/debian/etc/systemd/logind.conf
 mkdir $PathNFS/debian/etc/systemd/system/getty@tty1.service.d/
 cp resources/debootstrap/override.conf $PathNFS/debian/etc/systemd/system/getty@tty1.service.d/override.conf
+
+mkdir $PathNFS/debian$PathNFS
+cp resources/scripts/* $PathSCRIPTS
