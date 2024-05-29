@@ -2,6 +2,8 @@
 
 # TO DO
 # In DeBootStrap need to install console-data for azerty but post-install
+# Network part to redo
+# aggregation and nftables to comment
 # MariaDB possibility to create an account with random password by default
 # Change the name of web site and lets the user chose it
 # THREAD !!! debootstrap is to long
@@ -79,68 +81,23 @@ if [ $SkipQuestion ]; then
   read -p "and what will be is password : " PasswordDeBootStrap
   read -p "For the database what will be the username : " userMariaDB
   read -p "And what will be is password : " PasswordMariaDBUser
+  
   read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
-
-  if [ "$choice_aggregation" == "y" ]; then
-
-    ActivationAggregation=true
-    apt-get -y install ifenslave
-    echo ""
-    ip a && ip r
-    echo ""
-    read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
-    read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
-    echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
-    echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n"
-
-  fi
+  [ "$choice_aggregation" == "y" ] && ActivationAggregation=true
 
   read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
+  [ "$choice_nftables" == "y" ] && ActivationNftables=true
 
-  if [ "$choice_nftables" == "y" ]; then
-
-      ip a && ip r
-      Recuperer_IP_LAN
-      ActivationNftables=true
-
-      read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
-      read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
-      read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
-      read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
-      read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
-      read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
-
-      # Configure Nftables
-      sed -i \
-        -e "s/{Interface_NAT}/$Interface_NAT/g" \
-        -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
-        -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-        -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-        -e "s/{Interface_LAN}/$Interface_LAN/g" \
-        -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
-        -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-        -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-        -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
-        resources/nftables/nftables.conf
-      apt-get -y install nftables
-      cp resources/nftables/nftables.conf /etc/nftables.conf
-      systemctl enable nftables
-
-  else
-
-      echo ""
-      ip a && ip r
-      echo ""
-      Recuperer_IP_LA
-      read -p "Quelle est l'IP du routeur du réseaux :" Routeur
-
-  fi
 fi
+
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
+    
+    read -p "Quelle est l'IP du routeur du réseaux :" Routeur
 
-    #source bash aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
-    #source bash nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on /var/log/openClone" && exit 1; }
+    log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
+    log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on /var/log/openClone" && exit 1; }
+
     sed -i \
       -e "s/{Interface_NAT}/$Interface_NAT/g" \
       -e "s/{IP_NAT}/$IP_NAT/g" \
@@ -155,8 +112,10 @@ case "$ActivationAggregation$ActivationNftables" in
     ;;
 
   "falsetrue")
+    
+    read -p "Quelle est l'IP du routeur du réseaux :" Routeur
 
-    #source bash nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftables\nGo see the log on /var/log/openClone" && exit 1; }
+    log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftables\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -171,7 +130,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "truefalse")
 
-    #source bash aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
+    log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -184,6 +143,8 @@ case "$ActivationAggregation$ActivationNftables" in
     ;;
 
   "falsefalse")
+
+    read -p "Quelle est l'IP du routeur du réseaux :" Routeur
 
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
@@ -203,6 +164,7 @@ esac
 
 systemctl restart networking
 ip r add default via $Routeur
+
 
 # Update & install of paquets needed
 apt-get update && apt-get -y upgrade

@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Configure Nftables
+# Install the package needed
+apt-get -y install nftables
+
+# Copied and modification of the config file
 sed -i \
     -e "s/{Interface_NAT}/$Interface_NAT/g" \
     -e "s/{IP_NAT_SR}/$IP_NAT_SR/g" \
@@ -13,6 +16,5 @@ sed -i \
     -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
     resources/nftables/nftables.conf
 
-apt-get -y install nftables
-
 cp resources/nftables/nftables.conf /etc/nftables.conf
+systemctl enable nftables
