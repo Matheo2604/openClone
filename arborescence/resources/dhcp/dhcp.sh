@@ -6,7 +6,7 @@ IP_LAN_TABLEAU=( $(echo $IP_LAN | tr "." " ") )
 if [ "$Kea" = true ]; then
 
   # Install the package needed for the DHCP
-  apt -y install kea-dhcp4-server
+  apt-get -y install kea-dhcp4-server
 
   # Copied and modification of the config file
   sed -i \
@@ -30,7 +30,7 @@ systemctl enable kea-dhcp4-server
 elif [ "$Isc" = true ]; then
 
   # Install the package needed for the DHCP
-  apt -y install isc-dhcp-server
+  apt-get -y install isc-dhcp-server
 
   # Copied and modification of the config file
   sed -i \

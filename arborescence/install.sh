@@ -73,7 +73,7 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
     if [ "$choice_aggregation" == "y" ]; then
 
         ActivationAggregation=true
-        apt -y install ifenslave
+        apt-get -y install ifenslave
         echo ""
         ip a && ip r
         echo ""
@@ -112,7 +112,7 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
           -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
           -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
           resources/nftables/nftables.conf
-        apt -y install nftables
+        apt-get -y install nftables
         cp resources/nftables/nftables.conf /etc/nftables.conf
         systemctl restart nftables
 
@@ -196,9 +196,9 @@ systemctl restart networking
 ip r add default via $Routeur
 
 # Update & install of paquets needed
-apt update && apt -y upgrade
+apt-get update && apt-get -y upgrade
 
-# apt -y install wget
+# apt-get -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 echo -e "\nInstallation of the DHCP server\n"

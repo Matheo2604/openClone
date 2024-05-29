@@ -25,6 +25,6 @@ echo "Vous avez choisi d'utiliser nftables."
         -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
         -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
         resources/nftables/nftables.conf
-    apt -y install nftables
+    apt-get -y install nftables
     cp resources/nftables/nftables.conf /etc/nftables.conf
 

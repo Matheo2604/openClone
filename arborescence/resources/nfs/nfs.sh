@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install the package needed for the NFS
-apt -y install nfs-kernel-server
+apt-get -y install nfs-kernel-server
 
 # Create the shared folder
 mkdir $PathNFS

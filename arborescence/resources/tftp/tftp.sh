@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install the package needed for the TFTP
-apt -y install atftpd
+apt-get -y install atftpd
 
 # Copied the config file
 cp resources/tftp/atftpd /etc/default/atftpd

@@ -2,7 +2,7 @@
 
 
 # Install the package needed for the Web Server
-apt -y install apache2 php 
+apt-get -y install apache2 php 
 
 # Copied the files for the web interface
 cp resources/http/www $PathHTTP

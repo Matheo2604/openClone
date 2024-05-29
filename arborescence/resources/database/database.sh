@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install the package needed for the DataBase
-apt -y install mariadb-server
+apt-get -y install mariadb-server
 
 # Create the user & the DataBase
 mysql  << EOL

@@ -18,8 +18,8 @@ mount -o bind /dev $PathNFS/debian/dev
 # Install all the package needed and the actual kernel that's well be used to Boot in PXE mode
 chroot $PathNFS/debian /bin/bash << EOT
 
-  apt update && apt full-upgrade
-  apt install -y linux-image-amd64 partclone dialog sudo
+  apt-get update && apt-get full-upgrade
+  apt-get install -y linux-image-amd64 partclone dialog sudo
   useradd -m "$UserDebootStrap" -s /bin/bash
   echo "$UserDebootStrap:$PasswordDeBootStrap" | chpasswd
   usermod -aG sudo "$UserDebootStrap"
