@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # TO DO
-# Implementation of KEA
 # MariaDB create an account with random password by default
 # Doesn't need to start the script without having root permission by consequences ask the user to create an account 
 # Ask to change the password with an script when the first remote connexion is done DeBootStrap 
