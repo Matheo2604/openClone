@@ -4,44 +4,44 @@
 # In DeBootStrap need to install console-data for azerty but post-install
 # Copied all the scripts needed in the DeBootStrap
 # MariaDB create an account with random password by default
-# Doesn't need to start the script without having root permission by consequences ask the user to create an account 
-# Ask to change the password with an script when the first remote connexion is done DeBootStrap 
+# Doesn't need to start the script without having root permission by consequences ask the user to create an account
+# Ask to change the password with an script when the first remote connexion is done DeBootStrap
 # Change the name of web site and lets the user chose it
 # in the readME need to presice to start the script with the commande bash
 
 
-# THING TO DO BUT NO THE PRIORITIES 
-# CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY  
+# THING TO DO BUT NO THE PRIORITIES
+# CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY
 # Do the most importante script (the part of Elouen)
 # Add the possibility to have an ssl certificat with lets encrypt for an web server
 # MariaDB remote connexion
-# Change the range in dhcp file in funcition of question or file.ini 
+# Change the range in dhcp file in funcition of question or file.ini
 # Generate the grub.cfg
 # Dropbox iso + wget iso url via the web interface
 
 echo -e "
-                                          ______   __                               
-                                         /      \ /  |                              
-  ______    ______    ______   _______  /&&&&&&  |&& |  ______   _______    ______  
- /      \  /      \  /      \ /       \ && |  &&/ && | /      \ /       \  /      \ 
+                                          ______   __
+                                         /      \ /  |
+  ______    ______    ______   _______  /&&&&&&  |&& |  ______   _______    ______
+ /      \  /      \  /      \ /       \ && |  &&/ && | /      \ /       \  /      \
 /&&&&&&  |/&&&&&&  |/&&&&&&  |&&&&&&&  |&& |      && |/&&&&&&  |&&&&&&&  |/&&&&&&  |
 && |  && |&& |  && |&&    && |&& |  && |&& |   __ && |&& |  && |&& |  && |&&    && |
-&& \__&& |&& |__&& |&&&&&&&&/ && |  && |&& \__/  |&& |&& \__&& |&& |  && |&&&&&&&&/ 
+&& \__&& |&& |__&& |&&&&&&&&/ && |  && |&& \__/  |&& |&& \__&& |&& |  && |&&&&&&&&/
 &&    &&/ &&    &&/ &&       |&& |  && |&&    &&/ && |&&    &&/ && |  && |&&       |
- &&&&&&/  &&&&&&&/   &&&&&&&/ &&/   &&/  &&&&&&/  &&/  &&&&&&/  &&/   &&/  &&&&&&&/ 
-          && |                                                                      
-          && |                                                                      
-          &&/                                                                       
+ &&&&&&/  &&&&&&&/   &&&&&&&/ &&/   &&/  &&&&&&/  &&/  &&&&&&/  &&/   &&/  &&&&&&&/
+          && |
+          && |
+          &&/
 "
-# Verify if the id of the user is anything other then 0 (0 = root id) 
+# Verify if the id of the user is anything other then 0 (0 = root id)
 if [ "$EUID" -ne 0 ];then
  echo "Start the script with root permission"
  exit 1
 fi
 
-# Verify if the user that start the script is in the openClone folder 
+# Verify if the user that start the script is in the openClone folder
 # to test if working when user is in another folder
-cd "$(dirname $0)"  
+cd "$(dirname $0)"
 
 # Get all the variables from config.ini file
 source <(grep = config.ini)
@@ -70,7 +70,7 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
     read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
 
     if [ "$choice_aggregation" == "y" ]; then
-        
+
         ActivationAggregation=true
         apt -y install ifenslave
         echo ""
@@ -79,8 +79,8 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
         read -p "Entrez le nom de la première interface pour l'agrégation : " interface1
         read -p "Entrez le nom de la deuxième interface pour l'agrégation : " interface2
         echo "Interfaces sélectionnées pour l'agrégation : $interface1 et $interface2"
-        echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n" 
-    
+        echo -e "\nune nouvelle interface nommer bond0 vient d'etre creer\n"
+
     fi
 
     read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
@@ -116,14 +116,14 @@ read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
         systemctl restart nftables
 
      else
-        
+
         echo ""
         ip a
         echo ""
         Recuperer_IP_LAN
-        
+
         read -p "Quelle est l'IP du routeur du réseaux :" Routeur
-        
+
     fi
 
 case "$ActivationAggregation$ActivationNftables" in
@@ -160,7 +160,7 @@ case "$ActivationAggregation$ActivationNftables" in
     ;;
 
   "truefalse")
-    
+
     #source bash aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
     -e "s/{Interface_LAN}/$Interface_LAN/g" \
@@ -200,21 +200,28 @@ apt update && apt -y upgrade
 # apt -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-#log_prefix "interface" "resources/interface/interface.sh" || { echo -e "something went wrong during the initialization of the interface\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Installation of the DHCP server\n"
 [ $ActivationDHCP ] && log_prefix "dhcp" "resources/dhcp/dhcp.sh" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Installation of the DNS server\n"
 [ $ActivationDNS ] && log_prefix "dns" "resources/dns/dns.sh" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Installation of the DataBase server\n"
 [ $ActivationMariaDB ] && log_prefix "database" "resources/database/database.sh" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Installation of the Web Server\n"
 [ $ActivationHTTP ] && log_prefix "http" "resources/http/http.sh" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Installation of the NFS server\n"
 [ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Installation of the DeBootStrap service\n"
 [ $ActivationDeBootStrap ] && log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" || { echo -e "something went wrong during the installation of the DEBOOTSTRAP\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Installation of the TFTP server\n"
 [ $ActivationTFTP ] && log_prefix "tftp" "resources/tftp/tftp.sh" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+echo -e "Creation of the Boot files for the  maintenace OS\n"
 log_prefix "core" "resources/core/core.sh" || { echo -e"something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
 
 system(){
   {
   echo "restarting serices ..."
   # Restart every services so they take into account there new configuration
-  systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb 
+  systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb
   if [ "$Kea" = true ]; then
   systemctl restart kea-dhcp4-server
   elif [ "$Isc" = true ]; then
