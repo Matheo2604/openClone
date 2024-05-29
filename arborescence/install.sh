@@ -121,7 +121,7 @@ if [ "$choice_nftables" == "y" ]; then
       resources/nftables/nftables.conf
     apt-get -y install nftables
     cp resources/nftables/nftables.conf /etc/nftables.conf
-    systemctl restart nftables
+    systemctl enable nftables
 
 else
 
@@ -249,7 +249,7 @@ system(){
   echo "restarting serices ..."
 
   # Restart every services so they take into account there new configuration
-  systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb
+  systemctl restart bind9 atftpd nfs-kernel-server apache2 nftables mariadb
 
   if [ $Kea ]; then
   systemctl restart kea-dhcp4-server
