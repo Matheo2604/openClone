@@ -57,8 +57,6 @@ log_prefix() {
     } 2>&1 | sed "s/^/[$prefix] /" >> "$log_file"
 }
 
-source bash interface/interface.sh
-
 # Update & install of paquets needed
 apt update && apt -y upgrade
 
