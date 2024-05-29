@@ -201,7 +201,7 @@ system(){
   systemctl restart isc-dhcp-server bind9 atftpd nfs-kernel-server apache2 nftables mariadb 
   if [ "$Kea" = true ]; then
   systemctl restart kea-dhcp4-server
-  elif [ "$isc-dhcp" = true ]; then
+  elif [ "$Isc" = true ]; then
   systemctl restart isc-dhcp-server
   fi
   echo "services restart ..."

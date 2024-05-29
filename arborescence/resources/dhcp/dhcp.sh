@@ -27,7 +27,7 @@ systemctl start kea-dhcp4-server
 systemctl enable kea-dhcp4-server
 
 # Installation of isc-dhcp
-elif [ "$isc-dhcp" = true ]; then
+elif [ "$Isc" = true ]; then
 
   # Install the package needed for the DHCP
   apt -y install isc-dhcp-server
