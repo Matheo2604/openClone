@@ -22,9 +22,9 @@ mysql -u root -p"${PasswordMariaDBAdmin}" -e "FLUSH PRIVILEGES;"
 
 # Create tables
 mysql -u root -p"${PasswordMariaDBAdmin}" -D "${DataBase}" -e "
-CREATE TABLE  (
+CREATE TABLE class (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE workstations (
