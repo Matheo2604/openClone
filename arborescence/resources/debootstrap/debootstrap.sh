@@ -20,9 +20,9 @@ chroot $PathNFS/debian /bin/bash << EOT
 
   apt update && apt full-upgrade
   apt install -y linux-image-amd64 partclone dialog sudo
-  useradd -m "$username" -s /bin/bash
-  echo "$username:password" | chpasswd
-  usermod -aG sudo "$username"
+  useradd -m "$UserDebootStrap" -s /bin/bash
+  echo "$UserDebootStrap:$PasswordDeBootStrap" | chpasswd
+  usermod -aG sudo "$UserDebootStrap"
   (crontab -l 2>/dev/null; echo "@reboot /srv/scripts/ACHANGER.sh") | crontab -
 
 EOT
