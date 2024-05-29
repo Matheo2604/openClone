@@ -227,7 +227,7 @@ echo -e "Web Server installed & configure correctly\n\nInstallation of the NFS s
 
 [ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
 
-echo -e "NFS installed & configure correctly\n\nInstallation of the DeBootStrap service . . . \n"
+echo -e "NFS installed & configure correctly\n\nInstallation of the DeBootStrap service (this can take a will) . . . \n"
 
 [ $ActivationDeBootStrap ] && log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" || { echo -e "something went wrong during the installation of the DEBOOTSTRAP\nGo see the log on /var/log/openClone" && exit 1; }
 
