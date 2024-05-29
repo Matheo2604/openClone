@@ -56,7 +56,7 @@ log_prefix() {
     local script=$2
 
     {
-
+      
         echo "Beginning of $script"
         source "$script"
         echo "End of $script"
