@@ -56,7 +56,7 @@ log_prefix() {
     local script=$2
 
     {
-      
+
         echo "Beginning of $script"
         source "$script"
         echo "End of $script"
@@ -237,7 +237,7 @@ echo -e "DeBootStrap installed & configure correctly\n\nInstallation of the TFTP
 
 echo -e "TFTP installed & configure correctly\n\nCreation of the Boot files for the  maintenace OS . . . \n"
 
-log_prefix "core" "resources/core/core.sh" || { echo -e"something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
+log_prefix "core" "resources/core/core.sh" || { echo -e "something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
 
 echo -e "Core files create & configure correctly\n\n"
 
@@ -251,10 +251,10 @@ system(){
   systemctl restart bind9 atftpd nfs-kernel-server apache2 nftables mariadb
 
   if [ $Kea ]; then
-  systemctl restart kea-dhcp4-server
+    systemctl restart kea-dhcp4-server
 
   elif [ $Isc ]; then
-  systemctl restart isc-dhcp-server
+    systemctl restart isc-dhcp-server
 
   fi
 
