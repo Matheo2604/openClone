@@ -83,14 +83,16 @@ if [ $SkipQuestion ]; then
   [ "$choice_aggregation" == "y" ] && ActivationAggregation=true
 
   read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
-  [ "$choice_nftables" == "y" ]; then && ActivationNftables=true
+  if [ "$choice_nftables" == "y" ]; then 
+  
+    ActivationNftables=true
 
-        read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
-        read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
-        read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
-        read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
-        read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
-        read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
+    read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
+    read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
+    read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
+    read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
+    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
+    read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
 
   fi
 
