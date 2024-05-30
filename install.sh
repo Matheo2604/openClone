@@ -87,6 +87,7 @@ if [ $SkipQuestion ]; then
   
     ActivationNftables=true
 
+    ip a && ip r
     read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
     read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
     read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
@@ -96,6 +97,7 @@ if [ $SkipQuestion ]; then
 
   fi
 
+  ip a && ip r
   Recuperer_IP_LAN
 
 fi
