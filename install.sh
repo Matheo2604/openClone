@@ -4,6 +4,7 @@
 # Network part to redo
 # Change the name of web site and lets the user chose it
 # THREAD !!! debootstrap is way to long
+# check errors like to dhcp enabled
 
 
 # THING TO DO BUT NO THE PRIORITIES
