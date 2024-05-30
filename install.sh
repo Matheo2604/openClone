@@ -212,7 +212,7 @@ echo -e "Installation of the TFTP server . . . \n"
 
 echo -e "Creation of the Boot files for the  maintenace OS . . . \n"
 
-log_prefix "core" "resources/core/core.sh" || && echo -e "Core files create & configure correctly\n" { echo -e "something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
+log_prefix "core" "resources/core/core.sh" && echo -e "Core files create & configure correctly\n" || { echo -e "something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
 
 wait
 
