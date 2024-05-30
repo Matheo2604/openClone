@@ -89,12 +89,12 @@ if [ $SkipQuestion ]; then
     ActivationNftables=true
 
     ip a && ip r
-    read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
-    read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
-    read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
-    read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
-    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
-    read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
+    read -p "Quelle est son interface pour son sous réseaux WAN (exemple: eth0):" Interface_WAN
+    read -p "Quelle sera son addresse IP cote WAN (exemple: 192.168.1.15):" IP_WAN
+    read -p "Quelle est le masque du sous réseaux WAN aux format CIDR (24):" Masque_WAN_CIDR
+    read -p "Quelle est son masque de son sous réseaux WAN (exemple: 255.255.255.0):" Masque_WAN
+    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_WAN_SR
+    read -p "Quelle est l'IP du routeur du réseaux WAN (exemple: 192.168.1.254):" Routeur
 
   fi
 
@@ -110,9 +110,9 @@ case "$ActivationAggregation$ActivationNftables" in
     log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on /var/log/openClone" && exit 1; }
 
     sed -i \
-      -e "s/{Interface_NAT}/$Interface_NAT/g" \
-      -e "s/{IP_NAT}/$IP_NAT/g" \
-      -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
+      -e "s/{Interface_WAN}/$Interface_WAN/g" \
+      -e "s/{IP_WAN}/$IP_WAN/g" \
+      -e "s/{Masque_WAN_CIDR}/$Masque_WAN_CIDR/g" \
       -e "s/{Routeur}/$Routeur/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
       -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
@@ -129,9 +129,9 @@ case "$ActivationAggregation$ActivationNftables" in
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
       -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-      -e "s/{Interface_NAT}/$Interface_NAT/g" \
-      -e "s/{IP_NAT}/$IP_NAT/g" \
-      -e "s/{Masque_NAT_CIDR}/$Masque_NAT_CIDR/g" \
+      -e "s/{Interface_WAN}/$Interface_WAN/g" \
+      -e "s/{IP_WAN}/$IP_WAN/g" \
+      -e "s/{Masque_WAN_CIDR}/$Masque_WAN_CIDR/g" \
       -e "s/{Routeur}/$Routeur/g" \
     resources/network_interfaces/interfacesNftables
     cp resources/network_interfaces/interfacesNftables /etc/network/interfaces

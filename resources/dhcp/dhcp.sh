@@ -19,6 +19,7 @@ if [ "$Kea" = true ]; then
     -e "s/{MaxIP}/${MaxIP}/g" \
     -e "s/{MinIP}/${MinIP}/g" \
     -e "s/{PathTFTP}/${PathTFTP}/g" \
+    -e "s/{Interface_LAN}/${Interface_LAN}/g" \
     resources/dhcp/kea-dhcp4.conf
   cp /etc/kea/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf.old
   cp resources/dhcp/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf
