@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Vérifie si les paramètres ont été fournis en ligne de commande
 
 if [ $# -eq 2 ]; then
