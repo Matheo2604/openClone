@@ -7,9 +7,9 @@ iface lo inet loopback
 # The primary network interface
 auto bond0
 iface bond0 inet static
-        address {IP_LAN}/{Masque_LAN_CIDR}
+        address {IP_LAN}/{Mask_LAN_CIDR}
         bond-slaves {interface1} {interface2}
         bond_mode 0
         bond_miimon 100
-        gateaway {Routeur}
+        gateaway {Router}
         dns-nameservers 1.1.1.1

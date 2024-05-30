@@ -12,8 +12,8 @@ chmod 744 $PathNFS
 
 # Copied congif files
 sed -i \
-  -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-  -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+  -e "s/{IP_LAN_Subnet}/$IP_LAN_Subnet/g" \
+  -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
   resources/nfs/exports
 cp resources/nfs/exports /etc/exports
 

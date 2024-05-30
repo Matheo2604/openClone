@@ -7,12 +7,12 @@ iface lo inet loopback
 # The primary network interface
 auto {Interface_WAN}
 iface {Interface_WAN} inet static
- address {IP_WAN}/{Masque_WAN_CIDR}
-        gateaway {Routeur}
+ address {IP_WAN}/{Mask_WAN_CIDR}
+        gateaway {Router}
         dns-nameservers 1.1.1.1
 auto bond0
 iface bond0 inet static
-        address {IP_LAN}/{Masque_LAN_CIDR}
+        address {IP_LAN}/{Mask_LAN_CIDR}
         bond-slaves {interface1} {interface2}
         bond_mode 0
         bond_miimon 100

@@ -10,8 +10,8 @@ if [ "$Kea" = true ]; then
 
   # Copied and modification of the config file
   sed -i \
-    -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-    -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+    -e "s/{IP_LAN_Subnet}/$IP_LAN_Subnet/g" \
+    -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
     -e "s/{IP_LAN}/$IP_LAN/g" \
     -e "s/{ip0}/${IP_LAN_TABLEAU[0]}/g" \
     -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
@@ -36,8 +36,8 @@ elif [ "$Isc" = true ]; then
   # Copied and modification of the config file
   sed -i \
     -e "s/{IP_LAN}/$IP_LAN/g" \
-    -e "s/{Masque_LAN}/$Masque_LAN/g" \
-    -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
+    -e "s/{Mask_LAN}/$Mask_LAN/g" \
+    -e "s/{IP_LAN_Subnet}/$IP_LAN_Subnet/g" \
     -e "s/{ip0}/${IP_LAN_TABLEAU[0]}/g" \
     -e "s/{ip1}/${IP_LAN_TABLEAU[1]}/g" \
     -e "s/{ip2}/${IP_LAN_TABLEAU[2]}/g" \

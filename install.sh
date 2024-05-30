@@ -69,9 +69,9 @@ if [ $SkipQuestion ]; then
 
     read -p "Quelle est son interface pour son sous réseaux LAN (exemple: eth0):" Interface_LAN
     read -p "Quelle sera son addresse IP cote LAN (exemple: 192.168.1.15):" IP_LAN
-    read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (24):" Masque_LAN_CIDR
-    read -p "Quelle est son masque de son sous réseaux LAN (exemple: 255.255.255.0):" Masque_LAN
-    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_SR
+    read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (24):" Mask_LAN_CIDR
+    read -p "Quelle est son masque de son sous réseaux LAN (exemple: 255.255.255.0):" Mask_LAN
+    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_Subnet
 
   }
 
@@ -91,10 +91,10 @@ if [ $SkipQuestion ]; then
     ip a && ip r
     read -p "Quelle est son interface pour son sous réseaux WAN (exemple: eth0):" Interface_WAN
     read -p "Quelle sera son addresse IP cote WAN (exemple: 192.168.1.15):" IP_WAN
-    read -p "Quelle est le masque du sous réseaux WAN aux format CIDR (24):" Masque_WAN_CIDR
-    read -p "Quelle est son masque de son sous réseaux WAN (exemple: 255.255.255.0):" Masque_WAN
-    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_WAN_SR
-    read -p "Quelle est l'IP du routeur du réseaux WAN (exemple: 192.168.1.254):" Routeur
+    read -p "Quelle est le masque du sous réseaux WAN aux format CIDR (24):" Mask_WAN_CIDR
+    read -p "Quelle est son masque de son sous réseaux WAN (exemple: 255.255.255.0):" Mask_WAN
+    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_WAN_Subnet
+    read -p "Quelle est l'IP du router du réseaux WAN (exemple: 192.168.1.254):" Router
 
   fi
 
@@ -112,10 +112,10 @@ case "$ActivationAggregation$ActivationNftables" in
     sed -i \
       -e "s/{Interface_WAN}/$Interface_WAN/g" \
       -e "s/{IP_WAN}/$IP_WAN/g" \
-      -e "s/{Masque_WAN_CIDR}/$Masque_WAN_CIDR/g" \
-      -e "s/{Routeur}/$Routeur/g" \
+      -e "s/{Mask_WAN_CIDR}/$Mask_WAN_CIDR/g" \
+      -e "s/{Router}/$Router/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
       -e "s/{interface1}/$interface1/g" \
       -e "s/{interface2}/$interface2/g" \
     resources/network_interfaces/interfacesAggregationNftables
@@ -128,11 +128,11 @@ case "$ActivationAggregation$ActivationNftables" in
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
+      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
       -e "s/{Interface_WAN}/$Interface_WAN/g" \
       -e "s/{IP_WAN}/$IP_WAN/g" \
-      -e "s/{Masque_WAN_CIDR}/$Masque_WAN_CIDR/g" \
-      -e "s/{Routeur}/$Routeur/g" \
+      -e "s/{Mask_WAN_CIDR}/$Mask_WAN_CIDR/g" \
+      -e "s/{Router}/$Router/g" \
     resources/network_interfaces/interfacesNftables
     cp resources/network_interfaces/interfacesNftables /etc/network/interfaces
     ;;
@@ -143,8 +143,8 @@ case "$ActivationAggregation$ActivationNftables" in
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-      -e "s/{Routeur}/$Routeur/g" \
+      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
+      -e "s/{Router}/$Router/g" \
       -e "s/{interface1}/$interface1/g" \
       -e "s/{interface2}/$interface2/g" \
     resources/interface/interfacesAggregation
@@ -153,13 +153,13 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "falsefalse")
 
-    read -p "Quelle est l'IP du routeur du réseaux :" Routeur
+    read -p "Quelle est l'IP du router du réseaux :" Router
 
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Masque_LAN_CIDR}/$Masque_LAN_CIDR/g" \
-      -e "s/{Routeur}/$Routeur/g" \
+      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
+      -e "s/{Router}/$Router/g" \
     resources/network_interfaces/interfaces
 
     cp resources/network_interfaces/interfaces /etc/network/interfaces
@@ -172,7 +172,7 @@ case "$ActivationAggregation$ActivationNftables" in
 esac
 
 systemctl restart networking
-ip r add default via $Routeur
+ip r add default via $Router
 
 
 # Update & install of paquets needed
