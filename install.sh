@@ -3,9 +3,6 @@
 # TO DO
 # Simplify network question to many other way to get those informations
 # Change the name of web site and lets the user chose it
-# check errors like to dhcp enabled
-
-
 
 # THING TO DO BUT NO THE PRIORITIES
 # CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY
