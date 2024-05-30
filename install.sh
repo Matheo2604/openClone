@@ -96,11 +96,13 @@ if [ $SkipQuestion ]; then
 
   fi
 
+  Recuperer_IP_LAN
+
 fi
 
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
-    
+
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
     log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on /var/log/openClone" && exit 1; }
 
@@ -133,7 +135,7 @@ case "$ActivationAggregation$ActivationNftables" in
     ;;
 
   "truefalse")
-
+    
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
