@@ -183,7 +183,7 @@ apt-get update && apt-get -y upgrade >> /dev/null
 
 
 # Launch DeBootStrap in background
-echo -e "Installation of the DeBootStrap service (this can take a while) . . . \n"
+echo -e "\nInstallation of the DeBootStrap service (this can take a while) . . . "
 if [ $ActivationDeBootStrap ]; then
     log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" &
     debootstrap_pid=$!
