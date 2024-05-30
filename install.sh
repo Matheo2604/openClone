@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # TO DO
-# Network part to redo
+# Simplify network question to many other way to get those informations
 # Change the name of web site and lets the user chose it
 # check errors like to dhcp enabled
-# color
+
 
 
 # THING TO DO BUT NO THE PRIORITIES
@@ -17,7 +17,7 @@
 # link to debootstrap only for FR 
 
 clear
-echo -e '
+echo -e '${Green}
                                           ______   __
                                          /      \ /  |
   ______    ______    ______   _______  /$$$$$$  |$$ |  ______   _______    ______
@@ -30,6 +30,7 @@ $$    $$/ $$    $$/ $$       |$$ |  $$ |$$    $$/ $$ |$$    $$/ $$ |  $$ |$$    
           $$ |
           $$ |
           $$/
+\n
 '
 
 # Verify if the id of the user is anything other then 0 (0 = root id)
@@ -257,12 +258,14 @@ elif [ $Isc ]; then
   services=("isc-dhcp-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
 fi
 
+sleep 1 && clear
+
 for service in "${services[@]}"; do
   echo "[$service]"
   systemctl status "$service" | grep -E 'Loaded:|Active:'
   echo
 done
 
-sleep 1 && clear
 
-echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\n\nand for the DataBase :\nusername : $UserMariaDB \npassword : $PasswordMariaDBUser\n\nINSTALLATION FINISHED"
+
+echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\n\nand for the DataBase :\nusername : $UserMariaDB \npassword : $PasswordMariaDBUser\n\nINSTALLATION FINISHED\n\n"
