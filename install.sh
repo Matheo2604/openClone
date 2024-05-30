@@ -130,7 +130,11 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "truefalse")
     
+    read -p "Quelle est l'IP du router du réseaux :" Router
+    echo -e "Remember do disable the dhcp of your router"
+
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on $log_file" && exit 1; }
+    
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -145,6 +149,7 @@ case "$ActivationAggregation$ActivationNftables" in
   "falsefalse")
 
     read -p "Quelle est l'IP du router du réseaux :" Router
+    echo -e "Remember do disable the dhcp of your router"
 
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
