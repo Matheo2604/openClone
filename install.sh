@@ -2,7 +2,6 @@
 
 # TO DO 
 # CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY
-# Add the possibility to have an ssl certificat with lets encrypt for the web server
 # Generate the grub.cfg
 # Dropbox iso + wget iso url via the web interface
 # link to download debootstrap only for FR 
