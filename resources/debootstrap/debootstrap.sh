@@ -19,11 +19,18 @@ mount -o bind /dev $PathNFS/debootstrap/dev
 chroot $PathNFS/debootstrap /bin/bash << EOT
 
   apt-get update && apt-get full-upgrade
+
+  # Install the kernel for this  debian tree structure
   apt-get -y install linux-image-amd64 partclone dialog sudo
+
+  # Only install going to /dev/null because it has an post-install semi-graphic interaction
   apt-get -y install console-data >> /dev/null
+
+  # Creation off the user
   useradd -m "$UserDebootStrap" -s /bin/bash
   echo "$UserDebootStrap:$PasswordDeBootStrap" | chpasswd
   usermod -aG sudo "$UserDebootStrap"
+
   (crontab -l 2>/dev/null; echo "@reboot /srv/scripts/menu.sh") | crontab -
 
 EOT
@@ -39,7 +46,11 @@ cp resources/scripts/* $PathSCRIPTS
 
 # if the option to skip question is active then the users will be asked to change the maintenance os password when the first connexion is made
 if [ $SkipQuestion ]; then
+
   sed -i "s/{UserDebootStrap}/$UserDebootStrap/g" resources/debootstrap/first_logging.sh
+  
   cp "/home/$UserDebootStrap/.bashrc" "/home/$UserDebootStrap/.bashrc.tmp"
+
   echo "bash FirstLogging" >> .bashrc
+
 fi

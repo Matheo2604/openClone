@@ -3,7 +3,7 @@
 # TO DO
 # Network part to redo
 # Change the name of web site and lets the user chose it
-# THREAD !!! debootstrap is to long
+# THREAD !!! debootstrap is way to long
 
 
 # THING TO DO BUT NO THE PRIORITIES
@@ -83,15 +83,22 @@ if [ $SkipQuestion ]; then
   [ "$choice_aggregation" == "y" ] && ActivationAggregation=true
 
   read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
-  [ "$choice_nftables" == "y" ] && ActivationNftables=true
+  [ "$choice_nftables" == "y" ]; then && ActivationNftables=true
+
+        read -p "Quelle est son interface pour son sous réseaux NAT (exemple: eth0):" Interface_NAT
+        read -p "Quelle sera son addresse IP cote NAT (exemple: 192.168.1.15):" IP_NAT
+        read -p "Quelle est le masque du sous réseaux NAT aux format CIDR (24):" Masque_NAT_CIDR
+        read -p "Quelle est son masque de son sous réseaux NAT (exemple: 255.255.255.0):" Masque_NAT
+        read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_NAT_SR
+        read -p "Quelle est l'IP du routeur du réseaux NAT (exemple: 192.168.1.254):" Routeur
+
+  fi
 
 fi
 
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
     
-    read -p "Quelle est l'IP du routeur du réseaux :" Routeur
-
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
     log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on /var/log/openClone" && exit 1; }
 
@@ -110,8 +117,6 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "falsetrue")
     
-    read -p "Quelle est l'IP du routeur du réseaux :" Routeur
-
     log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftables\nGo see the log on /var/log/openClone" && exit 1; }
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \

@@ -17,4 +17,6 @@ sed -i \
     resources/nftables/nftables.conf
 
 cp resources/nftables/nftables.conf /etc/nftables.conf
+
+# Enable the service for nftables
 systemctl enable nftables
