@@ -176,7 +176,7 @@ ip r add default via $Router
 
 
 # Update & install of paquets needed
-apt-get update && apt-get -y upgrade
+apt-get update && apt-get -y upgrade >> /dev/null
 
 # apt-get -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
