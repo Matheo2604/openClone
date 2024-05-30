@@ -17,7 +17,7 @@ mysql -u root -p"${PasswordMariaDBAdmin}" -e "CREATE DATABASE ${DataBase};"
 
 # Create the user & give it rights
 mysql -u root -p"${PasswordMariaDBAdmin}" -e "CREATE USER '${userMariaDB}'@'localhost' IDENTIFIED BY '${PasswordMariaDBUser}';"
-mysql -u root -p"${PasswordMariaDBAdmin}" -e "GRANT ALL PRIVILEGES ON ${DataBase}.* TO '${userMariaDB}'@'localhost';"
+mysql -u root -p"${PasswordMariaDBAdmin}" -e "GRANT ALL PRIVILEGES ON ${DataBase}.* TO '${UserMariaDB}'@'localhost';"
 mysql -u root -p"${PasswordMariaDBAdmin}" -e "FLUSH PRIVILEGES;"
 
 # Create tables

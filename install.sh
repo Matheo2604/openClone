@@ -77,7 +77,7 @@ if [ $SkipQuestion ]; then
 
   read -p "What will be the username for maintenance OS : " UserDebootStrap
   read -p "and what will be is password : " PasswordDeBootStrap
-  read -p "For the database what will be the username : " userMariaDB
+  read -p "For the database what will be the username : " UserMariaDB
   read -p "And what will be is password : " PasswordMariaDBUser
   
   read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
@@ -106,8 +106,8 @@ fi
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
-    log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
-    log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on /var/log/openClone" && exit 1; }
+    log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on $log_file" && exit 1; }
+    log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on $log_file" && exit 1; }
 
     sed -i \
       -e "s/{Interface_WAN}/$Interface_WAN/g" \
@@ -124,7 +124,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "falsetrue")
     
-    log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftables\nGo see the log on /var/log/openClone" && exit 1; }
+    log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftables\nGo see the log on $log_file" && exit 1; }
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -139,7 +139,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
   "truefalse")
     
-    log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on /var/log/openClone" && exit 1; }
+    log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on $log_file" && exit 1; }
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -182,39 +182,50 @@ apt-get update && apt-get -y upgrade
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 
+# Launch DeBootStrap in background
+echo -e "Installation of the DeBootStrap service (this can take a while) . . . \n"
+if [ $ActivationDeBootStrap ]; then
+    log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" &
+    debootstrap_pid=$!
+fi
+
 echo -e "\nInstallation of the DHCP server . . . \n"
 
-[ $ActivationDHCP ] && log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationDHCP ] && log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on $log_file" && exit 1; }
 
 echo -e "Installation of the DNS server . . . \n"
 
-[ $ActivationDNS ] && log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationDNS ] && log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on $log_file" && exit 1; }
 
 echo -e "Installation of the DataBase server . . . \n"
 
-[ $ActivationMariaDB ] && log_prefix "database" "resources/database/database.sh" && echo -e "Database installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationMariaDB ] && log_prefix "database" "resources/database/database.sh" && echo -e "Database installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on $log_file" && exit 1; }
 
 echo -e "Installation of the Web Server . . .\n"
 
-[ $ActivationHTTP ] && log_prefix "http" "resources/http/http.sh" && echo -e "Web Server installed & configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationHTTP ] && log_prefix "http" "resources/http/http.sh" && echo -e "Web Server installed & configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
 
 echo -e "Installation of the NFS server . . . \n"
 
-[ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS installed & configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on /var/log/openClone" && exit 1; }
-
-echo -e "Installation of the DeBootStrap service (this can take a will) . . . \n"
-
-[ $ActivationDeBootStrap ] && log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" && echo -e "DeBootStrap installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DEBOOTSTRAP\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS installed & configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
 
 echo -e "Installation of the TFTP server . . . \n"
 
-[ $ActivationTFTP ] && log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP installed & configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on /var/log/openClone" && exit 1; }
+[ $ActivationTFTP ] && log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP installed & configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
 
 echo -e "Creation of the Boot files for the  maintenace OS . . . \n"
 
-log_prefix "core" "resources/core/core.sh" && echo -e "Core files create & configure correctly\n" || { echo -e "something went wrong during the creation of the BOOT FILES for linux\nGo see the log on /var/log/openClone" && exit 1; }
+log_prefix "core" "resources/core/core.sh" && echo -e "Core files create & configure correctly\n" || { echo -e "something went wrong during the creation of the BOOT FILES for linux\nGo see the log on $log_file" && exit 1; }
 
-wait
+# Wait for debootstrap to finish if it was started
+if [ $ActivationDeBootStrap ]; then
+    wait $debootstrap_pid
+    if [ $? -eq 0 ]; then
+        echo -e "DeBootStrap installed & configured correctly\n"
+    else
+        echo -e "something went wrong during the installation of the DEBOOTSTRAP\nGo see the log on $log_file" && exit 1;
+    fi
+fi
 
 
 system(){
@@ -236,8 +247,10 @@ system(){
   } 2>&1 | sed "s/^/[systemctl] /" >> "$log_file"
 }
 
-system || { echo -e "something went wrong during the restart of the services\nGo see the log on /var/log/openClone" && exit 1; }
+system || { echo -e "something went wrong during the restart of the services\nGo see the log on $log_file" && exit 1; }
+echo -e "All installations and configurations completed successfully."
 
+# Final screen
 if [ $Kea ]; then
   services=("kea-dhcp4-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
 elif [ $Isc ]; then
@@ -252,4 +265,4 @@ done
 
 sleep 1 && clear
 
-echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\n\nINSTALLATION FINISHED"
+echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\n\nand for the DataBase :\nusername : $UserMariaDB \npassword : $PasswordMariaDBUser\n\nINSTALLATION FINISHED"
