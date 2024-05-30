@@ -56,16 +56,6 @@ log_prefix() {
 
 if [ $SkipQuestion ]; then
 
-  Recuperer_IP_LAN(){
-
-    read -p "Quelle est son interface pour son sous réseaux LAN (exemple: eth0):" Interface_LAN
-    read -p "Quelle sera son addresse IP cote LAN (exemple: 192.168.1.15):" IP_LAN
-    read -p "Quelle est le masque du sous réseaux LAN aux format CIDR (24):" Mask_LAN_CIDR
-    read -p "Quelle est son masque de son sous réseaux LAN (exemple: 255.255.255.0):" Mask_LAN
-    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_LAN_Subnet
-
-  }
-
   read -p "What will be the username for maintenance OS : " UserDebootStrap
   read -p "and what will be is password : " PasswordDeBootStrap
   read -p "For the database what will be the username : " UserMariaDB
@@ -80,17 +70,25 @@ if [ $SkipQuestion ]; then
     ActivationNftables=true
 
     ip a && ip r
-    read -p "Quelle est son interface pour son sous réseaux WAN (exemple: eth0):" Interface_WAN
-    read -p "Quelle sera son addresse IP cote WAN (exemple: 192.168.1.15):" IP_WAN
-    read -p "Quelle est le masque du sous réseaux WAN aux format CIDR (24):" Mask_WAN_CIDR
-    read -p "Quelle est son masque de son sous réseaux WAN (exemple: 255.255.255.0):" Mask_WAN
-    read -p "Quelle est l'IP du sous résaux LAN (exemple: 192.168.1.0):" IP_WAN_Subnet
-    read -p "Quelle est l'IP du router du réseaux WAN (exemple: 192.168.1.254):" Router
+    echo ""
+    read -p "What is its interface for its WAN subnet (example: eth0):" Interface_WAN
+    read -p "What will be its IP address on the WAN side (example: 192.168.1.15):" IP_WAN
+    read -p "What is the CIDR format subnet mask for the WAN (example: 24):" Mask_WAN_CIDR
+    read -p "What is its subnet mask for the WAN (example: 255.255.255.0):" Mask_WAN
+    read -p "What is the IP of the WAN subnet (example: 192.168.1.0):" IP_WAN_Subnet
+    read -p "What is the IP of the router for the WAN network (example: 192.168.1.254):" Router
+
 
   fi
 
+  read -p "What is its interface for its LAN subnet (example: eth0):" Interface_LAN
+  read -p "What will be its IP address on the LAN side (example: 192.168.1.15):" IP_LAN
+  read -p "What is the CIDR format subnet mask for the LAN (example: 24):" Mask_LAN_CIDR
+  read -p "What is its subnet mask for the LAN (example: 255.255.255.0):" Mask_LAN
+  read -p "What is the IP of the LAN subnet (example: 192.168.1.0):" IP_LAN_Subnet
+
   ip a && ip r
-  Recuperer_IP_LAN
+  GET_LAN_INFO
 
 fi
 
@@ -260,7 +258,5 @@ for service in "${services[@]}"; do
   systemctl status "$service" | grep -E 'Loaded:|Active:'
   echo
 done
-
-
 
 echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\n\nand for the DataBase :\nusername : $UserMariaDB \npassword : $PasswordMariaDBUser\n\nINSTALLATION FINISHED\n\n"
