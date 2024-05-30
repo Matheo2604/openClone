@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# TO DO 
-# CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY
-# Generate the grub.cfg
-# Dropbox iso + wget iso url via the web interface
-# link to download debootstrap only for FR 
-
 clear
 echo -e '
                                           ______   __
