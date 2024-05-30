@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# TO DO
-# Simplify network question to many other way to get those informations
-
-# THING TO DO BUT NO THE PRIORITIES
+# TO DO 
 # CONFIGURE THE NETWORK INTERFACE WITH ANOTHER WAY
 # Add the possibility to have an ssl certificat with lets encrypt for the web server
 # MariaDB remote connexion
