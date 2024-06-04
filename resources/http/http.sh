@@ -6,6 +6,7 @@ apt-get -y install apache2 php
 
 # Copied the files for the web interface
 cp resources/http/www $PathHTTP
+# sed
 cp resources/http/opencloneWebSite.conf /etc/apache2/sites-available/
 
 # Start the new site

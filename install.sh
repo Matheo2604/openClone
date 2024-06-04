@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# inverser le sed et cp
+# http
+
 clear
 echo -e '
                                           ______   __
