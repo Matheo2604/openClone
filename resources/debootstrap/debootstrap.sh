@@ -35,12 +35,14 @@ chroot $PathNFS/debootstrap /bin/bash << EOT
 
 EOT
 
-# Copied the files used for the auto-logging
+# Copied the files used to logging, start script and change the keyboard layout automatically
+sed -i "s/{UserDebootStrap}/$UserDebootStrap/g" resources/debootstrap/sudoers
 cp resources/debootstrap/sudoers $PathNFS/debootstrap/etc/sudoers
 cp resources/debootstrap/logind.conf $PathNFS/debootstrap/etc/systemd/logind.conf
 mkdir $PathNFS/debootstrap/etc/systemd/system/getty@tty1.service.d/
 cp resources/debootstrap/override.conf $PathNFS/debootstrap/etc/systemd/system/getty@tty1.service.d/override.conf
 
+# !!! Not valid at all
 mkdir $PathNFS/debootstrap$PathNFS
 cp resources/scripts/* $PathSCRIPTS
 

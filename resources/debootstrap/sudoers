@@ -52,4 +52,4 @@ root    ALL=(ALL:ALL) ALL
 # See sudoers(5) for more information on "@include" directives:
 
 @includedir /etc/sudoers.d
-{username} ALL=(ALL) NOPASSWD: /home/{username}/.profile
+{UserDebootStrap} ALL=(ALL) NOPASSWD: /home/{UserDebootStrap}/.profile
