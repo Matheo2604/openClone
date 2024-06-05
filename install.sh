@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# inverser le sed et cp
 # http (plus page dns)
 # variable minuscule
 
