@@ -86,7 +86,6 @@ if [ $SkipQuestion ]; then
   read -p "What is the IP of the LAN subnet (example: 192.168.1.0):" IP_LAN_Subnet
 
   ip a && ip r
-  GET_LAN_INFO
 
 fi
 
