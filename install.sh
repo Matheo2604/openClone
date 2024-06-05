@@ -76,7 +76,6 @@ if [ $SkipQuestion ]; then
     read -p "What is the IP of the WAN subnet (example: 192.168.1.0):" IP_WAN_Subnet
     read -p "What is the IP of the router for the WAN network (example: 192.168.1.254):" Router
 
-
   fi
 
   read -p "What is its interface for its LAN subnet (example: eth0):" Interface_LAN
