@@ -2,6 +2,7 @@
 
 # inverser le sed et cp
 # http
+# variable minuscule
 
 clear
 echo -e '
