@@ -11,10 +11,11 @@ chown -R root:root $PathNFS
 chmod 744 $PathNFS
 
 # Copied congif files
+cp /etc/exports /etc/exports.old
+cp resources/nfs/exports /etc/exports
 sed -i \
   -e "s/{IP_LAN_Subnet}/$IP_LAN_Subnet/g" \
   -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
-  resources/nfs/exports
-cp resources/nfs/exports /etc/exports
+  /etc/exports
 
 exportfs -a

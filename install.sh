@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # inverser le sed et cp
-# http
+# http (plus page dns)
 # variable minuscule
 
 clear
@@ -90,12 +90,15 @@ if [ $SkipQuestion ]; then
 
 fi
 
+cp /etc/network/interfaces /etc/network/interfaces.old
+
 case "$ActivationAggregation$ActivationNftables" in
   "truetrue")
 
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on $log_file" && exit 1; }
     log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftable\nGo see the log on $log_file" && exit 1; }
 
+    cp resources/network_interfaces/interfacesAggregationNftables /etc/network/interfaces
     sed -i \
       -e "s/{Interface_WAN}/$Interface_WAN/g" \
       -e "s/{IP_WAN}/$IP_WAN/g" \
@@ -105,13 +108,14 @@ case "$ActivationAggregation$ActivationNftables" in
       -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
       -e "s/{interface1}/$interface1/g" \
       -e "s/{interface2}/$interface2/g" \
-    resources/network_interfaces/interfacesAggregationNftables
-    cp resources/network_interfaces/interfacesAggregationNftables /etc/network/interfaces
+    /etc/network/interfaces
     ;;
 
   "falsetrue")
     
     log_prefix "nftables" nftables/nftables.sh || { echo -e "something went wrong during the installation of the nftables\nGo see the log on $log_file" && exit 1; }
+    
+    cp resources/network_interfaces/interfacesNftables /etc/network/interfaces
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -120,8 +124,7 @@ case "$ActivationAggregation$ActivationNftables" in
       -e "s/{IP_WAN}/$IP_WAN/g" \
       -e "s/{Mask_WAN_CIDR}/$Mask_WAN_CIDR/g" \
       -e "s/{Router}/$Router/g" \
-    resources/network_interfaces/interfacesNftables
-    cp resources/network_interfaces/interfacesNftables /etc/network/interfaces
+    /etc/network/interfaces
     ;;
 
   "truefalse")
@@ -131,6 +134,7 @@ case "$ActivationAggregation$ActivationNftables" in
 
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on $log_file" && exit 1; }
     
+    cp resources/interface/interfacesAggregation /etc/network/interfaces
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
@@ -138,8 +142,7 @@ case "$ActivationAggregation$ActivationNftables" in
       -e "s/{Router}/$Router/g" \
       -e "s/{interface1}/$interface1/g" \
       -e "s/{interface2}/$interface2/g" \
-    resources/interface/interfacesAggregation
-    cp resources/interface/interfacesAggregation /etc/network/interfaces
+    /etc/network/interfaces
     ;;
 
   "falsefalse")
@@ -147,14 +150,13 @@ case "$ActivationAggregation$ActivationNftables" in
     read -p "Quelle est l'IP du router du réseaux :" Router
     echo -e "Remember do disable the dhcp of your router"
 
+    cp resources/network_interfaces/interfaces /etc/network/interfaces
     sed -i \
       -e "s/{Interface_LAN}/$Interface_LAN/g" \
       -e "s/{IP_LAN}/$IP_LAN/g" \
       -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
       -e "s/{Router}/$Router/g" \
-    resources/network_interfaces/interfaces
-
-    cp resources/network_interfaces/interfaces /etc/network/interfaces
+    /etc/network/interfaces
     ;;
 
   *)

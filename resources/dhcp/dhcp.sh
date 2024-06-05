@@ -9,6 +9,8 @@ if [ "$Kea" = true ]; then
   apt-get -y install kea-dhcp4-server
 
   # Copied and modification of the config file
+  cp /etc/kea/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf.old
+  cp resources/dhcp/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf
   sed -i \
     -e "s/{IP_LAN_Subnet}/$IP_LAN_Subnet/g" \
     -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
@@ -20,9 +22,7 @@ if [ "$Kea" = true ]; then
     -e "s/{MinIP}/${MinIP}/g" \
     -e "s/{PathTFTP}/${PathTFTP}/g" \
     -e "s/{Interface_LAN}/${Interface_LAN}/g" \
-    resources/dhcp/kea-dhcp4.conf
-  cp /etc/kea/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf.old
-  cp resources/dhcp/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf
+    /etc/kea/kea-dhcp4.conf
 
 systemctl start kea-dhcp4-server
 systemctl enable kea-dhcp4-server
@@ -34,6 +34,8 @@ elif [ "$Isc" = true ]; then
   apt-get -y install isc-dhcp-server
 
   # Copied and modification of the config file
+  cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.old
+  cp resources/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf
   sed -i \
     -e "s/{IP_LAN}/$IP_LAN/g" \
     -e "s/{Mask_LAN}/$Mask_LAN/g" \
@@ -44,10 +46,9 @@ elif [ "$Isc" = true ]; then
     -e "s/{MaxIP}/${MaxIP}/g" \
     -e "s/{MinIP}/${MinIP}/g" \
     -e "s/{PathTFTP}/${PathTFTP}/g" \
-    resources/dhcp/dhcpd.conf
+    /etc/dhcp/dhcpd.conf
 
-  cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.old
-  cp resources/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf
+
 
   # Ensures DHCP has access to the correct network interface
   chmod 666 /etc/default/isc-dhcp-server 

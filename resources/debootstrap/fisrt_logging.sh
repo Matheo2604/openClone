@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source <(grep = count.ini)
 echo " Welcome\nThis is your first time logging in with {UserDebootStrap} \n"
 passwd
 
