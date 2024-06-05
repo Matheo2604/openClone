@@ -29,7 +29,6 @@ if [ "$EUID" -ne 0 ];then
 fi
 
 # Verify if the user that start the script is in the openClone folder
-# to test if working when user is in another folder
 cd "$(dirname $0)"
 
 # Get all the variables from config.ini file
