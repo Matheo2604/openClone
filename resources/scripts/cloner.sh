@@ -1,4 +1,6 @@
 #!/bin/bash
+# ajouter option pour automatisation
+
 
 # Vérifie si les paramètres ont été fournis en ligne de commande
 
