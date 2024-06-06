@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# http (plus page dns)
-# variable minuscule
+# web site to do (dns to adapt)
+# variable first letter min
 
 clear
 echo -e '
