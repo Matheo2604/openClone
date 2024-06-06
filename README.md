@@ -1,17 +1,18 @@
 # **OpenClone**
 
 
-## 1 What's openClone
+## 1 - What's openClone
 
 hgfghjklm
 vbnj,klm
 
 
-## 2 Install
+## 2 - Install
 
+'''
 $ git clone https://github.com/Matheo2604/openClone
 $ cd openClone/
-bash install.sh 
+# bash install.sh 
+'''
 
-
-## 3 Troubleshooting
+## 3 - Troubleshooting
