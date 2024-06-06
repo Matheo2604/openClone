@@ -172,6 +172,8 @@ ip r add default via $Router
 apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
+clear 
+echo -e "kea = $Kea\nisc = $Isc"
 [ $Kea ] && apt-get -y install kea-dhcp4-server && echo -e "Installation of kea-dhcp4-server . . .\n" #>> /dev/null
 [ $Isc ] && sleep 5 && echo "pb"&& apt-get -y install isc-dhcp-server && echo -e "Installation of isc-dhcp-server . . .\n" #>> /dev/null
 [ $ActivationDNS ] && apt-get -y install bind9 && echo -e "Installation of bind9 . . .\n" #>> /dev/null
