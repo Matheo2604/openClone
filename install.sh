@@ -173,30 +173,39 @@ apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
 if [ $Kea ];then
-  apt-get -y install kea-dhcp4-server >> /dev/null && echo -e "Installation of kea-dhcp4-server . . .\n"
+  echo -e "Installation of kea-dhcp4-server . . .\n"
+  apt-get -y install kea-dhcp4-server >> /dev/null  
 fi
 if [ $Isc ];then 
-  apt-get -y install isc-dhcp-server >> /dev/null && echo -e "Installation of isc-dhcp-server . . .\n"
+  echo -e "Installation of isc-dhcp-server . . .\n"
+  apt-get -y install isc-dhcp-server >> /dev/null  
 fi
 if [ $ActivationDNS ];then
-  apt-get -y install bind9 >> /dev/null && echo -e "Installation of bind9 . . .\n"
+   echo -e "Installation of bind9 . . .\n"
+  apt-get -y install bind9 >> /dev/null
 fi
 if [ $ActivationMariaDB ];then 
-  apt-get -y install mariadb-server >> /dev/null && echo -e "Installation of mariadb-server . . .\n"
+  echo -e "Installation of mariadb-server . . .\n"
+  apt-get -y install mariadb-server >> /dev/null 
 fi
 if [ $ActivationHTTP ];then 
-  apt-get -y install apache2 php >> /dev/null && echo -e "Installation of apache2 and php . . .\n"
+  echo -e "Installation of apache2 and php . . .\n"
+  apt-get -y install apache2 php >> /dev/null 
 fi
 if [ $ActivationNFS ];then 
-  apt-get -y install nfs-kernel-server >> /dev/null && echo -e "Installation of nfs-kernel-server . . .\n"
+  echo -e "Installation of nfs-kernel-server . . .\n"
+  apt-get -y install nfs-kernel-server >> /dev/null  
 fi
 if [ $ActivationTFTP ];then 
-  apt-get -y install atftpd >> /dev/null && echo -e "Installation of atftpd . . .\n"
+  echo -e "Installation of atftpd . . .\n"
+  apt-get -y install atftpd >> /dev/null  
 fi
 if [ $ActivationDeBootStrap ];then 
-  apt-get -y install debootstrap >> /dev/null && echo -e "Installation of debootstrap . . .\n"
+  echo -e "Installation of debootstrap . . .\n"
+  apt-get -y install debootstrap >> /dev/null 
 fi
-apt-get -y install grub-common wget >> /dev/null && echo -e "Installation of grub-common and wget . . .\n"
+echo -e "Installation of grub-common and wget . . .\n"
+apt-get -y install grub-common wget >> /dev/null
 
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
@@ -224,11 +233,11 @@ if [ $ActivationHTTP ];then
 echo -e "Configuration of the Web Server . . .\n"
 log_prefix "http" "resources/http/http.sh" && echo -e "Web Server is configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationNFS ];
+if [ $ActivationNFS ];then
 echo -e "Configuration of the NFS server . . . \n"
 log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS is configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationTFTP ];
+if [ $ActivationTFTP ];then
 echo -e "Configuration of the TFTP server . . . \n"
 log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP is configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
 fi

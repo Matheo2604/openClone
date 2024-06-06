@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install the package needed
-apt-get -y install nftables
+apt-get -y install nftables >> /dev/null
 
 # Copied and modification of the config file
 cp /etc/nftables.conf /etc/nftables.conf.old
