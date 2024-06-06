@@ -44,32 +44,32 @@ clear
 
 case $CHOICE in
 
-        1)
+        "1")
 
 
             dialog --title "Disque(s) & partition(s) :" --msgbox "$(sudo ./lister_disque.>
 
             ;;
 
-        2)
+        "2")
 
             dialog --title "Restauration du la partition :" --msgbox "$(sudo ./restaurer.>
 
             ;;
 
-        3)
+        "3")
 
             dialog --title "Clonage de(s) partion(s) :" --msgbox "$(sudo ./cloner.sh)" 35>
 
             ;;
 
-        4)
+        "4")
 
             dialog --title "Creation d'une imgae :" --msgbox "$(sudo ./creer_image.sh)" 3>
 
             ;;
 
-        5)
+        "5")
 
             exit 0
 
