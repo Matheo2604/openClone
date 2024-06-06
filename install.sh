@@ -3,6 +3,7 @@
 # web site to do (dns to adapt)
 # variable first letter min
 #other script
+# vmlinuz and initrd from debootstrap to move for the grub or modify grub
 
 clear
 echo -e '
