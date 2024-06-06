@@ -169,15 +169,15 @@ ip r add default via $Router
 apt-get update && apt-get -y upgrade >> /dev/null
 
 #install of every paquets
-[ $Kea ] apt -y install kea-dhcp4-server >> /dev/null
-[ $Isc ] apt -y install isc-dhcp-server >> /dev/null
-[ $ActivationDNS ]  apt -y install bind9 >> /dev/null
-[ $ActivationMariaD] apt -y install mariadb-server >> /dev/null
-[ $ActivationHTTP ] apt -y install apache2 php >> /dev/null
-[ $ActivationNFS ]  apt -y install nfs-kernel-server >> /dev/null
-[ $ActivationTFTP ] apt -y install atftpd >> /dev/null
-[ $ActivationDeBootStrap ] apt -y install debootstrap >> /dev/null
-apt -y install grub-common >> /dev/null
+[ $Kea ] apt-get -y install kea-dhcp4-server >> /dev/null
+[ $Isc ] apt-get -y install isc-dhcp-server >> /dev/null
+[ $ActivationDNS ]  apt-get -y install bind9 >> /dev/null
+[ $ActivationMariaD] apt-get -y install mariadb-server >> /dev/null
+[ $ActivationHTTP ] apt-get -y install apache2 php >> /dev/null
+[ $ActivationNFS ]  apt-get -y install nfs-kernel-server >> /dev/null
+[ $ActivationTFTP ] apt-get -y install atftpd >> /dev/null
+[ $ActivationDeBootStrap ] apt-get -y install debootstrap >> /dev/null
+apt-get -y install grub-common >> /dev/null
 
 # apt-get -y install wget
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
