@@ -244,7 +244,7 @@ system(){
 
     echo "restarting services ..."
 
-    # Restart every service so they take into account their new configuration
+    # Restart every service so they take into account their new configurations
     systemctl restart bind9 atftpd nfs-kernel-server apache2 nftables mariadb
 
     if [ $Kea ]; then
