@@ -172,16 +172,24 @@ ip r add default via $Router
 apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
-[ "$Kea" ] && apt-get -y install kea-dhcp4-server && echo -e "Installation of kea-dhcp4-server . . .\n" #>> /dev/null
-[ "$Isc" ] && sleep 5 && echo "pb"&& apt-get -y install isc-dhcp-server && echo -e "Installation of isc-dhcp-server . . .\n" #>> /dev/null
-[ "$ActivationDNS" ] && apt-get -y install bind9 && echo -e "Installation of bind9 . . .\n" #>> /dev/null
-[ "$ActivationMariaD"] && apt-get -y install mariadb-server && echo -e "Installation of mariadb-server . . .\n" #>> /dev/null
-[ "$ActivationHTTP" ] && apt-get -y install apache2 php && echo -e "Installation of apache2 and php . . .\n" #>> /dev/null
-[ "$ActivationNFS" ] && apt-get -y install nfs-kernel-server && echo -e "Installation of nfs-kernel-server. . .\n" #>> /dev/null
-[ "$ActivationTFTP" ] && apt-get -y install atftpd && echo -e "Installation of atftpd . . .\n" #>> /dev/null
-[ "$ActivationDeBootStrap" ] && apt-get -y install debootstrap && echo -e "Installation of debootstrap . . .\n" #>> /dev/null
-apt-get -y install grub-common wget && echo -e "Installation of  grub-common and wget . . .\n" #>> /dev/null
-
+if [ "$Kea" ]; then
+  apt-get -y install kea-dhcp4-server >> /dev/null && echo -e "Installation of kea-dhcp4-server . . .\n"
+elif [ "$Isc" ]; then 
+  apt-get -y install isc-dhcp-server >> /dev/null && echo -e "Installation of isc-dhcp-server . . .\n"
+elif [ "$ActivationDNS" ]; then
+  apt-get -y install bind9 >> /dev/null && echo -e "Installation of bind9 . . .\n"
+elif [ "$ActivationMariaDB" ]; then 
+  apt-get -y install mariadb-server >> /dev/null && echo -e "Installation of mariadb-server . . .\n"
+elif [ "$ActivationHTTP" ]; then 
+  apt-get -y install apache2 php >> /dev/null && echo -e "Installation of apache2 and php . . .\n"
+elif [ "$ActivationNFS" ]; then 
+  apt-get -y install nfs-kernel-server >> /dev/null && echo -e "Installation of nfs-kernel-server . . .\n"
+elif [ "$ActivationTFTP" ]; then 
+  apt-get -y install atftpd >> /dev/null && echo -e "Installation of atftpd . . .\n"
+elif [ "$ActivationDeBootStrap" ]; then 
+  apt-get -y install debootstrap >> /dev/null && echo -e "Installation of debootstrap . . .\n"
+fi
+apt-get -y install grub-common wget >> /dev/null && echo -e "Installation of grub-common and wget . . .\n"
 
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
@@ -192,32 +200,32 @@ if [ $ActivationDeBootStrap ]; then
     debootstrap_pid=$!
 fi
 
+
+if [ $ActivationDHCP ];then
 echo -e "\nConfiguration of the DHCP server . . . \n"
+log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP is configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on $log_file" && exit 1; }
 
-[ $ActivationDHCP ] && log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP is configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on $log_file" && exit 1; }
-
+elif [ $ActivationDNS ];then
 echo -e "Configuration of the DNS server . . . \n"
+log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS is configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on $log_file" && exit 1; }
 
-[ $ActivationDNS ] && log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS is configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on $log_file" && exit 1; }
-
+elif [ $ActivationMariaDB ];then
 echo -e "Configuration of the DataBase server . . . \n"
+log_prefix "database" "resources/database/database.sh" && echo -e "Database is configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on $log_file" && exit 1; }
 
-[ $ActivationMariaDB ] && log_prefix "database" "resources/database/database.sh" && echo -e "Database is configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on $log_file" && exit 1; }
-
+elif [ $ActivationHTTP ];then
 echo -e "Configuration of the Web Server . . .\n"
+log_prefix "http" "resources/http/http.sh" && echo -e "Web Server is configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
 
-[ $ActivationHTTP ] && log_prefix "http" "resources/http/http.sh" && echo -e "Web Server is configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
-
+elif [ $ActivationNFS ];then
 echo -e "Configuration of the NFS server . . . \n"
+log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS is configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
 
-[ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS is configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
-
+elif [ $ActivationTFTP ];then
 echo -e "Configuration of the TFTP server . . . \n"
-
-[ $ActivationTFTP ] && log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP is configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
-
+log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP is configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
+fi
 echo -e "Creation of the Boot files for the  maintenace OS . . . \n"
-
 log_prefix "core" "resources/core/core.sh" && echo -e "Core files create & configure correctly\n" || { echo -e "something went wrong during the creation of the BOOT FILES for linux\nGo see the log on $log_file" && exit 1; }
 
 # Wait for debootstrap to finish if it was started
