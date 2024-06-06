@@ -42,6 +42,7 @@ sgdfhjjkhdgsrdthjyfkut
 ### 2.2 - Requirements
 
 You'll need at least 500mB for all the services and your goning to need some disk storage for the iso that's you want to add.
+debian 12 only one tested for now
 cpu to determine 
 ram to determine 
 do some range between 1-5 5-10 10-30 
