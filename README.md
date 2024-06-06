@@ -13,18 +13,21 @@ vbnj,klm
 
 First you'll need at least one newtork interfaces with an acces to your NAT.  
 If you want there are options that provide nftables or/and aggregation
+
 <br />
-what and why aggregation ?  
+what and why aggregation ? <br /> 
 uhihfjgdjohfg
 hdbjgklfmsgpji
-sdghijfokgoh  
+sdghijfokgoh
+<br />
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
 
 <br />
-what and why nftables ?  
+what and why nftables ?<br />
 dsqfghjkgfdsghj
 sdgfhjkgfdsgh
-sgdfhjjkhdgsrdthjyfkut  
+sgdfhjjkhdgsrdthjyfkut 
+<br />
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
 <br />
 
