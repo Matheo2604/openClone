@@ -173,10 +173,10 @@ apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
 [ $Kea ] && apt-get -y install kea-dhcp4-server && echo -e "Installation of kea-dhcp4-server . . .\n" #>> /dev/null
-[ $Isc ] && apt-get -y install isc-dhcp-server && echo -e "Installation of isc-dhcp-server . . .\n" #>> /dev/null
+[ $Isc ] && sleep 5 && echo "pb"&& apt-get -y install isc-dhcp-server && echo -e "Installation of isc-dhcp-server . . .\n" #>> /dev/null
 [ $ActivationDNS ] && apt-get -y install bind9 && echo -e "Installation of bind9 . . .\n" #>> /dev/null
 [ $ActivationMariaD] && apt-get -y install mariadb-server && echo -e "Installation of mariadb-server . . .\n" #>> /dev/null
-[ $ActivationHTTP ] && sleep 5 && echo "pb" && apt-get -y install apache2 php && echo -e "Installation of apache2 and php . . .\n" #>> /dev/null
+[ $ActivationHTTP ] && apt-get -y install apache2 php && echo -e "Installation of apache2 and php . . .\n" #>> /dev/null
 [ $ActivationNFS ] && apt-get -y install nfs-kernel-server && echo -e "Installation of nfs-kernel-server. . .\n" #>> /dev/null
 [ $ActivationTFTP ] && apt-get -y install atftpd && echo -e "Installation of atftpd . . .\n" #>> /dev/null
 [ $ActivationDeBootStrap ] && apt-get -y install debootstrap && echo -e "Installation of debootstrap . . .\n" #>> /dev/null
