@@ -37,6 +37,7 @@ cd "$(dirname $0)"
 source <(grep = config.ini)
 
 # create a prefix before for the log according of the part where it come from
+# not the best way to do that but it work
 log_prefix() {
 
     local prefix=$1
