@@ -4,7 +4,7 @@
 ## 1 - What's openClone
 
 hgfghjklm
-vbnj,klm
+vbnjklm
 
 
 ## 2 - Installation
