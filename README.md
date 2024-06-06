@@ -12,7 +12,7 @@ vbnj,klm
 '''
 $ git clone https://github.com/Matheo2604/openClone
 $ cd openClone/
-# bash install.sh 
+ bash install.sh 
 '''
 
 ## 3 - Troubleshooting
