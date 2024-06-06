@@ -172,28 +172,28 @@ ip r add default via $Router
 apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
-if else [ $Kea ]; then
+if [ $Kea ];then
   apt-get -y install kea-dhcp4-server >> /dev/null && echo -e "Installation of kea-dhcp4-server . . .\n"
 fi
-if [ $Isc ]; then 
+if [ $Isc ];then 
   apt-get -y install isc-dhcp-server >> /dev/null && echo -e "Installation of isc-dhcp-server . . .\n"
 fi
-if [ $ActivationDNS ]; then
+if [ $ActivationDNS ];then
   apt-get -y install bind9 >> /dev/null && echo -e "Installation of bind9 . . .\n"
 fi
-if [ $ActivationMariaDB ]; then 
+if [ $ActivationMariaDB ];then 
   apt-get -y install mariadb-server >> /dev/null && echo -e "Installation of mariadb-server . . .\n"
 fi
-if [ $ActivationHTTP ]; then 
+if [ $ActivationHTTP ];then 
   apt-get -y install apache2 php >> /dev/null && echo -e "Installation of apache2 and php . . .\n"
 fi
-if [ $ActivationNFS ]; then 
+if [ $ActivationNFS ];then 
   apt-get -y install nfs-kernel-server >> /dev/null && echo -e "Installation of nfs-kernel-server . . .\n"
 fi
-if [ $ActivationTFTP ]; then 
+if [ $ActivationTFTP ];then 
   apt-get -y install atftpd >> /dev/null && echo -e "Installation of atftpd . . .\n"
 fi
-if [ $ActivationDeBootStrap ]; then 
+if [ $ActivationDeBootStrap ];then 
   apt-get -y install debootstrap >> /dev/null && echo -e "Installation of debootstrap . . .\n"
 fi
 apt-get -y install grub-common wget >> /dev/null && echo -e "Installation of grub-common and wget . . .\n"
@@ -201,10 +201,10 @@ apt-get -y install grub-common wget >> /dev/null && echo -e "Installation of gru
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 # Launch DeBootStrap in an other process
-echo -e "\nInstallation of the DeBootStrap service (this one can take a while) . . ."
-if [ $ActivationDeBootStrap ]; then
-    log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" &
-    debootstrap_pid=$!
+if [ $ActivationDeBootStrap ];then
+  echo -e "\nInstallation of the DeBootStrap service (this one can take a while) . . ."
+  log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" &
+  debootstrap_pid=$!
 fi
 
 
@@ -224,11 +224,11 @@ if [ $ActivationHTTP ];then
 echo -e "Configuration of the Web Server . . .\n"
 log_prefix "http" "resources/http/http.sh" && echo -e "Web Server is configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationNFS ];then
+if [ $ActivationNFS ];
 echo -e "Configuration of the NFS server . . . \n"
 log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS is configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationTFTP ];then
+if [ $ActivationTFTP ];
 echo -e "Configuration of the TFTP server . . . \n"
 log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP is configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
 fi
