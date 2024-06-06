@@ -174,6 +174,14 @@ apt-get update && apt-get -y upgrade #>> /dev/null
 #install of every paquets
 clear 
 echo -e "kea = $Kea\nisc = $Isc"
+Kea=false
+Isc=false
+ActivationDNS=false
+ActivationHTTP=false
+ActivationMariaD=false
+ActivationNFS=false
+ActivationTFTP=false
+ActivationDeBootStrap=false
 [ $Kea ] && apt-get -y install kea-dhcp4-server && echo -e "Installation of kea-dhcp4-server . . .\n" #>> /dev/null
 [ $Isc ] && sleep 5 && echo "pb"&& apt-get -y install isc-dhcp-server && echo -e "Installation of isc-dhcp-server . . .\n" #>> /dev/null
 [ $ActivationDNS ] && apt-get -y install bind9 && echo -e "Installation of bind9 . . .\n" #>> /dev/null
@@ -183,7 +191,7 @@ echo -e "kea = $Kea\nisc = $Isc"
 [ $ActivationTFTP ] && apt-get -y install atftpd && echo -e "Installation of atftpd . . .\n" #>> /dev/null
 [ $ActivationDeBootStrap ] && apt-get -y install debootstrap && echo -e "Installation of debootstrap . . .\n" #>> /dev/null
 apt-get -y install grub-common wget && echo -e "Installation of  grub-common and wget . . .\n" #>> /dev/null
-
+exit 1
 
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
