@@ -174,19 +174,26 @@ apt-get update && apt-get -y upgrade #>> /dev/null
 #install of every paquets
 if else [ $Kea ]; then
   apt-get -y install kea-dhcp4-server >> /dev/null && echo -e "Installation of kea-dhcp4-server . . .\n"
-if else [ $Isc ]; then 
+fi
+if [ $Isc ]; then 
   apt-get -y install isc-dhcp-server >> /dev/null && echo -e "Installation of isc-dhcp-server . . .\n"
-if else [ $ActivationDNS ]; then
+fi
+if [ $ActivationDNS ]; then
   apt-get -y install bind9 >> /dev/null && echo -e "Installation of bind9 . . .\n"
-if else [ $ActivationMariaDB ]; then 
+fi
+if [ $ActivationMariaDB ]; then 
   apt-get -y install mariadb-server >> /dev/null && echo -e "Installation of mariadb-server . . .\n"
-if else [ $ActivationHTTP ]; then 
+fi
+if [ $ActivationHTTP ]; then 
   apt-get -y install apache2 php >> /dev/null && echo -e "Installation of apache2 and php . . .\n"
-if else [ $ActivationNFS ]; then 
+fi
+if [ $ActivationNFS ]; then 
   apt-get -y install nfs-kernel-server >> /dev/null && echo -e "Installation of nfs-kernel-server . . .\n"
-if else [ $ActivationTFTP ]; then 
+fi
+if [ $ActivationTFTP ]; then 
   apt-get -y install atftpd >> /dev/null && echo -e "Installation of atftpd . . .\n"
-if else [ $ActivationDeBootStrap ]; then 
+fi
+if [ $ActivationDeBootStrap ]; then 
   apt-get -y install debootstrap >> /dev/null && echo -e "Installation of debootstrap . . .\n"
 fi
 apt-get -y install grub-common wget >> /dev/null && echo -e "Installation of grub-common and wget . . .\n"
@@ -204,24 +211,24 @@ fi
 if [ $ActivationDHCP ];then
 echo -e "\nConfiguration of the DHCP server . . . \n"
 log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP is configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on $log_file" && exit 1; }
-
-if else [ $ActivationDNS ];then
+fi
+if [ $ActivationDNS ];then
 echo -e "Configuration of the DNS server . . . \n"
 log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS is configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on $log_file" && exit 1; }
-
-if else [ $ActivationMariaDB ];then
+fi
+if [ $ActivationMariaDB ];then
 echo -e "Configuration of the DataBase server . . . \n"
 log_prefix "database" "resources/database/database.sh" && echo -e "Database is configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on $log_file" && exit 1; }
-
-if else [ $ActivationHTTP ];then
+fi
+if [ $ActivationHTTP ];then
 echo -e "Configuration of the Web Server . . .\n"
 log_prefix "http" "resources/http/http.sh" && echo -e "Web Server is configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
-
-if else [ $ActivationNFS ];then
+fi
+if [ $ActivationNFS ];then
 echo -e "Configuration of the NFS server . . . \n"
 log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS is configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
-
-if else [ $ActivationTFTP ];then
+fi
+if [ $ActivationTFTP ];then
 echo -e "Configuration of the TFTP server . . . \n"
 log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP is configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
 fi
