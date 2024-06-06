@@ -2,6 +2,7 @@
 
 # web site to do (dns to adapt)
 # variable first letter min
+#other script
 
 clear
 echo -e '
