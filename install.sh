@@ -172,21 +172,21 @@ ip r add default via $Router
 apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
-if [ "$Kea" ]; then
+if [ $Kea ]; then
   apt-get -y install kea-dhcp4-server >> /dev/null && echo -e "Installation of kea-dhcp4-server . . .\n"
-elif [ "$Isc" ]; then 
+elif [ $Isc ]; then 
   apt-get -y install isc-dhcp-server >> /dev/null && echo -e "Installation of isc-dhcp-server . . .\n"
-elif [ "$ActivationDNS" ]; then
+elif [ $ActivationDNS ]; then
   apt-get -y install bind9 >> /dev/null && echo -e "Installation of bind9 . . .\n"
-elif [ "$ActivationMariaDB" ]; then 
+elif [ $ActivationMariaDB ]; then 
   apt-get -y install mariadb-server >> /dev/null && echo -e "Installation of mariadb-server . . .\n"
-elif [ "$ActivationHTTP" ]; then 
+elif [ $ActivationHTTP ]; then 
   apt-get -y install apache2 php >> /dev/null && echo -e "Installation of apache2 and php . . .\n"
-elif [ "$ActivationNFS" ]; then 
+elif [ $ActivationNFS ]; then 
   apt-get -y install nfs-kernel-server >> /dev/null && echo -e "Installation of nfs-kernel-server . . .\n"
-elif [ "$ActivationTFTP" ]; then 
+elif [ $ActivationTFTP ]; then 
   apt-get -y install atftpd >> /dev/null && echo -e "Installation of atftpd . . .\n"
-elif [ "$ActivationDeBootStrap" ]; then 
+elif [ $ActivationDeBootStrap ]; then 
   apt-get -y install debootstrap >> /dev/null && echo -e "Installation of debootstrap . . .\n"
 fi
 apt-get -y install grub-common wget >> /dev/null && echo -e "Installation of grub-common and wget . . .\n"
