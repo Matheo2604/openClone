@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Install the package needed for the DataBase
-apt-get -y install mariadb-server
-
 # Generat password for admin account 
 if [ $GeneratePasswordMariaDBAdmin ]; then
   apt -y install pwgen

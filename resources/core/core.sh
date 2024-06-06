@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# To make sure this package is already installed
-apt-get -y install grub-common
-
 # Create Boot file for linux (core.0 or core.efi) and transfert the PXE grub.cfg already made
 grub-mknetdir
 

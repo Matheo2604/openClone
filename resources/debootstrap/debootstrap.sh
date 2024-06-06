@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Install the package needed for the DeBootStrap
-apt -y install debootstrap
-
 # Create the folder that's well be used for the DeBootStrap
 mkdir $PathNFS/debootstrap
 

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Install the package needed for the DNS
-apt-get -y install bind9
-
 # Copied config files
 cp resources/dns/site22.fr.zone /var/cache/bind/site22.fr.zone
 sed -i "s/{IP_LAN}/$IP_LAN/g" /var/cache/bind/site22.fr.zone
