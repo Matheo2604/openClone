@@ -172,15 +172,15 @@ ip r add default via $Router
 apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
-[ $Kea ] && apt-get -y install kea-dhcp4-server #>> /dev/null
-[ $Isc ] && apt-get -y install isc-dhcp-server #>> /dev/null
-[ $ActivationDNS ] && apt-get -y install bind9 #>> /dev/null
-[ $ActivationMariaD] && apt-get -y install mariadb-server #>> /dev/null
-[ $ActivationHTTP ] && apt-get -y install apache2 php #>> /dev/null
-[ $ActivationNFS ] && apt-get -y install nfs-kernel-server #>> /dev/null
-[ $ActivationTFTP ] && apt-get -y install atftpd #>> /dev/null
-[ $ActivationDeBootStrap ] && apt-get -y install debootstrap #>> /dev/null
-apt-get -y install grub-common wget #>> /dev/null
+[ $Kea ] && apt-get -y install kea-dhcp4-server && echo -e "Installation of kea-dhcp4-server . . .\n" #>> /dev/null
+[ $Isc ] && apt-get -y install isc-dhcp-server && echo -e "Installation of isc-dhcp-server . . .\n" #>> /dev/null
+[ $ActivationDNS ] && apt-get -y install bind9 && echo -e "Installation of bind9 . . .\n" #>> /dev/null
+[ $ActivationMariaD] && apt-get -y install mariadb-server && echo -e "Installation of mariadb-server . . .\n" #>> /dev/null
+[ $ActivationHTTP ] && apt-get -y install apache2 php && echo -e "Installation of apache2 and php . . .\n" #>> /dev/null
+[ $ActivationNFS ] && apt-get -y install nfs-kernel-server && echo -e "Installation of nfs-kernel-server. . .\n" #>> /dev/null
+[ $ActivationTFTP ] && apt-get -y install atftpd && echo -e "Installation of atftpd . . .\n" #>> /dev/null
+[ $ActivationDeBootStrap ] && apt-get -y install debootstrap && echo -e "Installation of debootstrap . . .\n" #>> /dev/null
+apt-get -y install grub-common wget && echo -e "Installation of  grub-common and wget . . .\n" #>> /dev/null
 
 
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
@@ -192,29 +192,29 @@ if [ $ActivationDeBootStrap ]; then
     debootstrap_pid=$!
 fi
 
-echo -e "\nInstallation of the DHCP server . . . \n"
+echo -e "\nConfiguration of the DHCP server . . . \n"
 
-[ $ActivationDHCP ] && log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on $log_file" && exit 1; }
+[ $ActivationDHCP ] && log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP is configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on $log_file" && exit 1; }
 
-echo -e "Installation of the DNS server . . . \n"
+echo -e "Configuration of the DNS server . . . \n"
 
-[ $ActivationDNS ] && log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on $log_file" && exit 1; }
+[ $ActivationDNS ] && log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS is configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on $log_file" && exit 1; }
 
-echo -e "Installation of the DataBase server . . . \n"
+echo -e "Configuration of the DataBase server . . . \n"
 
-[ $ActivationMariaDB ] && log_prefix "database" "resources/database/database.sh" && echo -e "Database installed & configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on $log_file" && exit 1; }
+[ $ActivationMariaDB ] && log_prefix "database" "resources/database/database.sh" && echo -e "Database is configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on $log_file" && exit 1; }
 
-echo -e "Installation of the Web Server . . .\n"
+echo -e "Configuration of the Web Server . . .\n"
 
-[ $ActivationHTTP ] && log_prefix "http" "resources/http/http.sh" && echo -e "Web Server installed & configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
+[ $ActivationHTTP ] && log_prefix "http" "resources/http/http.sh" && echo -e "Web Server is configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
 
-echo -e "Installation of the NFS server . . . \n"
+echo -e "Configuration of the NFS server . . . \n"
 
-[ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS installed & configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
+[ $ActivationNFS ] && log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS is configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
 
-echo -e "Installation of the TFTP server . . . \n"
+echo -e "Configuration of the TFTP server . . . \n"
 
-[ $ActivationTFTP ] && log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP installed & configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
+[ $ActivationTFTP ] && log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP is configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
 
 echo -e "Creation of the Boot files for the  maintenace OS . . . \n"
 
