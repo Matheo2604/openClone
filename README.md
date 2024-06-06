@@ -13,6 +13,8 @@ vbnj,klm
 
 ### 2.2 - How to install
 
+First anssure thats your machine is up to date :
+ 
 ```
 # apt update
 # apt upgrade
