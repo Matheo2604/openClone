@@ -1,7 +1,7 @@
-# OpenClone
+# **OpenClone**
 
 
-## 1 What's oenClone
+## 1 What's openClone
 
 hgfghjklm
 vbnj,klm
