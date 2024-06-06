@@ -182,7 +182,7 @@ apt-get -y install grub-common wget >> /dev/null
 
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
-# Launch DeBootStrap in background
+# Launch DeBootStrap in an other process
 echo -e "\nInstallation of the DeBootStrap service (this one can take a while) . . ."
 if [ $ActivationDeBootStrap ]; then
     log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" &
