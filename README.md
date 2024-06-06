@@ -38,7 +38,16 @@ sgdfhjjkhdgsrdthjyfkut
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
 <br />
 
-### 2.2 - How to install
+
+### 2.2 - Requirements
+
+You'll need at least 500mB for all the services and your goning to need some disk storage for the iso that's you want to add.
+cpu to determine 
+ram to determine 
+do some range between 1-5 5-10 10-30 
+<br />
+
+### 2.3 - How to install
 
 First anssure thats your machine is up to date :
 
