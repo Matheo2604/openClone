@@ -9,6 +9,7 @@ fi
 # Récupération du nombre de partitions
 nombre_partitions=$1
 
+
 # Appel du script externe pour obtenir le nom_disque et taille_une_partition
 output=$(./partitionnage.sh $nombre_partitions)
 read nom_disque taille_une_partition <<< "$output"
@@ -35,4 +36,3 @@ for ((i=3; i<=$nombre_partitions+2; i++)); do
 EOF
     start_sector=$((end_sector + 1))
 done
-
