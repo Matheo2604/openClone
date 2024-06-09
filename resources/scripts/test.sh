@@ -25,12 +25,12 @@ dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 parted -s "/dev/$nom_disque" mklabel gpt
 
 # Création d'une partition fat32 pour EFI de 4096000 secteurs
-parted -s "/dev/$nom_disque" mkpart primary fat32 1s 4096000s
+parted -s "/dev/$nom_disque" mkpart primary fat32 1MiB 2048MiB
 parted -s "/dev/$nom_disque" set 1 esp on
 mkfs.fat -F32 "/dev/${nom_disque}1"
 
 # Création d'une partition ext4 pour GRUB de 4096001s à 8192000s
-parted -s "/dev/$nom_disque" mkpart primary ext4 4096001s 8192000s
+parted -s "/dev/$nom_disque" mkpart primary ext4 2048MiB 4096MiB
 mkfs.ext4 "/dev/${nom_disque}2"
 
 
