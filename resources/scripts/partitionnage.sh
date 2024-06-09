@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Recupere le nombre de partiotion voulu par paramètre
+# Récupère le nombre de partitions voulu par paramètre
 if [ $# -ne 1 ]; then
- echo "Usage: $0 <nombre_partition>"
+    echo "Usage: $0 <nombre_partition>"
     exit 1
 fi
 
@@ -18,11 +18,11 @@ disque_taille=$(echo $disque | awk '{print $4}')
 # Calculer la taille du disque en fonction du diviseur
 disque_partitionner=$((disque_taille / nombre_partition))
 
-# Soustraire 4100096 de la taille du disque l'equivalent de 2Gio plus 2Mio de securite (1Mio = 2048 secteur)
-disque_taille_finale=$((disque_partitionner - 8192000))
+# Soustraire 4100096 de la taille du disque l'equivalent de 2 Gio plus 2 Mio de sécurité (1 Mio = 1024 * 1024 octets)
+disque_taille_finale=$((disque_partitionner - 2147483648))
 
-if [ $disque_taille_finale -lt 8192000 ]; then
-    echo "Erreur : La taille finale du disque est inférieure à 4100096."
+if [ $disque_taille_finale -lt 2147483648 ]; then
+    echo "Erreur : La taille finale du disque est inférieure à 2147483648."
     exit 1
 fi
 
