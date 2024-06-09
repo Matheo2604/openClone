@@ -13,8 +13,6 @@ output=$(./partitionnage.sh "$nombre_partitions")
 
 # Utilisation de read pour extraire les variables de sortie
 read nom_disque taille_partition <<< "$output"
-# Convertir la taille de la partition de secteurs en MiB
-taille_partition_MiB=$((taille_partition / 2048 - 1))
 
 # Suppression de tout ce qui se trouve sur le disque
 wipefs -a "/dev/$nom_disque"
@@ -24,25 +22,25 @@ dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 parted -s "/dev/$nom_disque" mklabel gpt
 
 # Création d'une partition fat32 pour EFI de 1MiB à 2048MiB
-parted -s "/dev/$nom_disque" mkpart primary fat32 1MiB 2048MiB
+parted -s "/dev/$nom_disque" mkpart primary fat32 2048s 4116479s
 parted -s "/dev/$nom_disque" set 1 esp on
 mkfs.fat -F32 "/dev/${nom_disque}1"
 
-# Création d'une partition ext4 pour GRUB de 2048MiB à 4096MiB
-parted -s "/dev/$nom_disque" mkpart primary ext4 2048MiB 4096MiB
+# Création d'une partition ext4 pour GRUB de 2049MiB à 4096MiB
+parted -s "/dev/$nom_disque" mkpart primary ext4 4116480s 8191999s
 mkfs.ext4 "/dev/${nom_disque}2"
 
 # Calcul de l'offset de départ pour les partitions supplémentaires
-start_MiB=4096  # Taille en MiB de la dernière partition créée
+start_sector=8192000  # Secteur de départ pour les partitions supplémentaires
 
 # Boucle pour créer les partitions ext4
 for (( i=1; i<=nombre_partitions; i++ ))
 do
-  end_MiB=$((start_MiB + taille_partition_MiB))
-  # Création de la partition avec des unités en MiB
-  parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_MiB}MiB" "${end_MiB}MiB"
+  end_sector=$((start_sector + taille_partition - 1))
+  # Création de la partition avec des unités en secteurs
+  parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_sector}s" "${end_sector}s"
   mkfs.ext4 "/dev/${nom_disque}${i+2}"
-  start_MiB=$((end_MiB + 1))
+  start_sector=$((end_sector + 1))
 done
 
 echo "Partitions créées avec succès sur /dev/$nom_disque"
