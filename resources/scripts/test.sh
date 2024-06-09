@@ -17,7 +17,7 @@ output=$(./partitionnage.sh "$nombre_partitions")
 
 #
 read nom_disque taille_partition <<< "$output"
-taille_partition=$((taille_partition - 800000))
+taille_partition=$(taille_partition - 800000)
 #
 
 # Suppression de tout ce qui se trouve sur le disque
@@ -40,12 +40,12 @@ mkfs.ext4 "/dev/${nom_disque}2"
 start_sector=8192001
 
 # Boucle pour créer les partitions ext4
-for (( i=1; i<=nombre_partitions; i++ ))
+for ( i=1; i<=nombre_partitions; i++ )
 do
-  end_sector=$((start_sector + taille_partition - 1))
+  end_sector=$(start_sector + taille_partition - 1)
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_sector}s" "${end_sector}s"
   mkfs.ext4 "/dev/${nom_disque}${i+2}"
-  start_sector=$((end_sector + 1))
+  start_sector=$(end_sector + 1)
 done
 
 echo "Partitions créées avec succès sur /dev/$nom_disque"
