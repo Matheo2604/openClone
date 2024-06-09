@@ -12,19 +12,16 @@ nombre_partitions=$1
 # Supposons que le script tiers s'appelle 'partitionnage.sh' et qu'il renvoie
 # le nom du disque et la taille de partition utilisable
 output=$(./partitionnage.sh "$nombre_partitions")
-#nom_disque=$(echo "$output" | awk '{print $1}')
-#taille_partition=$(echo "$output" | awk '{print $2}')
 
-#
+# Utilisation de read pour extraire les variables de sortie
 read nom_disque taille_partition <<< "$output"
 taille_partition=$((taille_partition - 800000))
-#
 
 # Suppression de tout ce qui se trouve sur le disque
 wipefs -a "/dev/$nom_disque"
 dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 
-# Création de la table de partition msdos
+# Création de la table de partition GPT
 parted -s "/dev/$nom_disque" mklabel gpt
 
 # Création d'une partition fat32 pour EFI de 4096000 secteurs
@@ -39,13 +36,22 @@ mkfs.ext4 "/dev/${nom_disque}2"
 # Calcul de l'offset de départ pour les partitions supplémentaires
 start_sector=8192001
 
+# Obtenir la taille totale du disque en secteurs
+disk_size=$(parted -m /dev/$nom_disque unit s print | grep "^/dev" | awk -F: '{print $2}' | sed 's/s//')
+
 # Boucle pour créer les partitions ext4
 for (( i=1; i<=nombre_partitions; i++ ))
 do
   end_sector=$((start_sector + taille_partition - 1))
-  echo -e "\n\n taille_partition = $taille_partition\n start_sector     = $start_sector\n end_sector       = $end_sector\n\n\n"
+  
+  # Vérifier si end_sector dépasse la taille totale du disque
+  if [ $end_sector -ge $disk_size ]; then
+    echo "Erreur : la taille des partitions dépasse la taille du disque."
+    exit 1
+  fi
+  
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_sector}s" "${end_sector}s"
-  #mkfs.ext4 "/dev/${nom_disque}${i+2}"
+  mkfs.ext4 "/dev/${nom_disque}${i+2}"
   start_sector=$((end_sector + 1))
 done
 
