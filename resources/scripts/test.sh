@@ -13,7 +13,7 @@ nombre_partitions=$1
 # le nom du disque et la taille de partition utilisable
 output=$(./partitionnage.sh "$nombre_partitions")
 nom_disque=$(echo "$output" | awk '{print $1}')
-taille_partition=$((echo "$output" | awk '{print $2}') -nombre_partitions)
+taille_partition=$(echo "$output" | awk '{print $2}')
 
 # Suppression de tout ce qui se trouve sur le disque
 wipefs -a "/dev/$nom_disque"
@@ -28,8 +28,8 @@ parted -s "/dev/$nom_disque" set 1 esp on
 mkfs.fat -F32 "/dev/${nom_disque}1"
 
 # Création d'une partition ext4 pour GRUB de 4096000 secteurs
-start_grub=$((4096001))
-end_grub=$((start_grub + 4095999))
+start_grub="4096001"
+end_grub="8192000"
 parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_grub}s ${end_grub}s
 mkfs.ext4 "/dev/${nom_disque}2"
 
