@@ -44,6 +44,8 @@ for i in $(seq 1 $nombre_partitions); do
     echo "Erreur : La partition $i dépasse la taille du disque."
     exit 1
   fi
+  test=$start_partition-$end_partition
+  echo "$test" 
   parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_partition}s ${end_partition}s
   mkfs.ext4 "/dev/${nom_disque}$((i+2+1))"
   start_partition=$((end_partition + 1))
