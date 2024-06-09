@@ -25,7 +25,7 @@ wipefs -a "/dev/$nom_disque"
 dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 
 # Création de la table de partition msdos
-parted -s "/dev/$nom_disque" mklabel msdos
+parted -s "/dev/$nom_disque" mklabel gpt
 
 # Création d'une partition fat32 pour EFI de 4096000 secteurs
 parted -s "/dev/$nom_disque" mkpart primary fat32 1s 4096000s
