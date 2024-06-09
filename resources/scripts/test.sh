@@ -22,16 +22,16 @@ dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 parted -s "/dev/$nom_disque" mklabel gpt
 
 # Création d'une partition fat32 pour EFI de 1MiB à 2048MiB
-parted -s "/dev/$nom_disque" mkpart primary fat32 2048s 2050048s 
+parted -s "/dev/$nom_disque" mkpart primary fat32 2048s 4116479s
 parted -s "/dev/$nom_disque" set 1 esp on
 mkfs.fat -F32 "/dev/${nom_disque}1"
 
 # Création d'une partition ext4 pour GRUB de 2049MiB à 4096MiB
-parted -s "/dev/$nom_disque" mkpart primary ext4 2052096s  4100096s
+parted -s "/dev/$nom_disque" mkpart primary ext4 4116480s 8191999s
 mkfs.ext4 "/dev/${nom_disque}2"
 
 # Calcul de l'offset de départ pour les partitions supplémentaires
-start_sector=4100096  # Secteur de départ pour les partitions supplémentaires
+start_sector=8192000  # Secteur de départ pour les partitions supplémentaires
 
 # Boucle pour créer les partitions ext4
 for (( i=1; i<=nombre_partitions; i++ ))

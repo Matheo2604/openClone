@@ -19,9 +19,9 @@ disque_taille=$(echo $disque | awk '{print $4}')
 disque_partitionner=$((disque_taille / nombre_partition))
 
 # Soustraire 4100096 de la taille du disque l'equivalent de 2Gio plus 2Mio de securite (1Mio = 2048 secteur)
-disque_taille_finale=$((disque_partitionner - 4100096))
+disque_taille_finale=$((disque_partitionner - 8192000))
 
-if [ $disque_taille_finale -lt 4100096 ]; then
+if [ $disque_taille_finale -lt 8192000 ]; then
     echo "Erreur : La taille finale du disque est inférieure à 4100096."
     exit 1
 fi
