@@ -12,12 +12,12 @@ nombre_partitions=$1
 # Supposons que le script tiers s'appelle 'partitionnage.sh' et qu'il renvoie
 # le nom du disque et la taille de partition utilisable
 output=$(./partitionnage.sh "$nombre_partitions")
-nom_disque=$(echo "$output" | awk '{print $1}')
-taille_partition=$(echo "$output" | awk '{print $2}')
+#nom_disque=$(echo "$output" | awk '{print $1}')
+#taille_partition=$(echo "$output" | awk '{print $2}')
 
 #
-#read nom_disque taille_une_partition <<< "$output"
-#taille_une_partition=$((taille_une_partition - 2048))
+read nom_disque taille_partition <<< "$output"
+taille_partition=$((taille_partition - 800000))
 #
 
 # Suppression de tout ce qui se trouve sur le disque
