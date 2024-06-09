@@ -31,7 +31,7 @@ parted -s "/dev/$nom_disque" mkpart primary ext4 4098049s  8,194,047s
 mkfs.ext4 "/dev/${nom_disque}2"
 
 # Calcul de l'offset de départ pour les partitions supplémentaires
-start_sector=8,194,048  # Secteur de départ pour les partitions supplémentaires
+start_sector=8194048  # Secteur de départ pour les partitions supplémentaires
 
 # Boucle pour créer les partitions ext4
 for (( i=1; i<=nombre_partitions; i++ ))
