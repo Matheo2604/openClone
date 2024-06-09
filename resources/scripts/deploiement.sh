@@ -16,16 +16,18 @@ read nom_disque taille_une_partition <<< "$output"
 taille_une_partition=$((taille_une_partition - 2048))
 
 # Suppression de toutes les partitions et tables de partition sur nom_disque
-sudo /usr/sbin/sfdisk --delete /dev/$nom_disque
+sudo /usr/sbin/sfdisk --delete $nom_disque
 
 # Création d'une nouvelle table de partition
-sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
-label: dos
-unit: sectors
+echo ",4096000,ef" | sudo sfdisk --quiet "$DISK"
+# Formater la partition en FAT32
+PARTITION="${DISK}1"
+sudo mkfs.fat -F32 "$PARTITION"
 
-,4096000,0c,*
-,4096000,83
-EOF
+echo ",4096000,L" | sudo sfdisk --quiet "$DISK"
+# Formater la partition en ext4
+PARTITION="${DISK}1"
+sudo mkfs.ext4 "$PARTITION"
 
 # Création des partitions supplémentaires
 start_sector=8194047  # Début du premier espace libre
