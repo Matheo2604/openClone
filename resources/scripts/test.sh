@@ -36,13 +36,16 @@ mkfs.fat -F32 "/dev/${nom_disque}1"
 parted -s "/dev/$nom_disque" mkpart primary ext4 4096001s 8192000s
 mkfs.ext4 "/dev/${nom_disque}2"
 
-# Création des partitions utilisateur
-start_partition="8192001"
-for i in $(seq 1 $nombre_partitions); do
-  end_partition=$((start_partition + taille_partition + 1))
-  parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_partition}s ${end_partition}s
-  mkfs.ext4 "/dev/${nom_disque}$((i+2))"
-  start_partition=$((end_partition + 1))
+# Calcul de l'offset de départ pour les partitions supplémentaires
+start_sector=8192001
+
+# Boucle pour créer les partitions ext4
+for (( i=1; i<=nombre_partitions; i++ ))
+do
+  end_sector=$((start_sector + taille_partition - 1))
+  parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_sector}s" "${end_sector}s"
+  mkfs.ext4 "/dev/${nom_disque}${i+2}"
+  start_sector=$((end_sector + 1))
 done
 
 echo "Partitions créées avec succès sur /dev/$nom_disque"
