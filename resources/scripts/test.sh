@@ -9,35 +9,35 @@ fi
 nombre_partitions=$1
 
 # Appel du script tiers et récupération des variables
-# Supposons que le script tiers s'appelle 'tiers_script.sh' et qu'il renvoie
+# Supposons que le script tiers s'appelle 'partitionnage.sh' et qu'il renvoie
 # le nom du disque et la taille de partition utilisable
-output=$(./tiers_script.sh "$nombre_partitions")
+output=$(./partitionnage.sh "$nombre_partitions")
 nom_disque=$(echo "$output" | awk '{print $1}')
 taille_partition=$(echo "$output" | awk '{print $2}')
 
 # Suppression de tout ce qui se trouve sur le disque
-sudo wipefs -a "/dev/$nom_disque"
-sudo dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
+wipefs -a "/dev/$nom_disque"
+dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 
 # Création de la table de partition msdos
-sudo parted -s "/dev/$nom_disque" mklabel msdos
+parted -s "/dev/$nom_disque" mklabel msdos
 
 # Création d'une partition fat32 pour EFI de 4096000 secteurs
-sudo parted -s "/dev/$nom_disque" mkpart primary fat32 1s 4096000s
-sudo mkfs.fat -F32 "/dev/${nom_disque}1"
+parted -s "/dev/$nom_disque" mkpart primary fat32 1s 4096000s
+mkfs.fat -F32 "/dev/${nom_disque}1"
 
 # Création d'une partition ext4 pour GRUB de 4096000 secteurs
 start_grub=$((4096001))
 end_grub=$((start_grub + 4095999))
-sudo parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_grub}s ${end_grub}s
-sudo mkfs.ext4 "/dev/${nom_disque}2"
+parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_grub}s ${end_grub}s
+mkfs.ext4 "/dev/${nom_disque}2"
 
 # Création des partitions supplémentaires
 start_partition=$((end_grub + 1))
 for i in $(seq 1 $nombre_partitions); do
   end_partition=$((start_partition + taille_partition - 1))
-  sudo parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_partition}s ${end_partition}s
-  sudo mkfs.ext4 "/dev/${nom_disque}$((i+2))"
+  parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_partition}s ${end_partition}s
+  mkfs.ext4 "/dev/${nom_disque}$((i+2))"
   start_partition=$((end_partition + 1))
 done
 
