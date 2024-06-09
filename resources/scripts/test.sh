@@ -34,7 +34,7 @@ parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_grub}s ${end_grub}s
 mkfs.ext4 "/dev/${nom_disque}2"
 
 # Création des partitions supplémentaires
-start_partition=$((end_grub + 1))
+start_partition="8192001"
 for i in $(seq 1 $nombre_partitions); do
   end_partition=$((start_partition + taille_partition + 1))
   parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_partition}s ${end_partition}s
