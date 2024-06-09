@@ -36,11 +36,9 @@ start_sector=8192000  # Secteur de départ pour les partitions supplémentaires
 # Boucle pour créer les partitions ext4
 for (( i=1; i<=nombre_partitions; i++ ))
 do
+  start_sector=$((8192000 + (i - 1) * taille_partition))
   end_sector=$((start_sector + taille_partition - 1))
   # Création de la partition avec des unités en secteurs
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_sector}s" "${end_sector}s"
   mkfs.ext4 "/dev/${nom_disque}${i+2}"
-  start_sector=$((end_sector + 1))
 done
-
-echo "Partitions créées avec succès sur /dev/$nom_disque"
