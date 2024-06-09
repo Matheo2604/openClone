@@ -13,7 +13,7 @@ nombre_partitions=$1
 # le nom du disque et la taille de partition utilisable
 output=$(./partitionnage.sh "$nombre_partitions")
 nom_disque=$(echo "$output" | awk '{print $1}')
-taille_partition=$(echo "$output" | awk '{print $2}')
+taille_partition=$((echo "$output" | awk '{print $2}') -nombre_partitions)
 
 # Suppression de tout ce qui se trouve sur le disque
 wipefs -a "/dev/$nom_disque"
@@ -36,7 +36,7 @@ mkfs.ext4 "/dev/${nom_disque}2"
 # Création des partitions supplémentaires
 start_partition=$((end_grub + 1))
 for i in $(seq 1 $nombre_partitions); do
-  end_partition=$((start_partition + taille_partition - 1))
+  end_partition=$((start_partition + taille_partition + 1))
   parted -s "/dev/$nom_disque" mkpart primary ext4 ${start_partition}s ${end_partition}s
   mkfs.ext4 "/dev/${nom_disque}$((i+2))"
   start_partition=$((end_partition + 1))
