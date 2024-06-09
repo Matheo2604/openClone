@@ -30,11 +30,11 @@ PARTITION="${DISK}1"
 sudo mkfs.ext4 "$PARTITION"
 
 # Création des partitions supplémentaires
-start_sector=8194047  # Début du premier espace libre
-for ((i=3; i<=$nombre_partitions+2; i++)); do
-    end_sector=$((start_sector + taille_une_partition - 1))
-    sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
-,$end_sector,83
-EOF
-    start_sector=$((end_sector + 1))
-done
+#start_sector=8194047  # Début du premier espace libre
+#for ((i=3; i<=$nombre_partitions+2; i++)); do
+#    end_sector=$((start_sector + taille_une_partition - 1))
+#    sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
+#,$end_sector,83
+#EOF
+#    start_sector=$((end_sector + 1))
+#done
