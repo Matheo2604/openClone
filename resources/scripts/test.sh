@@ -44,7 +44,7 @@ do
   #echo -e "\n\n taille_partition = $taille_partition\n start_sector     = $start_sector\n end_sector       = $end_sector\n\n\n"
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_sector}s" "${end_sector}s"
   mkfs.ext4 "/dev/${nom_disque}${i+2}"
-  start_sector=$((end_sector - 2047))
+  start_sector=$((end_sector + 2047))
 done
 
 echo "Partitions créées avec succès sur /dev/$nom_disque"
