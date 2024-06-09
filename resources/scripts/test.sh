@@ -43,7 +43,7 @@ start_sector=8192001
 for (( i=1; i<=nombre_partitions; i++ ))
 do
   end_sector=$((start_sector + taille_partition - 1))
-  echo -e "\n\n taille_partition = $taille_partition\n start_sector =     $start_sector\n end_sector =       $end_sector\n\n\n"
+  echo -e "\n\n taille_partition = $taille_partition\n start_sector     = $start_sector\n end_sector       = $end_sector\n\n\n"
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_sector}s" "${end_sector}s"
   #mkfs.ext4 "/dev/${nom_disque}${i+2}"
   start_sector=$((end_sector + 1))
