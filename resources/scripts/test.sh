@@ -15,8 +15,7 @@ output=$(./partitionnage.sh "$nombre_partitions")
 
 # Utilisation de read pour extraire les variables de sortie
 read nom_disque taille_partition <<< "$output"
-securite=$((nombre_partitions * 2048))
-taille_partition=$((taille_partition - securite))
+taille_partition=$((taille_partition - 2048))
 
 # Suppression de tout ce qui se trouve sur le disque
 wipefs -a "/dev/$nom_disque"
