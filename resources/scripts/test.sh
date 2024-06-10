@@ -30,8 +30,9 @@ mkfs.fat -F32 "/dev/${nom_disque}1"
 parted -s "/dev/$nom_disque" mkpart primary ext4 2050048s 4098047s
 mkfs.ext4 "/dev/${nom_disque}2"
 
+# Octet de départ pour les partitions utilisateur
 # Calcul de l'offset de départ pour les partitions supplémentaires
-start_byte=4098048  # Octet de départ pour les partitions supplémentaires
+start_byte=4098048  
 
 # Boucle pour créer les partitions ext4
 for (( i=1; i<=nombre_partitions; i++ ))
