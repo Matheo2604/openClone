@@ -18,11 +18,11 @@ disque_taille=$(echo $disque | awk '{print $4}')
 # Calculer la taille du disque en fonction du diviseur
 disque_partitionner=$((disque_taille / nombre_partition))
 
-# Soustraire 4100096 de la taille du disque l'equivalent de 2 Gio plus 2 Mio de sécurité (1 Mio = 1024 * 1024 octets)
-disque_taille_finale=$((disque_partitionner - 2147483648))
+# Soustraire 2148532224 octest de la taille du disque l'equivalent de 2 Go 
+disque_taille_finale=$((disque_partitionner - 2148532224))
 
-if [ $disque_taille_finale -lt 2147483648 ]; then
-    echo "Erreur : La taille finale du disque est inférieure à 2147483648."
+if [ $disque_taille_finale -lt 2148532224 ]; then
+    echo "Erreur : La taille finale du disque est inférieure à 2148532224 octets."
     exit 1
 fi
 
