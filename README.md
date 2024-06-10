@@ -11,7 +11,7 @@ This project was developed as part of my Advanced Technician Certificate (Brevet
 <br />
 Feel free to modify it according to your specific needs!
 
-
+<br />
 
 ## 2 - Installation
 
