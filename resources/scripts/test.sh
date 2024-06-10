@@ -37,10 +37,11 @@ start_byte=4098048
 # Boucle pour créer les partitions ext4
 for (( i=1; i<=nombre_partitions; i++ ))
 do
+  index=$((i + 2))
   end_byte=$((start_byte + taille_partition - 1)) 
   # Création de la partition avec des unités en secteurs
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_byte}s" "${end_byte}s"
-  mkfs.ext4 "/dev/${nom_disque}${i+2}"
-  echo -e "\n\n/dev/${nom_disque}${i+2}\n\n"
+  mkfs.ext4 "/dev/${nom_disque}${inedx+2}"
+  echo -e "\n\n/dev/${nom_disque}${index+2}\n\n"
   start_byte=$((end_byte + 1))
 done
