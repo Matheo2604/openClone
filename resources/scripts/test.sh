@@ -15,8 +15,9 @@ output=$(./partitionnage.sh "$nombre_partitions")
 read nom_disque taille_partition <<< "$output"
 
 # Suppression de tout ce qui se trouve sur le disque
-wipefs -a "/dev/$nom_disque"
-dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
+#wipefs -a "/dev/$nom_disque"
+#dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
+sfdisk --delete $nom_disque
 
 # Création de la table de partition GPT
 parted -s "/dev/$nom_disque" mklabel gpt
@@ -24,11 +25,11 @@ parted -s "/dev/$nom_disque" mklabel gpt
 # Création d'une partition fat32 pour EFI de 1 MiO à 1GiO
 parted -s "/dev/$nom_disque" mkpart primary fat32 2048s 2050047s
 parted -s "/dev/$nom_disque" set 1 esp on
-mkfs.fat -F32 "/dev/${nom_disque}1" | yes
+mkfs.fat -F32 "/dev/${nom_disque}1"
 
 # Création d'une partition ext4 pour GRUB de 1GiO à 2GiO
 parted -s "/dev/$nom_disque" mkpart primary ext4 2050048s 4098047s
-mkfs.ext4 "/dev/${nom_disque}2" | yes
+mkfs.ext4 "/dev/${nom_disque}2"
 
 # Secteur de départ pour les partitions utilisateur
 # Calcul de l'offset de départ pour les partitions supplémentaires
@@ -41,6 +42,6 @@ do
   end_byte=$((start_byte + taille_partition - 1)) 
   # Création de la partition avec des unités en secteurs
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_byte}s" "${end_byte}s"
-  mkfs.ext4 "/dev/${nom_disque}${index}" | yes
+  mkfs.ext4 "/dev/${nom_disque}${index}"
   start_byte=$((end_byte + 1))
 done
