@@ -13,13 +13,13 @@ disque=$(lsblk -b -d | grep disk | sort -k 4 -nr | head -n 1)
 
 # Extraire le nom et la taille du disque le plus grand
 disque_nom=$(echo $disque | awk '{print $1}')
-disque_taille=$(echo $disque | awk '{print $4}')
+taille_disque=$(echo $disque | awk '{print $4}')
 
 #passage d'octets à secteur
-disque_taille=$((disque_taille / 512))
+taille_disque=$((disque_taille / 512))
 
 # Calculer la taille du disque en fonction du diviseur
-disque_partitionner=$((disque_taille / nombre_partition))
+disque_partitionner=$((taille_disque / nombre_partition))
 
 # Soustraire 4098048 secteur de la taille du disque l'equivalent de 2 GiO 
 disque_taille_finale=$((disque_partitionner - 4098048))

@@ -17,7 +17,7 @@ read nom_disque taille_partition <<< "$output"
 # Suppression de tout ce qui se trouve sur le disque
 #wipefs -a "/dev/$nom_disque"
 #dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
-sfdisk --delete $nom_disque
+/usr/sbin/sfdisk --delete $nom_disque
 
 # Création de la table de partition GPT
 parted -s "/dev/$nom_disque" mklabel gpt
