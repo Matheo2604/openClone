@@ -40,8 +40,13 @@ mkdir $PathNFS/debootstrap/etc/systemd/system/getty@tty1.service.d/
 cp resources/debootstrap/override.conf $PathNFS/debootstrap/etc/systemd/system/getty@tty1.service.d/override.conf
 
 # !!! Not valid at all
-mkdir $PathNFS/debootstrap$PathNFS
-cp resources/scripts/* $PathSCRIPTS
+#mkdir $PathNFS/debootstrap$PathNFS
+#cp resources/scripts/* $PathSCRIPTS
+
+# Start script automatically
+# the script has to be change
+echo "sudo $PathSCRIPTS/MENU.sh >> $PathNFS/debootstrap/home/felix/.bashrc 
+echo "$UserDebootStrap ALL=(ALL) NOPASSWD: $PathSCRIPTS/MENU.sh" >> /etc/sudoers 
 
 # if the option to skip question is active then the users will be asked to change the maintenance os password when the first connexion is made
 if [ $SkipQuestion ]; then
