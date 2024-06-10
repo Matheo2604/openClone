@@ -19,9 +19,8 @@ read nom_disque taille_partition <<< "$output"
 wipefs -a "/dev/$nom_disque"
 dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 
-#wipefs -a "/dev/$nom_disque"
-#dd if=/dev/zero of="/dev/$nom_disque" bs=512 count=1
-#dd if=/dev/zero of="/dev/$nom_disque" bs=512 count=1 conv=notrunc
+# To destroy every data but way longer
+#dd if=/dev/random of="/dev/$nom_disque" bs=512 count=1
 
 
 # Création de la table de partition GPT
