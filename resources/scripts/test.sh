@@ -15,8 +15,11 @@ output=$(./partitionnage.sh "$nombre_partitions")
 read nom_disque taille_partition <<< "$output"
 
 # Suppression de tout ce qui se trouve sur le disque
-#dd if=/dev/random of="/dev/$nom_disque"
+
 wipefs -a "/dev/$nom_disque"
+dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
+
+#wipefs -a "/dev/$nom_disque"
 #dd if=/dev/zero of="/dev/$nom_disque" bs=512 count=1
 #dd if=/dev/zero of="/dev/$nom_disque" bs=512 count=1 conv=notrunc
 
