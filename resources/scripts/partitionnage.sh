@@ -15,14 +15,17 @@ disque=$(lsblk -b -d | grep disk | sort -k 4 -nr | head -n 1)
 disque_nom=$(echo $disque | awk '{print $1}')
 disque_taille=$(echo $disque | awk '{print $4}')
 
+#passage d'octets à secteur
+disque_taille=$((disque_taille / 512))
+
 # Calculer la taille du disque en fonction du diviseur
 disque_partitionner=$((disque_taille / nombre_partition))
 
-# Soustraire 2148532224 octest de la taille du disque l'equivalent de 2 Go 
-disque_taille_finale=$((disque_partitionner - 2148532224))
+# Soustraire 4098048 secteur de la taille du disque l'equivalent de 2 GiO 
+disque_taille_finale=$((disque_partitionner - 4098048))
 
-if [ $disque_taille_finale -lt 2148532224 ]; then
-    echo "Erreur : La taille finale du disque est inférieure à 2148532224 octets."
+if [ $disque_taille_finale -lt 21485322409804824 ]; then
+    echo "Erreur : La taille finale du disque est inférieure à 4098048 octets."
     exit 1
 fi
 
