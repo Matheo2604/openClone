@@ -2,8 +2,9 @@
 
 # web site to do (dns to adapt)
 # variable first letter min
-#other script
+# other script
 # vmlinuz and initrd from debootstrap to move for the grub or modify grub
+# dns host reference 127.0.0.1 hgas to change on clients for openclone 
 
 clear
 echo -e '
