@@ -42,6 +42,5 @@ do
   # Création de la partition avec des unités en secteurs
   parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_byte}s" "${end_byte}s"
   mkfs.ext4 "/dev/${nom_disque}${index}"
-  echo -e "\n\n/dev/${nom_disque}${index}\n$i\n$index\n\n"
   start_byte=$((end_byte + 1))
 done
