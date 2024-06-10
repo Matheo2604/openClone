@@ -24,7 +24,7 @@ disque_partitionner=$((disque_taille / nombre_partition))
 # Soustraire 4098048 secteur de la taille du disque l'equivalent de 2 GiO 
 disque_taille_finale=$((disque_partitionner - 4098048))
 
-if [ $disque_taille_finale -lt 21485322409804824 ]; then
+if [ $disque_taille_finale -lt 4098048 ]; then
     echo "Erreur : La taille finale du disque est inférieure à 4098048 octets."
     exit 1
 fi
