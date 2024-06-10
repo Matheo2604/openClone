@@ -23,8 +23,8 @@ lenght_disk=$((lenght_disk - 4100096))
 # Find the lenght for every user partition
 disk_partitionner=$((lenght_disk / number_partitions))
 
-if [ $disk_partitionner -lt 4098048 ]; then
-    echo "Error : The final lenght of the disk is lower than 4098048 sector"
+if [ $disk_partitionner -lt 4100096 ]; then
+    echo "Error : The final lenght of the disk is lower than 4100096 sector"
     exit 1
 fi
 
