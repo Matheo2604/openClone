@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Récupère le nombre de partitions voulu par paramètre
+# Recupere le nombre de partitions voulu par parametre
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <nombre_partition>"
     exit 1
