@@ -24,7 +24,7 @@ The project has an option to deploy link aggregation for better efficiency or nf
 <br />
 What and Why Aggregation?
 <br />
-Link aggregation is a method used to combine multiple network connections into a single logical connection to increase throughput and provide redundancy. By deploying link aggregation, you can improve network performance
+Link aggregation is a method used to combine multiple network connections into a single logical connection to increase throughput and provide redundancy. By deploying link aggregation, you can improve network performance.
 <br />
 <br />
 
