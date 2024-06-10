@@ -17,7 +17,7 @@ read nom_disque taille_partition <<< "$output"
 # Suppression de tout ce qui se trouve sur le disque
 #wipefs -a "/dev/$nom_disque"
 #dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
-dd if=dev/urandom of="/dev/$nom_disque"
+dd if=dev/zero of="/dev/$nom_disque"
 
 
 # Création de la table de partition GPT
