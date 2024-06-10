@@ -1,40 +1,51 @@
 #!/bin/bash
 
-# Vérification du nombre de paramètres
+# Vérification du passage par paramètre du nombre de partitions souhaité
 if [ $# -ne 1 ]; then
-    echo "Usage: $0 nombre_partitions"
-    exit 1
+  echo "Usage: $0 <nombre_de_partitions>"
+  exit 1
 fi
 
-# Récupération du nombre de partitions
 nombre_partitions=$1
 
+# Appel du script tiers et récupération des variables
+output=$(./partitionnage.sh "$nombre_partitions")
 
-# Appel du script externe pour obtenir le nom_disque et taille_une_partition
-output=$(./partitionnage.sh $nombre_partitions)
-read nom_disque taille_une_partition <<< "$output"
-taille_une_partition=$((taille_une_partition - 2048))
+# Utilisation de read pour extraire les variables de sortie
+read nom_disque taille_partition <<< "$output"
 
-# Suppression de toutes les partitions et tables de partition sur nom_disque
-sudo /usr/sbin/sfdisk --delete $nom_disque
+# Suppression de tout ce qui se trouve sur le disque
 
-# Création d'une nouvelle table de partition
-echo ",4096000,ef" | sudo sfdisk --quiet "$DISK"
-# Formater la partition en FAT32
-PARTITION="${DISK}1"
-sudo mkfs.fat -F32 "$PARTITION"
+wipefs -a "/dev/$nom_disque"
+dd if=/dev/zero of="/dev/$nom_disque" bs=1M count=10
 
-echo ",4096000,L" | sudo sfdisk --quiet "$DISK"
-# Formater la partition en ext4
-PARTITION="${DISK}1"
-sudo mkfs.ext4 "$PARTITION"
+# To destroy every data but way longer
+#dd if=/dev/random of="/dev/$nom_disque" bs=512 count=1
 
-# Création des partitions supplémentaires
-#start_sector=8194047  # Début du premier espace libre
-#for ((i=3; i<=$nombre_partitions+2; i++)); do
-#    end_sector=$((start_sector + taille_une_partition - 1))
-#    sudo /usr/sbin/sfdisk /dev/$nom_disque << EOF
-#,$end_sector,83
-#EOF
-#    start_sector=$((end_sector + 1))
-#done
+
+# Création de la table de partition GPT
+parted -s "/dev/$nom_disque" mklabel gpt
+
+# Création d'une partition fat32 pour EFI de 1 MiO à 1GiO
+parted -s "/dev/$nom_disque" mkpart primary fat32 2048s 2050047s
+parted -s "/dev/$nom_disque" set 1 esp on
+yes | mkfs.fat -F32 "/dev/${nom_disque}1"
+
+# Création d'une partition ext4 pour GRUB de 1GiO à 2GiO
+parted -s "/dev/$nom_disque" mkpart primary ext4 2050048s 4098047s
+yes | mkfs.ext4 "/dev/${nom_disque}2"
+
+# Secteur de départ pour les partitions utilisateur
+# Calcul de l'offset de départ pour les partitions supplémentaires
+start_byte=4098048  
+
+# Boucle pour créer les partitions ext4
+for (( i=1; i<=nombre_partitions; i++ ))
+do
+  index=$((i + 2))
+  end_byte=$((start_byte + taille_partition - 1)) 
+  # Création de la partition avec des unités en secteurs
+  parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_byte}s" "${end_byte}s"
+  yes | mkfs.ext4 "/dev/${nom_disque}${index}"
+  start_byte=$((end_byte + 1))
+done
