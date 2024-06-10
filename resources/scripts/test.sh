@@ -38,7 +38,7 @@ for (( i=1; i<=nombre_partitions; i++ ))
 do
   end_byte=$((start_byte + taille_partition - 1))  # Convertir taille_partition de secteurs en octets
   # Création de la partition avec des unités en octets
-  parted -s "/dev/$nom_disque mkpart primary ext4 ${start_byte}s ${end_byte}s"
+  parted -s "/dev/$nom_disque" mkpart primary ext4 "${start_byte}s" "${end_byte}s"
   mkfs.ext4 "/dev/${nom_disque}${i+2}"
   start_byte=$((end_byte + 1))
 done
