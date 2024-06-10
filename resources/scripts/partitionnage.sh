@@ -16,7 +16,7 @@ disque_nom=$(echo $disque | awk '{print $1}')
 taille_disque=$(echo $disque | awk '{print $4}')
 
 #passage d'octets à secteur
-taille_disque=$((disque_taille / 512))
+taille_disque=$((taille_disque / 512))
 
 # Calculer la taille du disque en fonction du diviseur
 disque_partitionner=$((taille_disque / nombre_partition))
