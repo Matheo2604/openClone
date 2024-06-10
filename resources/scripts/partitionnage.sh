@@ -18,7 +18,7 @@ taille_disque=$(echo $disque | awk '{print $4}')
 # Passage d'octets à secteur
 taille_disque=$((taille_disque / 512))
 # Prise en compte de la partition grub et efi
-taille_disque=$((taille_disque - 4098048))
+taille_disque=$((taille_disque - 4100096))
 
 # Calculer la taille du disque en fonction du diviseur
 disque_partitionner=$((taille_disque / nombre_partition))
