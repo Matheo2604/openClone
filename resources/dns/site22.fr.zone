@@ -7,7 +7,7 @@ $TTL 604800
        1h ); Negative Cache TTL
 
 @        IN     NS              dns
-dns      A      {IP_LAN}
+dns      A      {ip_lan}
 
 ; Serveur web
-www      A      {IP_LAN}
+www      A      {ip_lan}

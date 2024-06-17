@@ -1,24 +1,24 @@
 #!/bin/bash
 
 # Generat password for admin account 
-if [ $GeneratePasswordMariaDBAdmin ]; then
+if [ $generate_password_admin_mariadb ]; then
   apt -y install pwgen
-  PasswordMariaDBAdmin=$(pwgen -c -n -s 24 1)
+  password_admin_mariadb=$(pwgen -c -n -s 24 1)
 fi
 
 # Change root password fo security
-mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${PasswordMariaDBAdmin}';"
+mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${password_admin_mariadb}';"
 
 # Create the actual DataBase
-mysql -u root -p"${PasswordMariaDBAdmin}" -e "CREATE DATABASE ${DataBase};"
+mysql -u root -p"${password_admin_mariadb}" -e "CREATE DATABASE ${database};"
 
 # Create the user & give it rights
-mysql -u root -p"${PasswordMariaDBAdmin}" -e "CREATE USER '${userMariaDB}'@'localhost' IDENTIFIED BY '${PasswordMariaDBUser}';"
-mysql -u root -p"${PasswordMariaDBAdmin}" -e "GRANT ALL PRIVILEGES ON ${DataBase}.* TO '${UserMariaDB}'@'localhost';"
-mysql -u root -p"${PasswordMariaDBAdmin}" -e "FLUSH PRIVILEGES;"
+mysql -u root -p"${password_admin_mariadb}" -e "CREATE USER '${user_mariadb}'@'localhost' IDENTIFIED BY '${password_user_mariadb}';"
+mysql -u root -p"${password_admin_mariadb}" -e "GRANT ALL PRIVILEGES ON ${database}.* TO '${user_mariadb}'@'localhost';"
+mysql -u root -p"${password_admin_mariadb}" -e "FLUSH PRIVILEGES;"
 
 # Create tables
-mysql -u root -p"${PasswordMariaDBAdmin}" -D "${DataBase}" -e "
+mysql -u root -p"${password_admin_mariadb}" -D "${database}" -e "
 CREATE TABLE class (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL

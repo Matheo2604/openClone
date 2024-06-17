@@ -5,6 +5,7 @@
 # other script
 # vmlinuz and initrd from debootstrap to move for the grub or modify grub
 # dns host reference 127.0.0.1 hgas to change on clients for openclone 
+# ip broadcast sur dhcp pb
 
 clear
 echo -e '
@@ -106,8 +107,8 @@ case "$activation_aggregation$activation_nftables" in
       -e "s/{router}/$router/g" \
       -e "s/{ip_lan}/$il_lan/g" \
       -e "s/{mask_lan_cidr}/$mask_lan_cidr/g" \
-      -e "s/{interface1}/$interface1/g" \
-      -e "s/{interface2}/$interface2/g" \
+      -e "s/{interface_2}/$interface1/g" \
+      -e "s/{interface_1}/$interface2/g" \
     /etc/network/interfaces
     ;;
 

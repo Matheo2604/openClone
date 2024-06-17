@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Copied the files for the web interface
-cp resources/http/www $PathHTTP
+cp resources/http/www $path_http
 # sed
 cp resources/http/opencloneWebSite.conf /etc/apache2/sites-available/
 
@@ -10,4 +10,4 @@ a2dissite 000-default.conf
 a2ensite opencloneWebSite.conf
 
 # Give the Web Server acces to a folder
-chown www-data:www-data $PathHTTP -Rf
+chown www-data:www-data $path_http -Rf

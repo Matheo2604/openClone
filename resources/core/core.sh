@@ -4,10 +4,10 @@
 grub-mknetdir
 
 # Basic config of the grub.cfg to Boot on the openClone OS
-cp $PathTFTP/boot/grub/grub.cfg $PathTFTP/boot/grub/grub.cfg.old
+cp $path_tftp/boot/grub/grub.cfg $path_tftp/boot/grub/grub.cfg.old
 cp resources/core/grub.cfg $PathTFTP/boot/grub/grub.cfg
 sed -i \
-    -e "s/{IP_LAN}/$IP_LAN/g" \ 
-    -e "s/{PathNFS}/$PathNFS/g" \
-    $PathTFTP/boot/grub/grub.cfg
+    -e "s/{ip_lan}/$ip_lan/g" \ 
+    -e "s/{path_nfs}/$path_nfs/g" \
+    $path_tftp/boot/grub/grub.cfg
 

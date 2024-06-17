@@ -7,15 +7,15 @@ apt-get -y install nftables >> /dev/null
 cp /etc/nftables.conf /etc/nftables.conf.old
 cp resources/nftables/nftables.conf /etc/nftables.conf
 sed -i \
-    -e "s/{Interface_WAN}/$Interface_WAN/g" \
-    -e "s/{IP_WAN_Subnet}/$IP_WAN_Subnet/g" \
-    -e "s/{IP_LAN_Subnet}/$IP_LAN_Subnet/g" \
-    -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
-    -e "s/{Interface_LAN}/$Interface_LAN/g" \
-    -e "s/{IP_WAN_SR}/$IP_WAN_SR/g" \
-    -e "s/{IP_LAN_SR}/$IP_LAN_SR/g" \
-    -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
-    -e "s/{Mask_WAN_CIDR}/$Mask_WAN_CIDR/g" \
+    -e "s/{interface_wan}/$interface_wan/g" \
+    -e "s/{ip_wan_subnet}/$ip_wan_subnet/g" \
+    -e "s/{ip_lan_subnet}/$ip_lan_subnet/g" \
+    -e "s/{mask_lan_cidr}/$mask_lan_cidr/g" \
+    -e "s/{interface_lan}/$interface_lan/g" \
+    -e "s/{ip_wan_subnet}/$ip_wan_subnet/g" \
+    -e "s/{ip_lan_subnet}/$ip_lan_subnet/g" \
+    -e "s/{mask_lan_cidr}/$mask_lan_cidr/g" \
+    -e "s/{mask_wan_cidr}/$mask_wan_cidr/g" \
     /etc/nftables.conf
 
 # Enable the service for nftables

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo " Welcome\nThis is your first time logging in with {UserDebootStrap} \n"
+echo " Welcome\nThis is your first time logging in with {user_debootstrap} \n"
 passwd
 
-mv "/home/{UserDebootStrap}/.bashrc.tmp" "/home/{UserDebootStrap}/.bashrc"
+mv "/home/{user_debootstrap}/.bashrc.tmp" "/home/{user_debootstrap}/.bashrc"
 rm first_logging.sh ".bashrc.tmp"

@@ -7,6 +7,6 @@ $TTL 604800
         1h )     ; TTL du cache négatif
 
 @ IN NS site22.fr.
-dns IN A {IP_LAN} ; Adresse IP du serveur DNS
+dns IN A {ip_lan} ; Adresse IP du serveur DNS
 
 153 PTR site22.fr. ;
