@@ -1,0 +1,184 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: center; /* Center the navigation items */
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: #6f6f6f;
+    padding: 10px 20px; /* Adjust padding */
+}
+
+nav h1 {
+    color: #fdfdfd;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    margin: 0; /* Remove default margin */
+}
+
+nav .onglets {
+    display: flex;
+    justify-content: center; /* Center the menu items */
+    margin: 0; /* Remove default margin */
+}
+
+nav .onglets a {
+    text-decoration: none;
+    color: #fff; /* Change color to white to match the theme */
+    margin: 0 10px; /* Adjust margin for spacing */
+    border-bottom: 1px solid #fff;
+    padding-bottom: 5px;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #94a7ae;
+    background-size: cover;
+    color: #fff;
+    padding: 40px;
+    height: 150px;
+    margin: 0; /* Remove margin */
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    margin: 0; /* Remove default margin */
+}
+
+header h4 {
+    margin-top: 10px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center the content vertically */
+    height: calc(100vh - 150px); /* Adjust height to fill the viewport minus the header */
+    padding: 20px;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    margin: auto; /* Center horizontally */
+}
+
+.container h1, .container h2 {
+    color: #333;
+}
+
+.container input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.container input[type="submit"], .container input[type="reset"] {
+    width: calc(50% - 10px);
+    padding: 10px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+/* Pied de page */
+footer {
+    background-color: #94a7ae;
+    padding: 25px 100px;
+    color: #fffcfc;
+}
+
+footer .colonnes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Fin du pied de page */
+
+@media screen and (max-width: 680px) {
+    nav .onglets {
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+
+    .main .card {
+        margin: 10px;
+    }
+
+    .main .content .card .right img {
+        height: auto; 
+        max-width: 100%;
+    }
+
+    .main .content .card {
+        display: block;
+    }
+
+    footer {
+        padding: 30px;
+    }
+}
+
+/* Réinitialiser la hauteur automatiquement */
+/* La largeur maximale de l'image est égale à 100% de son conteneur parent */
+@media screen and (max-width: 768px) {
+    nav .onglets {
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    nav .onglets {
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+
+    .main .card {
+        margin: 10px;
+    }
+
+    .main .content .card .right img {
+        height: auto;
+        max-width: 100%;
+    }
+
+    .main .content .card {
+        display: block;
+    }
+
+    footer {
+        padding: 30px;
+    }
+}
+
+.main .right img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

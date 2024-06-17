@@ -1,0 +1,119 @@
+/* Réinitialiser les styles par défaut */
+html {
+    scroll-behavior: smooth;
+    background-color: transparent; /* Fond transparent pour la page entière */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: #6f6f6f;
+    padding: 10px 20px;
+}
+
+nav h1 {
+    color: #fdfdfd;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    margin: 0;
+}
+
+nav .onglets {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+nav .onglets a {
+    text-decoration: none;
+    color: #fff;
+    margin: 0 10px;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 5px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Alignement du contenu en haut */
+    min-height: 100vh;
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+    padding: 20px; /* Ajout de rembourrage pour créer un cadre autour du formulaire */
+    background-color: #6f6f6f; /* Couleur de fond du formulaire */
+    border: 2px solid #fff; /* Bordure blanche */
+    border-radius: 10px; /* Coins arrondis */
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #6f6f6f;
+    font-size: 16px;
+    width: 250px;
+}
+
+select:hover,
+select:focus {
+    background-color: #e0e0e0;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #6f6f6f;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #fff;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+footer {
+    background-color: #94a7ae;
+    padding: 25px 100px;
+    color: #fffcfc;
+}
+
+footer .colonnes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
