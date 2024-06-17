@@ -54,37 +54,37 @@ log_prefix() {
 
 }
 
-if [ $SkipQuestion ]; then
+if [ $skipQuestion ]; then
 
-  read -p "What will be the username for maintenance OS : " UserDebootStrap
-  read -p "and what will be is password : " PasswordDeBootStrap
-  read -p "For the database what will be the username : " UserMariaDB
-  read -p "And what will be is password : " PasswordMariaDBUser
+  read -p "What will be the username for maintenance OS : " user_debootstrap
+  read -p "and what will be is password : " password_debootstrap
+  read -p "For the database what will be the username : " user_mariadb
+  read -p "And what will be is password : " password_user_mariadb
   
   read -p "Voulez-vous mettre en place de l'aggregation de liens ? [y|n] " choice_aggregation
-  [ "$choice_aggregation" == "y" ] && ActivationAggregation=true
+  [ "$choice_aggregation" == "y" ] && activation_aggregation=true
 
   read -p "Voulez-vous mettre en place le système nftables ? [y|n] " choice_nftables
   if [ "$choice_nftables" == "y" ]; then 
   
-    ActivationNftables=true
+    activation_nftables=true
 
     ip a && ip r
     echo ""
-    read -p "What is its interface for its WAN subnet (example: eth0):" Interface_WAN
-    read -p "What will be its IP address on the WAN side (example: 192.168.1.15):" IP_WAN
-    read -p "What is the CIDR format subnet mask for the WAN (example: 24):" Mask_WAN_CIDR
-    read -p "What is its subnet mask for the WAN (example: 255.255.255.0):" Mask_WAN
-    read -p "What is the IP of the WAN subnet (example: 192.168.1.0):" IP_WAN_Subnet
-    read -p "What is the IP of the router for the WAN network (example: 192.168.1.254):" Router
+    read -p "What is its interface for its WAN subnet (example: eth0):" interface_wan
+    read -p "What will be its IP address on the WAN side (example: 192.168.1.15):" ip_wan
+    read -p "What is the CIDR format subnet mask for the WAN (example: 24):" mask_wan_cidr
+    read -p "What is its subnet mask for the WAN (example: 255.255.255.0):" mask_wan
+    read -p "What is the IP of the WAN subnet (example: 192.168.1.0):" ip_wan_subnet
+    read -p "What is the IP of the router for the WAN network (example: 192.168.1.254):" router
 
   fi
 
-  read -p "What is its interface for its LAN subnet (example: eth0):" Interface_LAN
-  read -p "What will be its IP address on the LAN side (example: 192.168.1.15):" IP_LAN
-  read -p "What is the CIDR format subnet mask for the LAN (example: 24):" Mask_LAN_CIDR
-  read -p "What is its subnet mask for the LAN (example: 255.255.255.0):" Mask_LAN
-  read -p "What is the IP of the LAN subnet (example: 192.168.1.0):" IP_LAN_Subnet
+  read -p "What is its interface for its LAN subnet (example: eth0):" interface_lan
+  read -p "What will be its IP address on the LAN side (example: 192.168.1.15):" ip_lan
+  read -p "What is the CIDR format subnet mask for the LAN (example: 24):" mask_lan_cidr
+  read -p "What is its subnet mask for the LAN (example: 255.255.255.0):" mask_lan
+  read -p "What is the IP of the LAN subnet (example: 192.168.1.0):" ip_lan_subnet
 
   ip a && ip r
 
@@ -92,7 +92,7 @@ fi
 
 cp /etc/network/interfaces /etc/network/interfaces.old
 
-case "$ActivationAggregation$ActivationNftables" in
+case "$activation_aggregation$activation_nftables" in
   "truetrue")
 
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on $log_file" && exit 1; }
@@ -100,12 +100,12 @@ case "$ActivationAggregation$ActivationNftables" in
 
     cp resources/network_interfaces/interfacesAggregationNftables /etc/network/interfaces
     sed -i \
-      -e "s/{Interface_WAN}/$Interface_WAN/g" \
-      -e "s/{IP_WAN}/$IP_WAN/g" \
-      -e "s/{Mask_WAN_CIDR}/$Mask_WAN_CIDR/g" \
-      -e "s/{Router}/$Router/g" \
-      -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
+      -e "s/{interface_wan}/$interface_wan/g" \
+      -e "s/{ip_wan}/$ip_wan/g" \
+      -e "s/{mask_wan_cidr}/$mask_wan_cidr/g" \
+      -e "s/{router}/$router/g" \
+      -e "s/{ip_lan}/$il_lan/g" \
+      -e "s/{mask_lan_cidr}/$mask_lan_cidr/g" \
       -e "s/{interface1}/$interface1/g" \
       -e "s/{interface2}/$interface2/g" \
     /etc/network/interfaces
@@ -117,29 +117,29 @@ case "$ActivationAggregation$ActivationNftables" in
     
     cp resources/network_interfaces/interfacesNftables /etc/network/interfaces
     sed -i \
-      -e "s/{Interface_LAN}/$Interface_LAN/g" \
-      -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
-      -e "s/{Interface_WAN}/$Interface_WAN/g" \
-      -e "s/{IP_WAN}/$IP_WAN/g" \
-      -e "s/{Mask_WAN_CIDR}/$Mask_WAN_CIDR/g" \
-      -e "s/{Router}/$Router/g" \
+      -e "s/{interface_lan}/$interface_lan/g" \
+      -e "s/{ip_lan}/$ip_lan/g" \
+      -e "s/{mask_lan_cidr}/$mask_lan_cidr/g" \
+      -e "s/{interface_wan}/$interface_wan/g" \
+      -e "s/{ip_wan}/$ip_wan/g" \
+      -e "s/{mask_wan_cidr}/$mask_wan_cidr/g" \
+      -e "s/{router}/$router/g" \
     /etc/network/interfaces
     ;;
 
   "truefalse")
     
-    read -p "Quelle est l'IP du router du réseaux :" Router
-    echo -e "Remember do disable the dhcp of your router"
+    read -p "Quelle est l'IP du router du réseaux :" router
+    echo -e "/!\ IMPORTANT /!\ \nRemember do disable the dhcp of your router"
 
     log_prefix "aggregation" aggregation/aggregation.sh || { echo -e "something went wrong during the installation of the aggregation\nGo see the log on $log_file" && exit 1; }
     
     cp resources/interface/interfacesAggregation /etc/network/interfaces
     sed -i \
-      -e "s/{Interface_LAN}/$Interface_LAN/g" \
-      -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
-      -e "s/{Router}/$Router/g" \
+      -e "s/{interface_lan}/$interface_lan/g" \
+      -e "s/{ip_lan}/$ip_lan/g" \
+      -e "s/{mask_lan_cidr}/$mask_lan_cidr/g" \
+      -e "s/{router}/$router/g" \
       -e "s/{interface1}/$interface1/g" \
       -e "s/{interface2}/$interface2/g" \
     /etc/network/interfaces
@@ -148,14 +148,14 @@ case "$ActivationAggregation$ActivationNftables" in
   "falsefalse")
 
     read -p "Quelle est l'IP du router du réseaux :" Router
-    echo -e "Remember do disable the dhcp of your router"
+    echo -e "/!\ IMPORTANT /!\ \nRemember do disable the dhcp of your router"
 
     cp resources/network_interfaces/interfaces /etc/network/interfaces
     sed -i \
-      -e "s/{Interface_LAN}/$Interface_LAN/g" \
-      -e "s/{IP_LAN}/$IP_LAN/g" \
-      -e "s/{Mask_LAN_CIDR}/$Mask_LAN_CIDR/g" \
-      -e "s/{Router}/$Router/g" \
+      -e "s/{interface_lan}/$interface_lan/g" \
+      -e "s/{ip_lan}/$ip_lan/g" \
+      -e "s/{mask_lan_cidr}/$mask_lan_cidr/g" \
+      -e "s/{router}/$router/g" \
     /etc/network/interfaces
     ;;
 
@@ -166,42 +166,42 @@ case "$ActivationAggregation$ActivationNftables" in
 esac
 
 systemctl restart networking
-ip r add default via $Router
+ip r add default via $router
 
 
 # Update & install of paquets needed
 apt-get update && apt-get -y upgrade #>> /dev/null
 
 #install of every paquets
-if [ $Kea ];then
+if [ $kea ];then
   echo -e "Installation of kea-dhcp4-server . . .\n"
   apt-get -y install kea-dhcp4-server >> /dev/null  
 fi
-if [ $Isc ];then 
+if [ $isc ];then 
   echo -e "Installation of isc-dhcp-server . . .\n"
   apt-get -y install isc-dhcp-server >> /dev/null  
 fi
-if [ $ActivationDNS ];then
+if [ $activation_dns ];then
    echo -e "Installation of bind9 . . .\n"
   apt-get -y install bind9 >> /dev/null
 fi
-if [ $ActivationMariaDB ];then 
+if [ $activation_mariadb ];then 
   echo -e "Installation of mariadb-server . . .\n"
   apt-get -y install mariadb-server >> /dev/null 
 fi
-if [ $ActivationHTTP ];then 
+if [ $activation_http ];then 
   echo -e "Installation of apache2 and php . . .\n"
   apt-get -y install apache2 php >> /dev/null 
 fi
-if [ $ActivationNFS ];then 
+if [ $activation_nfs ];then 
   echo -e "Installation of nfs-kernel-server . . .\n"
   apt-get -y install nfs-kernel-server >> /dev/null  
 fi
-if [ $ActivationTFTP ];then 
+if [ $activation_tftp ];then 
   echo -e "Installation of atftpd . . .\n"
   apt-get -y install atftpd >> /dev/null  
 fi
-if [ $ActivationDeBootStrap ];then 
+if [ $activation_debootstrap ];then 
   echo -e "Installation of debootstrap . . .\n"
   apt-get -y install debootstrap >> /dev/null 
 fi
@@ -211,34 +211,34 @@ apt-get -y install grub-common wget >> /dev/null
 #wget https://cdimage.kali.org/kali-2023.4/kali-linux-2023.4-live-amd64.iso
 
 # Launch DeBootStrap in an other process
-if [ $ActivationDeBootStrap ];then
+if [ $activation_debootstrap ];then
   echo -e "\nInstallation of the DeBootStrap service (this one can take a while) . . ."
   log_prefix "debootstrap" "resources/debootstrap/debootstrap.sh" &
   debootstrap_pid=$!
 fi
 
 
-if [ $ActivationDHCP ];then
+if [ $activation_dhcp ];then
 echo -e "\nConfiguration of the DHCP server . . . \n"
 log_prefix "dhcp" "resources/dhcp/dhcp.sh" && echo -e "DHCP is configure correctly\n" || { echo -e "something went wrong during the installation of the DHCP SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationDNS ];then
+if [ $activation_dns ];then
 echo -e "Configuration of the DNS server . . . \n"
 log_prefix "dns" "resources/dns/dns.sh" && echo -e "DNS is configure correctly\n" || { echo -e "something went wrong during the installation of the DNS SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationMariaDB ];then
+if [ $activation_mariadb ];then
 echo -e "Configuration of the DataBase server . . . \n"
 log_prefix "database" "resources/database/database.sh" && echo -e "Database is configure correctly\n" || { echo -e "something went wrong during the installation of the DATABASE\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationHTTP ];then
+if [ $activation_http ];then
 echo -e "Configuration of the Web Server . . .\n"
 log_prefix "http" "resources/http/http.sh" && echo -e "Web Server is configure correctly\n" || { echo -e "something went wrong during the installation of the WEB SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationNFS ];then
+if [ $activation_nfs ];then
 echo -e "Configuration of the NFS server . . . \n"
 log_prefix "nfs" "resources/nfs/nfs.sh" && echo -e "NFS is configure correctly\n" || { echo -e "something went wrong during the installation of the NFS SERVER\nGo see the log on $log_file" && exit 1; }
 fi
-if [ $ActivationTFTP ];then
+if [ $activation_tftp ];then
 echo -e "Configuration of the TFTP server . . . \n"
 log_prefix "tftp" "resources/tftp/tftp.sh" && echo -e "TFTP is configure correctly\n" || { echo -e "something went wrong during the installation of the TFTP SERVER\nGo see the log on $log_file" && exit 1; }
 fi
@@ -246,7 +246,7 @@ echo -e "Creation of the Boot files for the  maintenace OS . . . \n"
 log_prefix "core" "resources/core/core.sh" && echo -e "Core files create & configure correctly\n" || { echo -e "something went wrong during the creation of the BOOT FILES for linux\nGo see the log on $log_file" && exit 1; }
 
 # Wait for debootstrap to finish if it was started
-if [ $ActivationDeBootStrap ]; then
+if [ $activation_debootstrap ]; then
     wait $debootstrap_pid
     if [ $? -eq 0 ]; then
         echo -e "DeBootStrap installed & configured correctly\n"
@@ -264,9 +264,9 @@ system(){
     # Restart every service so they take into account their new configurations
     systemctl restart bind9 atftpd nfs-kernel-server apache2 nftables mariadb
 
-    if [ $Kea ]; then
+    if [ $kea ]; then
       systemctl restart kea-dhcp4-server
-    elif [ $Isc ]; then
+    elif [ $isc ]; then
       systemctl restart isc-dhcp-server
     fi
 
@@ -279,9 +279,9 @@ system || { echo -e "something went wrong during the restart of the services\nGo
 echo -e "All installations and configurations completed successfully."
 
 # Final screen
-if [ $Kea ]; then
+if [ $kea ]; then
   services=("kea-dhcp4-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
-elif [ $Isc ]; then
+elif [ $isc ]; then
   services=("isc-dhcp-server" "bind9" "atftpd" "nfs-kernel-server" "apache2" "nftables" "mariadb.service")
 fi
 
@@ -293,4 +293,4 @@ for service in "${services[@]}"; do
   echo
 done
 
-echo -e "\nAs a reminder, for the maintenance OS:\nusername : $UserDebootStrap \npassword : $PasswordDeBootStrap\n\nand for the DataBase :\nusername : $UserMariaDB \npassword : $PasswordMariaDBUser\n\nINSTALLATION FINISHED\n\n"
+echo -e "\nAs a reminder, for the maintenance OS:\nusername : $user_debootstrap \npassword : $password_debootstrap\n\nand for the DataBase :\nusername : $user_mariadb \npassword : $password_user_mariadb\n\nINSTALLATION FINISHED\n\n"
