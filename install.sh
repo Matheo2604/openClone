@@ -6,6 +6,7 @@
 # vmlinuz and initrd from debootstrap to move for the grub or modify grub
 # dns host reference 127.0.0.1 hgas to change on clients for openclone 
 # ip broadcast sur dhcp pb
+# password and user web site to database
 
 clear
 echo -e '
