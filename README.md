@@ -49,8 +49,8 @@ You'll need at least 500MB for all the services and some disk storage for the IS
 
 Debian 12 is the only distribution tested for now (but it should be compatible with all Debian-based distributions).
 
-   - CPU: Still to determine
-   - RAM: Still to determine (probably heavy if you have multiple machines)
+   - CPU: 2 cores required minimum (4 recommended if you use heavy Iso file)
+   - RAM: 500Mo required minimum plus approximatively 256Mo every 3 machines (500Mo for each machines if you use heavy Iso file)
 
 I will test soon on some ranges between:
 
@@ -70,7 +70,7 @@ First, ensure that your machine is up to date:
 
 <br />
 
-cgvhbjnkfcgvhbjkl
+then to install and start the project:
 
 <br />
 
@@ -82,10 +82,18 @@ $ cd openClone/
 
 ## 3 - Usage
 
+The project is managable through the web interface or in CLI (Script will be made to make the user admin experiences easier)
+
 ### 3.1 - How to Boot in PXE Mode
+
+You'll need to enable PXE or Network boot in your Bios/UEFI it's advise to for people that's going to use frequently ISO to put Pxe/Network boot first in there boot order
 
 ### 3.2 - How to Use Our Maintenance Linux
 
+When booting on your client machine choose to boot on the "Maintenance Linux" option, then you'll have a graphical interface to manage your client or you can chose tu use CLI to use your own commande
+
 ### 3.3 - How to Add an OS
+
+
 
 ## 4 - Troubleshooting
