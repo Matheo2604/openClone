@@ -3,7 +3,7 @@
 
 ## 1 - What's openClone
 
-Welcome to the "OpenClone" project! This repository contains all the necessary scripts, configurations, and documentation to set up a network boot and cloning system. The primary goal of this project is to facilitate the deployment and maintenance of operating systems across multiple machines within a network, ensuring efficient and streamlined processes.
+Welcome to the "OpenClone" project! This repository contains all the necessary scripts, configurations, and documentation to set up a network boot and cloning system. The primary goal of this project is to facilitate the deployment(of an new system or temporary with live OS) and maintenance of operating systems across multiple machines within a same network, ensuring efficient and streamlined processes.
 <br />
 <br />
 This project was developed as part of my Advanced Technician Certificate (Brevet de Technicien Supérieur, BTS) program. It has allowed me to apply and expand my knowledge in operating systems, networking, and scripting. By leveraging tools like PXE, TFTP, NFS, and various Linux utilities, this project demonstrates a comprehensive approach to network-based system deployment.
@@ -17,7 +17,7 @@ Feel free to modify it according to your specific needs!
 
 ### 2.1 - Things to Know
 
-The project has an option to deploy link aggregation for better efficiency or nftables (highly recommended for security purposes as it allows you to have a DHCP dedicated to this project).
+The project has an option to deploy link aggregation for better efficiency or/and nftables to allow you to modify your DHCP configuration(highly recommended for security purposes as it allows you to manage the data stream of this network).
 <br />
 
 
@@ -34,7 +34,7 @@ Link aggregation is a method used to combine multiple network connections into a
 <br />
 What and Why nftables?
 <br />
-nftables is a subsystem of the Linux kernel that provides filtering and classification of network packets/datagrams/frames. It is a replacement for the legacy iptables framework and offers several advantages, including better performance, ease of use, and more advanced features. Using nftables can enhance the security of your network by providing more efficient and flexible packet filtering rules.
+nftables is tools that provides filtering and classification of network packets/datagrams/frames. It is a replacement for the legacy iptables framework and offers several advantages, including better performance, ease of use, and more advanced features. Using nftables can enhance the security of your network by providing more efficient and flexible packet filtering rules.
 <br />
 <br />
 
@@ -45,12 +45,12 @@ nftables is a subsystem of the Linux kernel that provides filtering and classifi
 
 ### 2.2 - Requirements
 
-You'll need at least 500MB for all the services and some disk storage for the ISOs you want to add.
+You'll need at least 500MB for all the services and some disk storage for the ISO's you want to add.
 
 Debian 12 is the only distribution tested for now (but it should be compatible with all Debian-based distributions).
 
    - CPU: 2 cores required minimum (4 recommended if you use heavy Iso file)
-   - RAM: 500Mo required minimum plus approximatively 256Mo every 3 machines (500Mo for each machines if you use heavy Iso file)
+   - RAM: 500Mo required minimum plus approximatively 256Mo every 3 machines (500Mo for each machines if you use heavy ISO file)
 
 I will test soon on some ranges between:
 
@@ -90,7 +90,7 @@ You'll need to enable PXE or Network boot in your Bios/UEFI it's advise to for p
 
 ### 3.2 - How to Use Our Maintenance Linux
 
-When booting on your client machine choose to boot on the "Maintenance Linux" option, then you'll have a graphical interface to manage your client or you can chose tu use CLI to use your own commande
+When booting on your client machine choose to boot on the "Maintenance Linux" option, then you'll have a semi-graphical interface to manage your client or you can chose tu use CLI to use your own commande
 
 ### 3.3 - How to Add an OS
 
